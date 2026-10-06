@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Chakra+Petch:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+  body{margin:0;background:#100d15;}
+  a{text-decoration:none;color:#C084FF;}
+  a:hover{color:#e7c8ff;}
+  @keyframes kybrSpin{to{transform:rotate(360deg);}}
+  @keyframes kybrEq{0%,100%{transform:scaleY(.22);}50%{transform:scaleY(1);}}
+  @keyframes kybrPulse{0%,100%{opacity:1;box-shadow:0 0 9px #5fd8ff;}50%{opacity:.4;box-shadow:0 0 2px #5fd8ff;}}
+  @keyframes kybrFlick{0%,100%{opacity:.22;}50%{opacity:1;}}
+  @keyframes kybrRise{from{transform:translateY(26px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  @keyframes kybrCloud{0%{transform:translateX(0);}100%{transform:translateX(26px);}}
+  @keyframes kybrFlipA{0%{transform:rotateX(0);opacity:1;}44%{transform:rotateX(34deg);opacity:.25;}60%{transform:rotateX(-22deg);opacity:.5;}100%{transform:rotateX(0);opacity:1;}}
+  @keyframes kybrFlipB{0%{transform:rotateX(0);opacity:1;}44%{transform:rotateX(34deg);opacity:.25;}60%{transform:rotateX(-22deg);opacity:.5;}100%{transform:rotateX(0);opacity:1;}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:36px 20px 40px;font-family:'DM Mono',monospace;color:#e9e4f0;background:radial-gradient(130% 80% at 12% -10%,#2b2236 0%,#1a1622 52%),#15121b;">
+
+  <!-- PHONE SHELL -->
+  <div data-screen-label="{{ tabUp }}" style="position:relative;width:392px;height:812px;flex:none;border-radius:50px;padding:11px;background:{{ shellBg }};box-shadow:{{ shellSh }};">
+    <div style="position:relative;width:100%;height:100%;border-radius:40px;overflow:hidden;display:flex;flex-direction:column;background:{{ screenBg }};">
+
+      <!-- status bar (shared) -->
+      <div style="position:absolute;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:15px 24px 0;font-size:11px;font-weight:500;color:{{ statusFg }};pointer-events:none;"><span>9:41</span><div style="display:flex;align-items:center;gap:5px;"><span style="font-size:9px;letter-spacing:1px;">{{ skinName }}</span><span style="width:7px;height:7px;border-radius:50%;background:{{ acc }};box-shadow:0 0 7px {{ acc }};"></span></div></div>
+
+      <!-- ================= WIRE · GAME BOY COLOR ================= -->
+      <sc-if value="{{ isWire }}" hint-placeholder-val="{{ true }}">
+        <div style="position:relative;flex:1;min-height:0;display:flex;flex-direction:column;padding:40px 22px 0;">
+          <sc-if value="{{ gloss }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;inset:0;background:radial-gradient(70% 30% at 24% 4%,rgba(255,255,255,.6),transparent 60%),radial-gradient(50% 24% at 88% 28%,rgba(255,255,255,.35),transparent 70%);pointer-events:none;z-index:3;"></div>
+          </sc-if>
+
+          <!-- bezel -->
+          <div style="position:relative;z-index:2;display:flex;border-radius:10px 10px 24px 24px;padding:14px 16px 12px;background:linear-gradient(160deg,#201e26,#070608);box-shadow:inset 0 2px 6px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.3);">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding:34px 9px 0 0;flex:none;">
+              <span style="width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#ff8f8f,#cc2222);box-shadow:0 0 6px #ff4d4d;"></span>
+              <span style="width:7px;height:9px;border-radius:50%;border:1.4px solid #6e6e77;border-left-color:transparent;"></span>
+              <span style="width:7px;height:9px;border-radius:50%;border:1.4px solid #54545c;border-left-color:transparent;"></span>
+              <span style="font-size:6px;letter-spacing:1px;color:#83838c;writing-mode:vertical-rl;margin-top:3px;">POWER</span>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="position:relative;border-radius:4px;overflow:hidden;background:radial-gradient(120% 80% at 50% 0,#241a33,#100c18);padding:11px;box-shadow:inset 0 0 0 1px {{ accA18 }};">
+                <sc-if value="{{ scanlines }}" hint-placeholder-val="{{ true }}">
+                  <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,{{ accA05 }} 0 1px,transparent 1px 3px);pointer-events:none;z-index:2;"></div>
+                </sc-if>
+                <div style="position:relative;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid {{ accA30 }};padding-bottom:6px;">
+                  <span style="font-family:'Michroma',sans-serif;font-size:11px;color:{{ acc }};">&#9829;KYBR</span>
+                  <span style="font-size:8px;background:linear-gradient(180deg,{{ accLo }},{{ acc }});color:#2a1f3a;padding:2px 7px;border-radius:2px;letter-spacing:1px;">WIRE</span>
+                </div>
+                <div style="position:relative;font-size:8px;letter-spacing:1px;color:rgba(231,224,240,.5);margin:8px 0 7px;">WHAT YR CREW PUT U ON</div>
+                <div style="position:relative;display:flex;flex-direction:column;gap:3px;">
+                  <sc-for list="{{ wireRows }}" as="r" hint-placeholder-count="5">
+                    <div onClick="{{ r.select }}" style="display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 8px;border-radius:6px;border-left:2px solid {{ r.bd }};background:{{ r.bg }};cursor:pointer;" style-hover="filter:brightness(1.18);">
+                      <span style="width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,{{ accLo }},{{ accHi }});flex:none;"></span>
+                      <div style="flex:1;min-width:0;">
+                        <div style="font-size:11px;color:{{ r.titleFg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.title }}</div>
+                        <div style="font-size:8px;color:rgba(231,224,240,.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ r.who }}</div>
+                      </div>
+                      <span style="font-size:8px;color:rgba(231,224,240,.45);flex:none;">{{ r.time }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="position:relative;display:flex;gap:3px;margin-top:9px;border-top:1px solid {{ accA30 }};padding-top:7px;justify-content:space-between;">
+                  <sc-for list="{{ strip }}" as="w" hint-placeholder-count="5">
+                    <span style="font-size:7px;letter-spacing:.5px;color:{{ w.fg }};background:{{ w.bg }};padding:2px 6px;border-radius:2px;">{{ w.label }}</span>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;justify-content:center;align-items:baseline;gap:5px;margin-top:9px;font-style:italic;">
+                <span style="font-size:9px;font-weight:700;letter-spacing:.5px;color:#aeb0b8;">KYBR BOY</span>
+                <span style="font-size:9px;font-weight:700;letter-spacing:.5px;"><span style="color:#ff5b5b;">C</span><span style="color:#ff9d3d;">O</span><span style="color:#ffd23d;">L</span><span style="color:#46d07a;">O</span><span style="color:#4db4ff;">R</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- controls -->
+          <div style="position:relative;z-index:2;flex:1;min-height:210px;margin-top:14px;">
+            <sc-if value="{{ guts }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;inset:0;z-index:0;filter:blur(.5px);pointer-events:none;">
+                <div style="position:absolute;left:0;bottom:44px;width:56px;height:46px;border-radius:3px;background:#1d3a26;opacity:.42;box-shadow:inset 0 0 0 1px rgba(0,0,0,.35);overflow:hidden;">
+                  <div style="position:absolute;inset:4px;background-image:radial-gradient(circle,#c9a84a 0 1px,transparent 1.5px);background-size:6px 6px;opacity:.85;"></div>
+                  <div style="position:absolute;left:5px;top:6px;width:22px;height:3px;background:rgba(201,168,74,.6);"></div>
+                </div>
+                <div style="position:absolute;right:96px;top:10px;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle,rgba(160,140,200,.55),transparent 72%);"></div>
+                <div style="position:absolute;right:40px;top:84px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,rgba(160,140,200,.5),transparent 72%);"></div>
+                <div style="position:absolute;left:110px;bottom:28px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,rgba(160,140,200,.45),transparent 72%);"></div>
+                <div style="position:absolute;left:18px;top:4px;width:8px;height:8px;border-radius:50%;box-shadow:inset 0 0 0 1.6px rgba(120,108,160,.45);"></div>
+                <div style="position:absolute;right:8px;top:6px;width:8px;height:8px;border-radius:50%;box-shadow:inset 0 0 0 1.6px rgba(120,108,160,.45);"></div>
+              </div>
+            </sc-if>
+
+            <!-- D-pad -->
+            <div style="position:absolute;left:8px;top:26px;width:96px;height:96px;z-index:1;">
+              <div style="position:absolute;top:32px;left:0;width:96px;height:32px;border-radius:5px;background:linear-gradient(180deg,#4a4552,#211d28);box-shadow:inset 0 1px 1px rgba(255,255,255,.18),0 3px 5px rgba(0,0,0,.45);"></div>
+              <div style="position:absolute;left:32px;top:0;width:32px;height:96px;border-radius:5px;background:linear-gradient(90deg,#4a4552,#211d28);box-shadow:inset 0 1px 1px rgba(255,255,255,.18),0 3px 5px rgba(0,0,0,.45);"></div>
+              <div style="position:absolute;left:40px;top:40px;width:16px;height:16px;border-radius:50%;background:#0f0d12;box-shadow:inset 0 1px 2px rgba(0,0,0,.7);"></div>
+              <div onClick="{{ wireUp }}" title="up" style="position:absolute;left:26px;top:-2px;width:44px;height:44px;cursor:pointer;border-radius:6px;" style-hover="background:rgba(255,255,255,.08);" style-active="background:rgba(0,0,0,.25);"></div>
+              <div onClick="{{ wireDown }}" title="down" style="position:absolute;left:26px;top:54px;width:44px;height:44px;cursor:pointer;border-radius:6px;" style-hover="background:rgba(255,255,255,.08);" style-active="background:rgba(0,0,0,.25);"></div>
+              <div onClick="{{ wireSelectTab }}" title="left" style="position:absolute;left:-2px;top:26px;width:44px;height:44px;cursor:pointer;border-radius:6px;" style-hover="background:rgba(255,255,255,.08);" style-active="background:rgba(0,0,0,.25);"></div>
+              <div onClick="{{ wireSelectTab }}" title="right" style="position:absolute;left:54px;top:26px;width:44px;height:44px;cursor:pointer;border-radius:6px;" style-hover="background:rgba(255,255,255,.08);" style-active="background:rgba(0,0,0,.25);"></div>
+            </div>
+
+            <!-- A / B -->
+            <div style="position:absolute;right:4px;top:22px;z-index:1;display:flex;gap:8px;align-items:flex-end;">
+              <div onClick="{{ wireB }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;width:52px;padding:4px 0;cursor:pointer;">
+                <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(180deg,#54505c,#211d28);box-shadow:inset 0 2px 2px rgba(255,255,255,.22),0 4px 6px rgba(0,0,0,.5);" style-active="transform:translateY(1px);"></div>
+                <div style="font-size:9px;color:#6a5c86;letter-spacing:1px;text-shadow:0 1px 0 rgba(255,255,255,.5);">B</div>
+              </div>
+              <div onClick="{{ wireA }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;width:52px;padding:4px 0;margin-bottom:30px;cursor:pointer;">
+                <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(180deg,#54505c,#211d28);box-shadow:inset 0 2px 2px rgba(255,255,255,.22),0 4px 6px rgba(0,0,0,.5);" style-active="transform:translateY(1px);"></div>
+                <div style="font-size:9px;color:#6a5c86;letter-spacing:1px;text-shadow:0 1px 0 rgba(255,255,255,.5);">A</div>
+              </div>
+            </div>
+
+            <!-- SELECT / START -->
+            <div style="position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:1;display:flex;gap:10px;">
+              <div onClick="{{ wireSelectTab }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:58px;height:44px;cursor:pointer;">
+                <div style="width:30px;height:10px;border-radius:6px;background:linear-gradient(180deg,#4a4552,#211d28);box-shadow:inset 0 1px 1px rgba(255,255,255,.18),0 2px 3px rgba(0,0,0,.45);"></div>
+                <div style="font-size:7px;color:#6a5c86;letter-spacing:1px;text-shadow:0 1px 0 rgba(255,255,255,.5);">SELECT</div>
+              </div>
+              <div onClick="{{ wireStart }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:58px;height:44px;cursor:pointer;">
+                <div style="width:30px;height:10px;border-radius:6px;background:linear-gradient(180deg,#4a4552,#211d28);box-shadow:inset 0 1px 1px rgba(255,255,255,.18),0 2px 3px rgba(0,0,0,.45);"></div>
+                <div style="font-size:7px;color:#6a5c86;letter-spacing:1px;text-shadow:0 1px 0 rgba(255,255,255,.5);">START</div>
+              </div>
+            </div>
+
+            <!-- speaker -->
+            <div style="position:absolute;right:2px;bottom:4px;z-index:1;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.4),rgba(70,62,84,.12) 72%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),inset 0 2px 6px rgba(0,0,0,.22);overflow:hidden;">
+              <div style="position:absolute;inset:6px;border-radius:50%;background-image:radial-gradient(circle,rgba(36,30,48,.62) 0 1.4px,transparent 1.8px);background-size:5px 5px;"></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= CHNL · HI-FI RACK ================= -->
+      <sc-if value="{{ isChnl }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding-top:38px;">
+          <div style="flex:1;min-height:0;margin:0 12px;border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px;overflow:hidden;background:linear-gradient(180deg,#d9dbe1 0%,#bcbec7 42%,#a4a6b0 58%,#cfd1d8 100%);box-shadow:inset 0 2px 2px rgba(255,255,255,.85),inset 0 -3px 7px rgba(0,0,0,.32),0 6px 16px rgba(0,0,0,.4);">
+
+            <div style="display:flex;align-items:center;justify-content:space-between;flex:none;padding:0 3px;">
+              <span style="font-family:'Michroma',sans-serif;font-size:15px;letter-spacing:1px;background:linear-gradient(180deg,#3a3a44,#6f7180 48%,#2b2c34 52%,#54555f);-webkit-background-clip:text;background-clip:text;color:transparent;">KYBR</span>
+              <span style="font-size:7px;letter-spacing:2px;color:#73757f;">CD CREW SYSTEM &middot; KY&middot;NMT09</span>
+            </div>
+
+            <!-- LCD -->
+            <div style="flex:none;border-radius:7px;padding:10px 13px 11px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0a1526 0%,#060c18 100%);box-shadow:inset 0 2px 9px rgba(0,0,0,.85),inset 0 0 0 2px #2c2e38,0 0 0 3px #6b6d77;">
+              <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(95,216,255,.05) 0 1px,transparent 1px 3px);pointer-events:none;"></div>
+              <div style="position:relative;display:flex;justify-content:space-between;align-items:center;font-size:8px;letter-spacing:1px;color:#5fd8ff;">
+                <div style="display:flex;align-items:center;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#7CFFC2;animation:kybrPulse 1.5s ease-in-out infinite;"></span><span style="text-shadow:0 0 7px rgba(95,216,255,.7);">{{ onAirLabel }}</span></div>
+                <span style="text-shadow:0 0 7px rgba(95,216,255,.7);">DECK {{ discNum }} &middot; {{ crewName }} &middot; {{ crewFreq }}fm</span>
+              </div>
+              <div style="position:relative;display:flex;align-items:flex-end;justify-content:center;gap:2px;height:46px;margin-top:9px;">
+                <sc-for list="{{ spec }}" as="b" hint-placeholder-count="12">
+                  <span style="width:5px;height:{{ b.h }};border-radius:1px;background:{{ b.grad }};transform-origin:bottom;animation:kybrEq 1.05s ease-in-out infinite {{ b.d }};animation-play-state:{{ playState }};"></span>
+                </sc-for>
+              </div>
+              <div style="position:relative;display:flex;justify-content:space-between;align-items:flex-end;margin-top:7px;border-top:1px solid rgba(95,216,255,.22);padding-top:7px;">
+                <div style="min-width:0;flex:1;">
+                  <div style="font-size:14px;color:#dffaff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 0 9px rgba(95,216,255,.5);">{{ np.song }}</div>
+                  <div style="font-size:8.5px;color:rgba(159,239,255,.6);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ np.artist }} &middot; added by {{ np.who }}</div>
+                </div>
+                <span style="font-family:'Michroma',sans-serif;font-size:13px;color:#7CFFC2;flex:none;margin-left:8px;text-shadow:0 0 8px rgba(124,255,194,.6);">{{ elapsedStr }}</span>
+              </div>
+            </div>
+
+            <!-- transport + jog -->
+            <div style="flex:none;display:flex;align-items:center;gap:10px;">
+              <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">
+                <span onClick="{{ pPrev }}" style="display:flex;align-items:center;justify-content:center;height:44px;font-size:11px;color:#4b4d56;border-radius:5px;cursor:pointer;background:linear-gradient(180deg,#eceef2,#c2c4cd);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 2px rgba(0,0,0,.3);" style-active="box-shadow:inset 0 2px 3px rgba(0,0,0,.3);">&#9198;</span>
+                <span onClick="{{ playOn }}" style="display:flex;align-items:center;justify-content:center;height:44px;font-size:11px;color:#1f8f5a;border-radius:5px;cursor:pointer;background:linear-gradient(180deg,#eaffe9,#bfe6c4);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 2px rgba(0,0,0,.3);" style-active="box-shadow:inset 0 2px 3px rgba(0,0,0,.3);">&#9654;</span>
+                <span onClick="{{ pauseOn }}" style="display:flex;align-items:center;justify-content:center;height:44px;font-size:11px;color:#4b4d56;border-radius:5px;cursor:pointer;background:linear-gradient(180deg,#eceef2,#c2c4cd);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 2px rgba(0,0,0,.3);" style-active="box-shadow:inset 0 2px 3px rgba(0,0,0,.3);">&#9208;</span>
+                <span onClick="{{ pNext }}" style="display:flex;align-items:center;justify-content:center;height:44px;font-size:11px;color:#4b4d56;border-radius:5px;cursor:pointer;background:linear-gradient(180deg,#eceef2,#c2c4cd);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 2px rgba(0,0,0,.3);" style-active="box-shadow:inset 0 2px 3px rgba(0,0,0,.3);">&#9199;</span>
+              </div>
+              <div onClick="{{ nextCrew }}" style="position:relative;width:64px;height:64px;flex:none;border-radius:50%;cursor:pointer;background:radial-gradient(circle at 42% 34%,#fbfbfd,#cdcfd7 52%,#9a9ca6);box-shadow:0 3px 6px rgba(0,0,0,.4),inset 0 2px 2px rgba(255,255,255,.9);" style-hover="filter:brightness(1.04);">
+                <div style="position:absolute;inset:5px;border-radius:50%;background:conic-gradient(#c7c9d2 0 6deg,#8c8e98 6deg 12deg);opacity:.85;"></div>
+                <div style="position:absolute;inset:11px;border-radius:50%;background:radial-gradient(circle at 40% 32%,#1a3a52,#0a1826);box-shadow:inset 0 0 8px #3aa0ff,0 0 12px rgba(58,160,255,.55),inset 0 2px 3px rgba(0,0,0,.6);border:1px solid rgba(95,216,255,.5);"></div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:7px;letter-spacing:1px;color:#9fefff;text-shadow:0 0 6px #3aa0ff;">TUNE</div>
+              </div>
+            </div>
+
+            <!-- presets -->
+            <div style="flex:none;border-radius:8px;padding:8px 9px;background:linear-gradient(180deg,#2c2d35,#16171d);box-shadow:inset 0 2px 6px rgba(0,0,0,.6);">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
+                <span style="font-size:7px;letter-spacing:1.5px;color:#8a8c96;">DISC PRESETS</span>
+                <span style="font-size:7px;letter-spacing:1px;color:#ff6fae;">&#9679; tap to power up a room</span>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <sc-for list="{{ presets }}" as="p" hint-placeholder-count="3">
+                  <div onClick="{{ p.select }}" style="flex:1;display:flex;align-items:center;gap:8px;min-height:44px;padding:7px 8px;border-radius:7px;cursor:pointer;background:{{ p.bg }};border:1px solid {{ p.bd }};" style-hover="filter:brightness(1.12);">
+                    <span style="width:18px;height:18px;flex:none;border-radius:50%;background:{{ p.disc }};box-shadow:{{ p.discGlow }};display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;">{{ p.num }}</span>
+                    <div style="min-width:0;">
+                      <div style="font-size:9px;color:{{ p.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ p.name }}</div>
+                      <div style="font-size:7px;color:rgba(233,228,240,.4);">{{ p.freq }}fm</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- in the room -->
+            <div style="flex:none;display:flex;align-items:center;gap:9px;">
+              <div style="flex:none;display:flex;flex-direction:column;gap:3px;">
+                <span style="font-size:7px;letter-spacing:1.5px;color:#5d5f69;">IN THE</span>
+                <span style="font-size:7px;letter-spacing:1.5px;color:#5d5f69;">ROOM</span>
+              </div>
+              <div style="flex:1;display:flex;gap:7px;">
+                <div style="flex:1;border-radius:6px;padding:7px 8px;background:linear-gradient(180deg,#15161c,#0c0d12);box-shadow:inset 0 1px 4px rgba(0,0,0,.7),inset 0 0 0 1px #34353d;">
+                  <div style="font-size:6.5px;letter-spacing:1px;color:#6a6c76;margin-bottom:5px;">DECK A &middot; LIVE</div>
+                  <div style="display:flex;align-items:center;">
+                    <sc-for list="{{ members }}" as="m" hint-placeholder-count="5">
+                      <span style="width:19px;height:19px;border-radius:50%;margin-left:{{ m.ml }};border:1.5px solid {{ m.bd }};box-shadow:{{ m.sh }};opacity:{{ m.op }};display:flex;align-items:center;justify-content:center;font-size:7.5px;color:#fff;background:{{ m.bg }};">{{ m.i }}</span>
+                    </sc-for>
+                    <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ false }}">
+                      <span style="width:19px;height:19px;border-radius:50%;margin-left:-5px;border:1.5px solid #0c0d12;display:flex;align-items:center;justify-content:center;font-size:7px;color:rgba(233,228,240,.7);background:#2a2533;">+{{ moreN }}</span>
+                    </sc-if>
+                  </div>
+                </div>
+                <div style="flex:none;width:104px;border-radius:6px;padding:7px 8px;background:linear-gradient(180deg,#15161c,#0c0d12);box-shadow:inset 0 1px 4px rgba(0,0,0,.7),inset 0 0 0 1px #34353d;">
+                  <div style="display:flex;justify-content:space-between;font-size:6.5px;letter-spacing:1px;color:#6a6c76;margin-bottom:5px;"><span>VU</span><span>SUPER T&middot;BASS</span></div>
+                  <div style="display:flex;align-items:flex-end;gap:1.5px;height:18px;">
+                    <sc-for list="{{ vu }}" as="v" hint-placeholder-count="14">
+                      <span style="flex:1;height:{{ v.h }};min-width:2px;border-radius:1px;background:{{ v.col }};animation:kybrFlick .7s ease-in-out infinite {{ v.d }};animation-play-state:{{ playState }};opacity:{{ vuOp }};"></span>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- track list -->
+            <div style="flex:1;min-height:0;border-radius:7px;padding:8px 10px 2px;display:flex;flex-direction:column;background:linear-gradient(180deg,#0a1526,#060c18);box-shadow:inset 0 2px 7px rgba(0,0,0,.8),inset 0 0 0 2px #2c2e38;">
+              <div style="flex:none;display:flex;justify-content:space-between;align-items:center;font-size:7.5px;letter-spacing:1.5px;color:#5fd8ff;border-bottom:1px solid rgba(95,216,255,.22);padding-bottom:5px;">
+                <span>ON {{ crewNameUp }}'S DECK</span><span style="color:rgba(159,239,255,.5);">{{ trackCount }} TRACKS</span>
+              </div>
+              <div style="flex:1;min-height:0;overflow:hidden;padding-top:3px;display:flex;flex-direction:column;">
+                <sc-for list="{{ burns }}" as="b" hint-placeholder-count="4">
+                  <div onClick="{{ b.open }}" style="display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 3px;border-bottom:{{ b.bb }};cursor:pointer;border-radius:5px;" style-hover="background:rgba(95,216,255,.06);">
+                    <span style="font-family:'Michroma',sans-serif;font-size:9px;color:{{ b.numFg }};flex:none;width:16px;text-shadow:{{ b.numSh }};">{{ b.num }}</span>
+                    <div style="flex:1;min-width:0;">
+                      <div style="font-size:12px;color:#dffaff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ b.song }}</div>
+                      <div style="font-size:8.5px;color:rgba(159,239,255,.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ b.sub }}</div>
+                    </div>
+                    <sc-if value="{{ b.isNow }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-size:7.5px;letter-spacing:1px;color:#7CFFC2;flex:none;">&#9654; NOW</span>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:none;display:flex;gap:8px;padding:8px 14px 0;">
+            <div onClick="{{ playThisWeek }}" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px;border-radius:11px;background:linear-gradient(160deg,rgba(95,216,255,.16),rgba(20,40,60,.5));border:1px solid rgba(95,216,255,.35);cursor:pointer;font-family:'Michroma',sans-serif;font-size:8.5px;letter-spacing:2px;color:#dffaff;" style-hover="filter:brightness(1.1);"><span style="width:7px;height:7px;border-radius:50%;background:#5fd8ff;box-shadow:0 0 8px #5fd8ff;"></span>{{ thisWeekLabel }}</div>
+            <div style="flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 11px;border-radius:9px;background:linear-gradient(180deg,#d6342a,#9a1d16);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 4px rgba(0,0,0,.4);"><span style="font-family:'Michroma',sans-serif;font-size:11px;color:#ffe27a;line-height:1;">410W</span><span style="font-size:6px;letter-spacing:1px;color:rgba(255,255,255,.85);margin-top:2px;">T&middot;BASS</span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= DECK · RECORD SLEEVE ================= -->
+      <sc-if value="{{ isDeck }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column;">
+          <div style="position:relative;flex:none;height:196px;overflow:hidden;background:linear-gradient(150deg,#3d2560,#1d1230);">
+            <div style="position:absolute;right:-64px;top:-28px;width:220px;height:220px;border-radius:50%;overflow:hidden;clip-path:circle(50%);background:radial-gradient(circle,#2a1f3a,#46326b 46%,#211633 76%);opacity:.9;">
+              <div style="position:absolute;inset:-12%;border-radius:50%;animation:kybrSpin 14s linear infinite;background:conic-gradient(from 0deg,#c9a6ff,#8fd9ff,#ffb3e6,#ffe6a8,#a8ffd1,#bfa6ff,#8fd9ff,#ffb3e6,#c9a6ff);mix-blend-mode:screen;opacity:.5;"></div>
+              <div style="position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 2px,rgba(255,255,255,.1) 2px 3px);"></div>
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22%;height:22%;border-radius:50%;background:radial-gradient(circle,#160f20 0 38%,#8a76b8 40% 62%,#160f20 64%);"></div>
+            </div>
+            <div style="position:absolute;inset:0;background:linear-gradient(100deg,#150f1f 22%,rgba(21,15,31,.55) 52%,transparent 76%);"></div>
+            <div style="position:absolute;left:24px;bottom:22px;right:110px;">
+              <div style="font-size:7.5px;letter-spacing:2.5px;color:{{ accA80 }};">DECK &middot; SIDE A</div>
+              <div style="font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28px;letter-spacing:4px;line-height:1.1;margin-top:8px;background:linear-gradient(180deg,#fff,{{ accLo }});-webkit-background-clip:text;background-clip:text;color:transparent;">JUNE</div>
+              <div style="font-size:10px;letter-spacing:.5px;color:{{ accLo }};margin-top:6px;line-height:1.4;">basement-dwelling, always cold</div>
+            </div>
+          </div>
+
+          <div style="flex:1;min-height:0;padding:14px 24px 2px;display:flex;flex-direction:column;gap:10px;">
+            <!-- profile song -->
+            <div style="flex:none;border-radius:12px;padding:7px 8px;background:linear-gradient(180deg,#c2c6d0 0%,#9aa0ac 30%,#6a6f7c 50%,#525762 51%,#7a808c 70%,#aeb4c0 100%);box-shadow:0 10px 20px rgba(0,0,0,.5),inset 0 2px 2px rgba(255,255,255,.7),inset 0 -4px 8px rgba(0,0,0,.4);display:flex;gap:6px;align-items:center;">
+              <div style="flex:1;min-width:0;border-radius:7px;background:linear-gradient(180deg,#0e2418,#06120c);box-shadow:inset 0 2px 6px rgba(0,0,0,.8);padding:8px 10px;display:flex;align-items:center;gap:9px;">
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:7px;letter-spacing:1px;color:rgba(124,255,176,.75);">&#9834; PROFILE SONG</div>
+                  <div style="font-size:13px;color:#a8ffcf;text-shadow:0 0 6px rgba(124,255,176,.5);margin-top:3px;line-height:1;">Let Go &middot; <span style="font-size:9px;color:#7CFFB0;">Frou Frou</span></div>
+                </div>
+                <div style="display:flex;align-items:flex-end;gap:1.5px;height:14px;width:34px;flex:none;">
+                  <sc-for list="{{ deckEq }}" as="e" hint-placeholder-count="6">
+                    <span style="flex:1;height:100%;background:linear-gradient(180deg,#7CFFB0,#2bd07a);border-radius:1px;transform-origin:bottom;animation:kybrEq {{ e.dur }} ease-in-out infinite;animation-play-state:{{ deckPlayState }};"></span>
+                  </sc-for>
+                </div>
+              </div>
+              <div onClick="{{ playDeck }}" style="width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;cursor:pointer;" style-hover="filter:brightness(1.08);">
+                <div style="width:32px;height:32px;border-radius:50%;background:radial-gradient(circle at 40% 32%,#fff,{{ accLo }} 50%,{{ accHi }});box-shadow:0 5px 12px rgba(0,0,0,.5),0 0 14px {{ accA45 }};display:flex;align-items:center;justify-content:center;"><div style="width:0;height:0;border-style:solid;border-width:5px 0 5px 9px;border-color:transparent transparent transparent #fff;margin-left:2px;"></div></div>
+              </div>
+            </div>
+
+            <!-- liner notes -->
+            <div style="flex:none;border-left:2px solid {{ accA50 }};padding-left:12px;">
+              <div style="font-size:7.5px;letter-spacing:2px;color:{{ accA85 }};">LINER NOTES</div>
+              <div style="font-size:11px;color:#e6dcf5;line-height:17px;margin-top:6px;">i burn more than i talk. track 4 will fix you &mdash; don't skip it.</div>
+            </div>
+
+            <!-- top 8 -->
+            <div style="flex:none;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;"><span style="font-size:7.5px;letter-spacing:2px;color:{{ accA85 }};">TOP 8 ALBUMS</span><span style="flex:1;height:1px;background:{{ accA22 }};"></span></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(4,44px);gap:0 16px;margin:-6px 0 -4px;">
+                <sc-for list="{{ top8 }}" as="t" hint-placeholder-count="8">
+                  <div onClick="{{ t.open }}" style="display:flex;gap:7px;align-items:center;min-height:44px;cursor:pointer;" style-hover="filter:brightness(1.25);"><span style="font-size:7.5px;color:{{ accHi }};flex:none;">{{ t.n }}</span><div style="min-width:0;"><div style="font-size:10px;color:#f0e6ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ t.album }}</div><div style="font-size:7.5px;color:rgba(233,228,240,.45);margin-top:1px;">{{ t.artist }}</div></div></div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- reviews (each card opens the album's TAPE page) -->
+            <div style="flex:1;min-height:0;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px;"><span style="font-size:7.5px;letter-spacing:2px;color:{{ accA85 }};">ALBUM REVIEWS</span><span style="flex:1;height:1px;background:{{ accA22 }};"></span><span style="font-size:7px;letter-spacing:1px;color:rgba(233,228,240,.45);">PUBLIC</span></div>
+              <div onClick="{{ feat.open }}" style="cursor:pointer;border-radius:8px;background:rgba(255,255,255,.045);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);padding:10px 12px 9px;" style-hover="background:rgba(255,255,255,.07);">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:12px;color:#fff;">{{ feat.title }}</span><span style="font-size:10px;color:#FFB45E;letter-spacing:1px;">{{ feat.stars }}</span></div>
+                <div style="font-size:7.5px;color:rgba(233,228,240,.5);margin-top:2px;">{{ feat.sub }}</div>
+                <div style="font-size:10px;color:#d8cbee;line-height:15px;margin-top:7px;">{{ feat.t }}</div>
+                <div style="font-size:7.5px;letter-spacing:1px;color:{{ accA80 }};margin-top:7px;">&#8618; OPEN THE J-CARD</div>
+              </div>
+              <div style="display:flex;gap:6px;margin-top:8px;overflow-x:auto;scrollbar-width:none;">
+                <sc-for list="{{ shelf }}" as="sh" hint-placeholder-count="4">
+                  <div onClick="{{ sh.open }}" style="flex:none;display:flex;flex-direction:column;justify-content:center;min-height:44px;padding:0 11px;border-radius:7px;cursor:pointer;background:rgba(255,255,255,.035);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);" style-hover="background:rgba(255,255,255,.07);">
+                    <span style="font-size:9.5px;color:#f0e6ff;white-space:nowrap;">{{ sh.title }}</span>
+                    <span style="font-size:8.5px;color:#FFB45E;letter-spacing:1px;margin-top:2px;">{{ sh.stars }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= CASE · CD BINDER ================= -->
+      <sc-if value="{{ isCase }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding-top:36px;">
+          <div style="flex:none;padding:8px 20px 0;z-index:6;">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;">
+              <span style="font-family:'Michroma',sans-serif;font-size:21px;letter-spacing:1px;background:linear-gradient(180deg,#ffffff,#cfd0db 48%,#8b8c9c 52%,#ffffff);-webkit-background-clip:text;background-clip:text;color:transparent;">KYBR&middot;CASE</span>
+              <span style="font-family:'Michroma',sans-serif;font-size:8px;letter-spacing:3px;color:rgba(233,228,240,.45);">SAVED &middot; YOURS</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+              <span style="font-size:11px;letter-spacing:1px;color:{{ acc }};border:1px solid {{ accA40 }};border-radius:7px;padding:6px 11px;white-space:nowrap;flex:none;">DISC {{ pageLabel }} / 48</span>
+              <div style="display:flex;align-items:center;gap:2px;">
+                <span style="font-size:8px;letter-spacing:1.5px;color:rgba(233,228,240,.4);margin-right:2px;">SKIN</span>
+                <sc-for list="{{ caseSwatches }}" as="s" hint-placeholder-count="4">
+                  <span onClick="{{ s.pick }}" title="{{ s.name }}" style="width:40px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;" style-hover="filter:brightness(1.12);"><span style="width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 38% 32%,{{ s.lo }},{{ s.c }} 64%,{{ s.hi }});box-shadow:{{ s.ring }};"></span></span>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:1;min-height:0;position:relative;padding:8px 16px 4px;z-index:3;perspective:1200px;display:flex;flex-direction:column;">
+            <!-- top sleeve -->
+            <div style="flex:1;min-height:0;border-radius:20px 20px 7px 7px;border:1.5px dashed {{ accA34 }};border-bottom:none;padding:0 14px;display:flex;align-items:center;gap:14px;background:linear-gradient(160deg,rgba(255,255,255,.055),rgba(255,255,255,.012));transform-origin:bottom center;animation:{{ flipAnim }};">
+              <div onClick="{{ topDisc.play }}" style="position:relative;width:150px;height:150px;flex:none;border-radius:50%;cursor:pointer;background:conic-gradient(from 210deg,#f7c9d8,#c9d8f7,#c9f7e4,#f7f0c9,#f7d8c9,#e4c9f7,#c9e8f7,#f7c9d8);box-shadow:0 16px 34px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.4);" style-hover="filter:brightness(1.05);">
+                <div style="position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 2px,rgba(255,255,255,.15) 2px 3px);"></div>
+                <div style="position:absolute;inset:7px;border-radius:50%;background:linear-gradient(125deg,rgba(255,255,255,.5),rgba(255,255,255,0) 42%);"></div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:9px;overflow:hidden;background:{{ topDisc.art }};box-shadow:0 4px 12px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.25);"></div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 42% 34%,#ffffff,{{ accLo }} 56%,{{ acc }});box-shadow:0 5px 14px rgba(0,0,0,.45),0 0 18px {{ accA55 }};display:flex;align-items:center;justify-content:center;"><div style="width:0;height:0;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #2a1f3a;margin-left:3px;"></div></div>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:18px;color:#f3ecff;line-height:1.15;overflow-wrap:anywhere;">{{ topDisc.song }}</div>
+                <div style="font-size:12px;color:rgba(233,228,240,.55);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ topDisc.artist }}</div>
+                <div style="display:flex;align-items:flex-start;gap:7px;margin-top:12px;">
+                  <span style="width:23px;height:23px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;background:{{ topDisc.whoBg }};">{{ topDisc.who0 }}</span>
+                  <span style="font-size:10px;line-height:15px;color:rgba(233,228,240,.7);min-width:0;">{{ topDisc.pre }} <span style="color:{{ acc }};">{{ topDisc.who }}</span> &middot; {{ topDisc.date }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- rings -->
+            <div onClick="{{ flipNext }}" style="flex:none;height:44px;display:flex;align-items:center;justify-content:space-around;padding:0 14px;position:relative;z-index:5;cursor:pointer;" style-hover="filter:brightness(1.08);">
+              <sc-for list="{{ rings }}" as="rg" hint-placeholder-count="8">
+                <span style="width:24px;height:22px;border-radius:50%;background:radial-gradient(circle at 40% 28%,#fafbfd,#c2c4cd 50%,#83858f);box-shadow:0 2px 4px rgba(0,0,0,.6),inset 0 1px 1px rgba(255,255,255,.9),inset 0 -2px 3px rgba(0,0,0,.3);"></span>
+              </sc-for>
+            </div>
+
+            <!-- bottom sleeve -->
+            <div style="flex:1;min-height:0;border-radius:7px 7px 20px 20px;border:1.5px dashed {{ accA34 }};border-top:none;padding:0 14px;display:flex;align-items:center;gap:14px;background:linear-gradient(160deg,rgba(255,255,255,.012),rgba(255,255,255,.055));transform-origin:top center;animation:{{ flipAnim }};">
+              <div onClick="{{ botDisc.play }}" style="position:relative;width:150px;height:150px;flex:none;border-radius:50%;cursor:pointer;background:conic-gradient(from 150deg,#f7d8c9,#f7c9d8,#e4c9f7,#c9d8f7,#c9e8f7,#c9f7e4,#f7f0c9,#f7d8c9);box-shadow:0 16px 34px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.4);" style-hover="filter:brightness(1.05);">
+                <div style="position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 2px,rgba(255,255,255,.15) 2px 3px);"></div>
+                <div style="position:absolute;inset:7px;border-radius:50%;background:linear-gradient(125deg,rgba(255,255,255,.5),rgba(255,255,255,0) 42%);"></div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80px;height:80px;border-radius:9px;overflow:hidden;background:{{ botDisc.art }};box-shadow:0 4px 12px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.25);"></div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 42% 34%,#ffffff,{{ accLo }} 56%,{{ acc }});box-shadow:0 5px 14px rgba(0,0,0,.45),0 0 18px {{ accA55 }};display:flex;align-items:center;justify-content:center;"><div style="width:0;height:0;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #2a1f3a;margin-left:3px;"></div></div>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:18px;color:#f3ecff;line-height:1.15;overflow-wrap:anywhere;">{{ botDisc.song }}</div>
+                <div style="font-size:12px;color:rgba(233,228,240,.55);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ botDisc.artist }}</div>
+                <div style="display:flex;align-items:flex-start;gap:7px;margin-top:12px;">
+                  <span style="width:23px;height:23px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;background:{{ botDisc.whoBg }};">{{ botDisc.who0 }}</span>
+                  <span style="font-size:10px;line-height:15px;color:rgba(233,228,240,.7);min-width:0;">{{ botDisc.pre }} <span style="color:{{ acc }};">{{ botDisc.who }}</span> &middot; {{ botDisc.date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:none;display:flex;align-items:center;justify-content:center;gap:18px;padding:2px 0 0;z-index:6;">
+            <span onClick="{{ flipPrev }}" style="cursor:pointer;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:{{ acc }};background:rgba(255,255,255,.05);border:1px solid {{ accA40 }};" style-hover="background:rgba(255,255,255,.1);">&#9650;</span>
+            <span style="font-size:9px;letter-spacing:2px;color:rgba(233,228,240,.45);">FLIP THE RINGS</span>
+            <span onClick="{{ flipNext }}" style="cursor:pointer;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:{{ acc }};background:rgba(255,255,255,.05);border:1px solid {{ accA40 }};" style-hover="background:rgba(255,255,255,.1);">&#9660;</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= CTRL · WIN98 CONTROL PANEL ================= -->
+      <sc-if value="{{ isCtrl }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column;">
+          <div style="position:relative;flex:1;min-height:0;overflow:hidden;background:linear-gradient(180deg,#2e6fc0 0%,#4f93d6 26%,#86bfe9 50%,#bfe0c0 66%,#a9d27e 70%);">
+            <div style="position:absolute;top:48px;left:-14px;width:120px;height:34px;border-radius:50%;background:radial-gradient(ellipse at 50% 60%,rgba(255,255,255,.92),rgba(255,255,255,0) 70%);filter:blur(1px);animation:kybrCloud 9s ease-in-out infinite alternate;"></div>
+            <div style="position:absolute;top:84px;right:-10px;width:96px;height:26px;border-radius:50%;background:radial-gradient(ellipse at 50% 60%,rgba(255,255,255,.8),rgba(255,255,255,0) 70%);filter:blur(1px);animation:kybrCloud 12s ease-in-out infinite alternate;"></div>
+            <div style="position:absolute;top:130px;left:60px;width:70px;height:20px;border-radius:50%;background:radial-gradient(ellipse at 50% 60%,rgba(255,255,255,.7),rgba(255,255,255,0) 70%);filter:blur(1px);"></div>
+            <div style="position:absolute;left:-6%;right:-6%;bottom:-2px;height:42%;background:linear-gradient(180deg,#a7d06a 0%,#7cb342 22%,#5f9e30 55%,#4e8c28 100%);border-radius:54% 46% 0 0 / 60px 38px 0 0;box-shadow:inset 0 5px 0 rgba(255,255,255,.18);"></div>
+            <div style="position:absolute;left:-10%;right:30%;bottom:-2px;height:30%;background:linear-gradient(180deg,#9ac95e,#6aa636);border-radius:50% 50% 0 0 / 44px 30px 0 0;opacity:.85;"></div>
+
+            <!-- desktop icons -->
+            <div style="position:absolute;top:40px;left:12px;display:flex;flex-direction:column;gap:14px;z-index:2;">
+              <div onClick="{{ goCase }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;width:60px;padding:6px 0;cursor:pointer;">
+                <div style="position:relative;width:30px;height:30px;border-radius:50%;overflow:hidden;clip-path:circle(50%);background:radial-gradient(circle,#2a1f3a,#46326b 46%,#211633 76%);box-shadow:0 1px 3px rgba(0,0,0,.4);"><div style="position:absolute;inset:-14%;border-radius:50%;animation:kybrSpin 9s linear infinite;background:conic-gradient(from 0deg,#c9a6ff,#8fd9ff,#ffb3e6,#ffe6a8,#a8ffd1,#c9a6ff);mix-blend-mode:screen;opacity:.6;"></div></div>
+                <span style="font-size:7.5px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.7);text-align:center;line-height:1.1;">My Burns</span>
+              </div>
+              <div onClick="{{ goCase }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;width:60px;padding:6px 0;cursor:pointer;">
+                <div style="width:28px;height:24px;border-radius:3px 3px 4px 4px;background:linear-gradient(180deg,#ffe39a,#e8b84e);box-shadow:0 1px 3px rgba(0,0,0,.4);border-top:5px solid #ffcf6a;"></div>
+                <span style="font-size:7.5px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.7);text-align:center;line-height:1.1;">kept</span>
+              </div>
+            </div>
+
+            <!-- control panel window -->
+            <div style="position:absolute;top:40px;left:82px;right:10px;background:#c0c0c0;border:2px outset #dedede;box-shadow:2px 3px 8px rgba(0,0,0,.4);z-index:5;">
+              <div style="display:flex;align-items:center;gap:5px;padding:3px 4px;background:linear-gradient(90deg,#0a1f8c,#1466c8 70%,#3a8fdf);">
+                <div style="width:14px;height:14px;border-radius:2px;background:linear-gradient(135deg,{{ acc }},{{ accHi }});display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);"><span style="width:6px;height:6px;border-radius:50%;border:1.5px solid #fff;"></span></div>
+                <span style="flex:1;font-size:9px;font-weight:500;color:#fff;letter-spacing:.3px;">kybr control panel</span>
+                <span style="width:15px;height:13px;background:#c0c0c0;border:1px outset #dedede;display:flex;align-items:flex-end;justify-content:center;font-size:9px;line-height:.6;color:#000;">_</span>
+                <span style="width:15px;height:13px;background:#c0c0c0;border:1px outset #dedede;display:flex;align-items:center;justify-content:center;font-size:8px;color:#000;">&#9634;</span>
+                <span style="width:15px;height:13px;background:#c0c0c0;border:1px outset #dedede;display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;">&#10005;</span>
+              </div>
+              <div style="display:flex;gap:11px;padding:2px 7px;background:#c0c0c0;font-size:8.5px;color:#000;border-bottom:1px solid #9a9a9a;"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>V</u>iew</span><span><u>H</u>elp</span></div>
+              <div style="margin:5px;background:#fff;border:2px inset #dedede;padding:10px 6px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 4px;">
+                  <div onClick="{{ ap.skin.sel }}" onDoubleClick="{{ openDlg }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;padding:5px 2px;cursor:pointer;outline:{{ ap.skin.ol }};background:{{ ap.skin.bg }};">
+                    <div style="display:flex;align-items:center;justify-content:center;width:28px;height:26px;"><span style="width:11px;height:11px;border-radius:50%;background:#C084FF;box-shadow:9px 0 0 -2px #FF8A3D,16px 0 0 -3px #6FD3E8,-9px 3px 0 -2px #C6F24E,-3px -7px 0 -3px #FF4D3D;"></span></div>
+                    <span style="font-size:8px;color:{{ ap.skin.fg }};text-align:center;line-height:1.1;">Skin</span>
+                  </div>
+                  <div onClick="{{ ap.profile.sel }}" onDoubleClick="{{ goDeck }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;padding:5px 2px;cursor:pointer;outline:{{ ap.profile.ol }};background:{{ ap.profile.bg }};">
+                    <div style="position:relative;width:26px;height:26px;border-radius:50%;overflow:hidden;clip-path:circle(50%);background:radial-gradient(circle,#2a1f3a,#46326b 46%,#211633 76%);"><div style="position:absolute;inset:-14%;border-radius:50%;animation:kybrSpin 9s linear infinite;background:conic-gradient(from 0deg,#c9a6ff,#8fd9ff,#ffb3e6,#ffe6a8,#a8ffd1,#c9a6ff);mix-blend-mode:screen;opacity:.6;"></div></div>
+                    <span style="font-size:8px;color:{{ ap.profile.fg }};text-align:center;line-height:1.1;">Profile &amp; Account</span>
+                  </div>
+                  <div onClick="{{ ap.chnls.sel }}" onDoubleClick="{{ goChnl }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;padding:5px 2px;cursor:pointer;outline:{{ ap.chnls.ol }};background:{{ ap.chnls.bg }};">
+                    <div style="display:flex;align-items:center;justify-content:center;width:28px;height:26px;"><span style="width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e7c8ff,#9a5cf0);box-shadow:8px 2px 0 -1px #3c96d2,4px 8px 0 -2px #78c83c;border:1px solid #fff;"></span></div>
+                    <span style="font-size:8px;color:{{ ap.chnls.fg }};text-align:center;line-height:1.1;">Your CHNLs</span>
+                  </div>
+                  <div onClick="{{ ap.notif.sel }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;padding:5px 2px;cursor:pointer;outline:{{ ap.notif.ol }};background:{{ ap.notif.bg }};">
+                    <div style="position:relative;display:flex;align-items:center;justify-content:center;width:28px;height:26px;"><span style="width:14px;height:13px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#ffe08a,#d99a2a);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);border-bottom:2px solid #b97e1c;"></span><span style="position:absolute;bottom:2px;width:4px;height:4px;border-radius:50%;background:#b97e1c;"></span></div>
+                    <span style="font-size:8px;color:{{ ap.notif.fg }};text-align:center;line-height:1.1;">Notifications</span>
+                  </div>
+                  <div onClick="{{ ap.about.sel }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;padding:5px 2px;cursor:pointer;outline:{{ ap.about.ol }};background:{{ ap.about.bg }};">
+                    <div style="display:flex;align-items:center;justify-content:center;width:28px;height:26px;"><span style="width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#eef0f4,#9aa0ac);display:flex;align-items:center;justify-content:center;font-family:'Michroma',sans-serif;font-size:9px;color:#2a2433;">k</span></div>
+                    <span style="font-size:8px;color:{{ ap.about.fg }};text-align:center;line-height:1.1;">About kybr</span>
+                  </div>
+                  <div onClick="{{ ap.signout.sel }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:48px;padding:5px 2px;cursor:pointer;outline:{{ ap.signout.ol }};background:{{ ap.signout.bg }};">
+                    <div style="position:relative;display:flex;align-items:center;justify-content:center;width:28px;height:26px;"><span style="width:18px;height:18px;border-radius:50%;border:2px solid #c0392b;"></span><span style="position:absolute;width:2px;height:9px;background:#c0392b;top:3px;border-radius:1px;"></span></div>
+                    <span style="font-size:8px;color:#c0392b;text-align:center;line-height:1.1;">Sign Out</span>
+                  </div>
+                </div>
+                <div style="margin-top:8px;border-top:1px solid #d0d0d0;padding-top:5px;font-size:7.5px;color:#555;">6 applets &middot; double-click to open one.</div>
+              </div>
+            </div>
+
+            <!-- display properties dialog -->
+            <sc-if value="{{ ctrlDlg }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;bottom:10px;left:14px;right:24px;background:#c0c0c0;border:2px outset #dedede;box-shadow:3px 4px 10px rgba(0,0,0,.45);z-index:8;animation:kybrRise .2s ease both;">
+                <div style="display:flex;align-items:center;gap:5px;padding:3px 4px;background:linear-gradient(90deg,#0a1f8c,#1466c8 70%,#3a8fdf);">
+                  <span style="width:11px;height:11px;border-radius:2px;background:linear-gradient(135deg,{{ acc }},{{ accHi }});"></span>
+                  <span style="flex:1;font-size:9px;font-weight:500;color:#fff;">Display Properties &mdash; Skins</span>
+                  <span onClick="{{ dlgCancel }}" style="width:15px;height:13px;background:#c0c0c0;border:1px outset #dedede;display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;cursor:pointer;position:relative;" style-before="content:'';position:absolute;inset:-15px;">&#10005;</span>
+                </div>
+                <div style="padding:9px 9px 8px;">
+                  <div style="font-size:8px;color:#000;margin-bottom:7px;">Choose a skin for kybr. Preview:</div>
+                  <div style="background:#fff;border:2px inset #dedede;padding:6px 4px;">
+                    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:2px;">
+                      <sc-for list="{{ dlgSkins }}" as="d" hint-placeholder-count="5">
+                        <div onClick="{{ d.pick }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:56px;padding:4px 0;cursor:pointer;">
+                          <div style="width:32px;height:34px;border-radius:3px;background:linear-gradient(150deg,{{ d.lo }},{{ d.c }} 55%,{{ d.hi }});box-shadow:{{ d.sh }};"></div>
+                          <span style="display:flex;align-items:center;gap:3px;font-size:7px;color:#000;"><span style="width:8px;height:8px;border-radius:50%;border:1px solid #555;background:{{ d.radio }};"></span>{{ d.name }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;margin-top:8px;">
+                    <span style="font-size:7.5px;color:#000;white-space:nowrap;">Current: <b style="color:{{ accHi }};">{{ dlgCurrentName }}</b> &middot; "{{ dlgQuote }}"</span>
+                    <span style="margin-left:auto;display:flex;gap:5px;">
+                      <span onClick="{{ dlgOk }}" style="display:flex;align-items:center;font-size:8px;color:#000;padding:0 9px;min-height:26px;background:#c0c0c0;border:2px outset #dedede;cursor:pointer;position:relative;" style-active="border-style:inset;" style-before="content:'';position:absolute;left:0;right:0;top:-9px;bottom:-9px;">OK</span>
+                      <span onClick="{{ dlgCancel }}" style="display:flex;align-items:center;font-size:8px;color:#000;padding:0 7px;min-height:26px;background:#c0c0c0;border:2px outset #dedede;cursor:pointer;position:relative;" style-active="border-style:inset;" style-before="content:'';position:absolute;left:0;right:0;top:-9px;bottom:-9px;">Cancel</span>
+                      <span onClick="{{ dlgApply }}" style="display:flex;align-items:center;font-size:8px;color:{{ applyFg }};padding:0 8px;min-height:26px;background:#c0c0c0;border:2px outset #dedede;cursor:pointer;position:relative;" style-active="border-style:inset;" style-before="content:'';position:absolute;left:0;right:0;top:-9px;bottom:-9px;">Apply</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- taskbar -->
+          <div style="flex:none;display:flex;align-items:center;gap:5px;padding:3px 5px;background:#c0c0c0;border-top:2px outset #dedede;z-index:25;">
+            <div style="display:flex;align-items:center;gap:5px;padding:3px 9px 3px 5px;background:#c0c0c0;border:2px outset #dedede;">
+              <span style="display:grid;grid-template-columns:5px 5px;grid-template-rows:5px 5px;gap:1px;"><span style="background:#C084FF;"></span><span style="background:#FF8A3D;"></span><span style="background:#6FD3E8;"></span><span style="background:#C6F24E;"></span></span>
+              <span style="font-family:'Michroma',sans-serif;font-size:9px;color:#11131a;">kybr</span>
+            </div>
+            <div style="flex:1;min-width:0;display:flex;align-items:center;gap:5px;padding:4px 8px;background:#b4b0a8;border:2px inset #dedede;box-shadow:inset 1px 1px 2px rgba(0,0,0,.25);">
+              <span style="width:11px;height:11px;border-radius:2px;background:linear-gradient(135deg,{{ acc }},{{ accHi }});flex:none;"></span>
+              <span style="font-size:8.5px;color:#11131a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ taskLabel }}</span>
+            </div>
+            <div style="flex:none;display:flex;align-items:center;gap:5px;padding:3px 7px;background:#c0c0c0;border:2px inset #dedede;">
+              <span style="width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 40% 35%,{{ accLo }},{{ acc }});box-shadow:0 0 5px {{ acc }};"></span>
+              <span style="font-size:8.5px;color:#11131a;">9:41</span>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+
+      <!-- ================= TAPE · CASSETTE PLAYER + J-CARD (album page) ================= -->
+      <sc-if value="{{ isAlbum }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:36px 14px 0;">
+          <div style="flex:none;display:flex;align-items:center;justify-content:space-between;">
+            <span onClick="{{ closeAlbum }}" style="display:flex;align-items:center;min-height:44px;padding:0 10px 0 2px;cursor:pointer;font-size:9px;letter-spacing:2px;color:{{ accLo }};" style-hover="color:#fff;">&#9666; BACK</span>
+            <span style="font-family:'Michroma',sans-serif;font-size:8px;letter-spacing:3px;color:rgba(233,228,240,.5);">TAPE &middot; J-CARD</span>
+          </div>
+
+          <!-- transport keys sit on the top edge -->
+          <div style="flex:none;display:flex;gap:4px;padding:0 16px;margin-top:2px;">
+            <div onClick="{{ tapeRw }}" style="flex:1;height:44px;display:flex;align-items:flex-end;justify-content:center;cursor:pointer;"><span style="width:100%;height:30px;border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#3a3c46;background:linear-gradient(180deg,#f5f6f9,#c9ccd5);box-shadow:inset 0 1px 0 #fff,0 -1px 2px rgba(0,0,0,.3);">&#9664;&#9664;</span></div>
+            <div onClick="{{ tapePlay }}" style="flex:1.4;height:44px;display:flex;align-items:flex-end;justify-content:center;cursor:pointer;"><span style="width:100%;height:34px;border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:9px;letter-spacing:2px;color:#2a2433;background:linear-gradient(180deg,#fff,#d3d5dd);box-shadow:inset 0 1px 0 #fff,0 -1px 2px rgba(0,0,0,.3);"><span style="font-size:10px;letter-spacing:-1px;color:{{ accHi }};">{{ tapePlayLabel }}</span>PLAY</span></div>
+            <div onClick="{{ tapeFf }}" style="flex:1;height:44px;display:flex;align-items:flex-end;justify-content:center;cursor:pointer;"><span style="width:100%;height:30px;border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#3a3c46;background:linear-gradient(180deg,#f5f6f9,#c9ccd5);box-shadow:inset 0 1px 0 #fff,0 -1px 2px rgba(0,0,0,.3);">&#9654;&#9654;</span></div>
+            <div onClick="{{ tapeStop }}" style="flex:1;height:44px;display:flex;align-items:flex-end;justify-content:center;cursor:pointer;"><span style="width:100%;height:30px;border-radius:6px 6px 0 0;display:flex;align-items:center;justify-content:center;font-size:9px;color:#3a3c46;background:linear-gradient(180deg,#f5f6f9,#c9ccd5);box-shadow:inset 0 1px 0 #fff,0 -1px 2px rgba(0,0,0,.3);">&#9632;</span></div>
+          </div>
+
+          <!-- player body -->
+          <div style="flex:none;border-radius:6px 6px 18px 18px;padding:9px 11px 10px;background:linear-gradient(180deg,#bcc3d2 0%,#959db0 44%,#78809a 54%,#a9b0c1 100%);box-shadow:inset 0 2px 2px rgba(255,255,255,.7),inset 0 -3px 8px rgba(0,0,0,.35),0 10px 22px rgba(0,0,0,.5);">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:0 2px 7px;">
+              <span style="font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:1px;background:linear-gradient(180deg,#2b2c34,#5a5c68 48%,#1d1e25 52%,#454650);-webkit-background-clip:text;background-clip:text;color:transparent;">KYBR</span>
+              <span style="font-size:6.5px;letter-spacing:1.5px;color:#3d404c;">STEREO CASSETTE &middot; KY&middot;TP02</span>
+              <span style="display:flex;align-items:center;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:{{ tapeLed }};box-shadow:{{ tapeLedSh }};"></span><span style="font-family:'Michroma',sans-serif;font-size:8px;padding:2px 5px;border-radius:2px;background:#0e2418;color:#a8ffcf;box-shadow:inset 0 1px 3px rgba(0,0,0,.7);">{{ tapeCounter }}</span></span>
+            </div>
+            <!-- smoked window with the cassette inside -->
+            <div style="position:relative;border-radius:10px;padding:8px 10px;background:linear-gradient(160deg,rgba(40,34,52,.92),rgba(14,11,20,.96));box-shadow:inset 0 2px 8px rgba(0,0,0,.8),0 1px 0 rgba(255,255,255,.4);overflow:hidden;">
+              <div style="position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.14),transparent 34%);pointer-events:none;z-index:3;"></div>
+              <div style="position:relative;border-radius:6px;padding:6px 8px 8px;background:linear-gradient(180deg,#34303d,#211d29);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);">
+                <!-- label sticker -->
+                <div style="border-radius:3px;padding:5px 8px 6px;background:#efe8d8;border-top:4px solid {{ tape.tint }};">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;"><span style="font-size:12px;font-weight:500;color:#2a2433;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ tape.title }}</span><span style="font-family:'Michroma',sans-serif;font-size:8px;color:#8a7f69;flex:none;">{{ tape.sideLabel }}</span></div>
+                  <div style="font-size:8.5px;color:#5b5466;margin-top:1px;">{{ tape.artist }} &middot; {{ tape.year }}</div>
+                </div>
+                <!-- reels -->
+                <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-top:7px;">
+                  <span style="width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#efe8d8 0 22%,transparent 23%),repeating-conic-gradient(#efe8d8 0 14deg,#4a3a2c 14deg 60deg),#4a3a2c;box-shadow:0 0 0 5px #3a2a1e,0 0 0 6px rgba(0,0,0,.4);animation:kybrSpin 2.6s linear infinite;animation-play-state:{{ reelState }};"></span>
+                  <span style="width:70px;height:16px;margin:0 6px;border-radius:3px;background:linear-gradient(180deg,#120f18,#1f1a26);box-shadow:inset 0 1px 3px rgba(0,0,0,.8);position:relative;"><span style="position:absolute;left:4px;right:4px;top:6px;height:4px;background:#5a4030;border-radius:1px;"></span></span>
+                  <span style="width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#efe8d8 0 22%,transparent 23%),repeating-conic-gradient(#efe8d8 0 14deg,#4a3a2c 14deg 60deg),#4a3a2c;box-shadow:0 0 0 2px #3a2a1e,0 0 0 3px rgba(0,0,0,.4);animation:kybrSpin 2.6s linear infinite;animation-play-state:{{ reelState }};"></span>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding:0 2px;">
+              <span style="font-size:8.5px;color:#22242c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px;">{{ tapeNowLine }}</span>
+              <span style="font-size:6.5px;letter-spacing:1.5px;color:#3d404c;flex:none;">AUTO REVERSE</span>
+            </div>
+          </div>
+
+          <!-- heat readout (no counts, just heat) -->
+          <div style="flex:none;display:flex;gap:8px;margin-top:10px;">
+            <div style="flex:1;min-width:0;border-radius:8px;padding:7px 10px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);"><div style="font-size:10px;letter-spacing:1px;color:#FFB45E;min-height:12px;">{{ myHeatStars }}</div><div style="font-size:8px;color:rgba(233,228,240,.65);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ myHeatWord }}</div></div>
+            <div style="flex:1;min-width:0;border-radius:8px;padding:7px 10px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);"><div style="font-size:10px;letter-spacing:1px;color:#FFB45E;min-height:12px;">{{ crewAvgStars }}</div><div style="font-size:8px;color:rgba(233,228,240,.65);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ crewAvgWord }}</div></div>
+          </div>
+
+          <!-- the J-card: tracklist + reviews, scrolls like folded paper -->
+          <div style="flex:1;min-height:0;margin-top:10px;border-radius:6px 6px 0 0;overflow-y:auto;scrollbar-width:none;background:linear-gradient(180deg,#f3ecdd,#ebe2ce);box-shadow:0 -4px 16px rgba(0,0,0,.4),inset 0 1px 0 #fff;">
+            <div style="padding:7px 12px;background:#1c1726;border-left:4px solid {{ tape.tint }};font-family:'Michroma',sans-serif;font-size:6.5px;letter-spacing:2px;color:#efe8d8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ tape.spine }}</div>
+            <div style="padding:10px 14px 16px;color:#2a2433;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 14px;">
+                <div style="min-width:0;">
+                  <div style="font-family:'Michroma',sans-serif;font-size:7px;letter-spacing:2px;color:#7a6d58;margin-bottom:4px;">SIDE A</div>
+                  <sc-for list="{{ tape.sideA }}" as="tr" hint-placeholder-count="6">
+                    <div style="display:flex;gap:5px;align-items:baseline;padding:2px 0;"><span style="font-size:7px;color:#9a8a74;flex:none;">{{ tr.n }}</span><span style="font-size:9px;color:{{ tr.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ tr.t }}</span></div>
+                  </sc-for>
+                </div>
+                <div style="min-width:0;">
+                  <div style="font-family:'Michroma',sans-serif;font-size:7px;letter-spacing:2px;color:#7a6d58;margin-bottom:4px;">SIDE B</div>
+                  <sc-for list="{{ tape.sideB }}" as="tr" hint-placeholder-count="6">
+                    <div style="display:flex;gap:5px;align-items:baseline;padding:2px 0;"><span style="font-size:7px;color:#9a8a74;flex:none;">{{ tr.n }}</span><span style="font-size:9px;color:{{ tr.fg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ tr.t }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+
+              <!-- your take -->
+              <div style="display:flex;align-items:center;gap:8px;margin:14px 0 6px;padding-top:10px;border-top:1px dashed rgba(42,36,51,.25);"><span style="font-family:'Michroma',sans-serif;font-size:7px;letter-spacing:2px;color:#7a6d58;">YOUR TAKE</span><span style="flex:1;"></span><span style="font-size:7px;letter-spacing:1px;color:#9a8a74;">PUBLIC</span></div>
+              <sc-if value="{{ hasMine }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:12px;letter-spacing:1px;color:#e2701f;">{{ mine.stars }}</span><span style="font-size:8px;color:#8a7f69;">{{ mine.when }}</span></div>
+                <div style="font-family:'Caveat',cursive;font-weight:500;font-size:19px;line-height:21px;color:#23307a;margin-top:2px;">{{ mine.t }}</div>
+                <div style="display:flex;justify-content:flex-end;"><span onClick="{{ startReview }}" style="display:flex;align-items:center;min-height:44px;padding:0 4px 0 14px;cursor:pointer;font-size:8.5px;letter-spacing:1.5px;color:#6b4fb0;" style-hover="color:#2a2433;">&#9998; REWRITE</span></div>
+              </sc-if>
+              <sc-if value="{{ noMine }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ startReview }}" style="display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:6px;border:1.5px dashed rgba(42,36,51,.3);cursor:pointer;font-size:9px;letter-spacing:2px;color:#4b3f63;" style-hover="background:rgba(42,36,51,.05);">&#9998; WRITE ON THE J-CARD</div>
+              </sc-if>
+              <sc-if value="{{ revEdit }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;margin:-4px 0 0 -10px;">
+                  <sc-for list="{{ revCells }}" as="rc" hint-placeholder-count="5"><span onClick="{{ rc.pick }}" style="flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;" style-active="transform:scale(.92);"><span style="position:relative;display:inline-block;font-size:24px;line-height:1;color:rgba(150,110,60,.22);">&#9733;<span style="position:absolute;left:0;top:0;width:{{ rc.fill }};overflow:hidden;white-space:nowrap;color:#FFB45E;text-shadow:0 0 8px rgba(255,138,61,.55);">&#9733;</span></span></span></sc-for>
+                  <span style="margin-left:6px;font-size:10px;color:#c25a12;white-space:nowrap;">{{ revWord }}</span>
+                </div>
+                <textarea value="{{ revNote }}" onChange="{{ setRevNote }}" placeholder="what does it sound like to you?" rows="3" style="width:100%;margin-top:2px;padding:4px 2px;border:none;resize:none;outline:none;background:repeating-linear-gradient(180deg,transparent 0 20px,rgba(42,36,51,.18) 20px 21px);font-family:'Caveat',cursive;font-weight:500;font-size:19px;line-height:21px;color:#23307a;"></textarea>
+                <div style="display:flex;justify-content:space-between;font-size:8px;color:#8a7f69;margin-top:4px;"><span>public &middot; shows on your DECK too</span><span>{{ revLeft }}</span></div>
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                  <div onClick="{{ cancelReview }}" style="display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:7px;cursor:pointer;font-size:9px;letter-spacing:2px;flex:none;padding:0 14px;color:#4b3f63;border:1px solid rgba(42,36,51,.25);">CANCEL</div>
+                  <div onClick="{{ saveReview }}" style="display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:7px;cursor:pointer;font-size:9px;letter-spacing:2px;flex:1;opacity:{{ revSaveOp }};color:#4a1d05;background:linear-gradient(180deg,#ffcf9a,#FF8A3D);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 2px 4px rgba(0,0,0,.2);">&#9733; ETCH IT ON</div>
+                </div>
+              </sc-if>
+
+              <!-- crews -->
+              <sc-if value="{{ hasCrew }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;align-items:center;gap:8px;margin:14px 0 4px;padding-top:10px;border-top:1px dashed rgba(42,36,51,.25);"><span style="font-family:'Michroma',sans-serif;font-size:7px;letter-spacing:2px;color:#7a6d58;">FROM YOUR CREWS</span></div>
+                <sc-for list="{{ crewList }}" as="cr" hint-placeholder-count="2">
+                  <div style="display:flex;gap:9px;padding:7px 0;">
+                    <span style="width:22px;height:22px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;background:radial-gradient(circle at 35% 30%,{{ accLo }},{{ acc }} 55%,{{ accHi }});">{{ cr.who0 }}</span>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:9px;color:#2a2433;">{{ cr.who }} <span style="color:#8a7f69;">&middot; {{ cr.crew }}</span></span><span style="font-size:10px;letter-spacing:1px;color:#e2701f;">{{ cr.stars }}</span></div>
+                      <div style="font-family:'Caveat',cursive;font-weight:500;font-size:17px;line-height:19px;color:#23307a;margin-top:1px;">{{ cr.t }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </sc-if>
+
+              <!-- public -->
+              <sc-if value="{{ hasWorld }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;align-items:center;gap:8px;margin:10px 0 4px;padding-top:10px;border-top:1px dashed rgba(42,36,51,.25);"><span style="font-family:'Michroma',sans-serif;font-size:7px;letter-spacing:2px;color:#7a6d58;">OUT IN THE WORLD</span></div>
+                <sc-for list="{{ worldList }}" as="wr" hint-placeholder-count="2">
+                  <div style="padding:7px 0;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-size:9px;color:#2a2433;">{{ wr.who }} <span style="color:#8a7f69;">&middot; {{ wr.when }}</span></span><span style="font-size:10px;letter-spacing:1px;color:#e2701f;">{{ wr.stars }}</span></div>
+                    <div style="font-size:10px;line-height:15px;color:#3d3548;margin-top:3px;">{{ wr.t }}</div>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <div style="margin-top:12px;text-align:center;font-size:7.5px;letter-spacing:1px;color:#9a8a74;">no counts, no charts &mdash; just takes.</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= CHROME NAV TRAY (locked) ================= -->
+      <div style="flex:none;padding:10px 16px 16px;background:{{ navGround }};">
+        <div style="display:flex;gap:7px;padding:7px;border-radius:18px;background:linear-gradient(180deg,#2a2533,#171320);box-shadow:inset 0 2px 6px rgba(0,0,0,.66),inset 0 -1px 0 rgba(255,255,255,.05);">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+            <div onClick="{{ t.go }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:11px 0 10px;border-radius:12px;cursor:pointer;background:{{ t.bg }};border:1px solid {{ t.bd }};box-shadow:{{ t.sh }};" style-hover="filter:brightness(1.06);transform:translateY(-1px);" style-active="transform:translateY(0);">
+              <span style="width:9px;height:9px;border-radius:50%;background:{{ t.led }};box-shadow:{{ t.ledSh }};"></span>
+              <span style="font-size:8px;letter-spacing:1.5px;color:{{ t.fg }};text-shadow:{{ t.ts }};">{{ t.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- ================= PLYR · iPOD OVERLAY ================= -->
+      <sc-if value="{{ plyr }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closePlyr }}" style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(8,5,14,.64);backdrop-filter:blur(3px);">
+          <div onClick="{{ stop }}" style="margin:0 14px 16px;border-radius:34px;padding:18px 18px 22px;background:linear-gradient(155deg,#fbfbfc,#e8e9ed 38%,#cfd1d8 60%,#f4f5f8);box-shadow:0 -12px 50px rgba(0,0,0,.5),inset 0 2px 2px rgba(255,255,255,.9),inset 0 -2px 4px rgba(0,0,0,.16),0 0 0 1px rgba(255,255,255,.6);animation:kybrRise .32s ease both;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:0 4px;">
+              <span style="font-family:'Michroma',sans-serif;font-size:9px;letter-spacing:3px;color:#9a9ba6;">PLYR &middot; {{ plyrMode }}</span>
+              <span onClick="{{ closePlyr }}" style="cursor:pointer;display:flex;align-items:center;min-height:32px;font-size:9px;letter-spacing:1px;color:#70717f;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:0 14px;position:relative;" style-hover="background:rgba(0,0,0,.04);" style-before="content:'';position:absolute;inset:-6px;">&#9662; {{ tabUp }}</span>
+            </div>
+            <div style="border-radius:12px;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,#2c1c45,#160d22 80%);padding:16px 18px 18px;box-shadow:inset 0 2px 8px rgba(0,0,0,.7),inset 0 0 0 2px rgba(0,0,0,.28);">
+              <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:9px;color:#8df0d0;letter-spacing:1px;">&#9654; {{ onAirLabel }}</span><span style="font-size:9px;color:rgba(233,228,240,.5);">{{ np.crew }}</span></div>
+              <div style="display:flex;justify-content:center;margin-top:16px;">
+                <div style="position:relative;width:118px;height:118px;flex:none;">
+                  <div style="position:absolute;inset:-16px;border-radius:50%;background:radial-gradient(circle,{{ accA40 }},transparent 66%);filter:blur(4px);"></div>
+                  <div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;clip-path:circle(50%);isolation:isolate;background:radial-gradient(circle,#2a1f3a 0%,#46326b 46%,#211633 76%);box-shadow:0 14px 28px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.22);">
+                    <div style="position:absolute;inset:-10%;border-radius:50%;animation:kybrSpin 12s linear infinite;animation-play-state:{{ playState }};background:conic-gradient(from 0deg,#c9a6ff,#8fd9ff,#ffb3e6,#ffe6a8,#a8ffd1,#bfa6ff,#8fd9ff,#ffb3e6,#c9a6ff);mix-blend-mode:screen;opacity:.52;"></div>
+                    <div style="position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 2px,rgba(0,0,0,.12) 2px 3px);mix-blend-mode:overlay;"></div>
+                    <div style="position:absolute;top:-8%;left:-6%;width:60%;height:46%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.6),transparent 62%);filter:blur(3px);"></div>
+                  </div>
+                  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:32%;height:32%;border-radius:50%;background:radial-gradient(circle,#160f20 0 32%,#8a76b8 34% 46%,#3a2c55 47% 70%,#160f20 71%);"></div>
+                </div>
+              </div>
+              <div style="text-align:center;margin-top:15px;"><div style="font-size:16px;color:#fff;line-height:1.2;">{{ np.song }}</div><div style="font-size:11px;color:rgba(233,228,240,.6);margin-top:3px;">{{ np.artist }}</div></div>
+              <sc-if value="{{ npHasAlbum }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:center;margin-top:2px;"><span onClick="{{ openNpAlbum }}" style="cursor:pointer;display:flex;align-items:center;min-height:36px;padding:0 12px;font-size:9.5px;letter-spacing:.5px;color:{{ accLo }};position:relative;" style-hover="color:#fff;" style-before="content:'';position:absolute;left:0;right:0;top:-4px;bottom:-4px;">{{ npAlbumLabel }}</span></div></sc-if>
+              <div style="margin-top:13px;display:flex;align-items:center;gap:8px;justify-content:center;padding:8px 12px;border-radius:12px;background:{{ accA10 }};border:1px solid {{ accA22 }};">
+                <span style="width:18px;height:18px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;background:radial-gradient(circle at 35% 30%,{{ accLo }},{{ acc }} 55%,{{ accHi }});">{{ npWho0 }}</span>
+                <span style="font-size:10.5px;color:rgba(235,228,245,.85);">added by {{ np.who }} &middot; {{ npCtx }}</span>
+              </div>
+              <sc-if value="{{ npEtched }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;text-align:center;font-size:9.5px;color:#FFB45E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ npEtchLine }}</div></sc-if>
+              <div style="margin-top:15px;display:flex;align-items:center;gap:9px;"><span style="font-size:9px;color:rgba(233,228,240,.5);min-width:28px;">{{ elapsedStr }}</span><div style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.12);position:relative;overflow:hidden;"><div style="position:absolute;left:0;top:0;bottom:0;width:{{ progressPct }};background:linear-gradient(90deg,{{ accHi }},{{ acc }});box-shadow:0 0 8px {{ acc }};transition:width .9s linear;"></div></div><span style="font-size:9px;color:rgba(233,228,240,.5);">{{ syncLabel }}</span></div>
+            </div>
+            <div style="margin:22px auto 0;width:196px;height:196px;border-radius:50%;position:relative;background:radial-gradient(circle at 50% 34%,#fdfdfe,#e6e7ec 58%,#c9cbd3);box-shadow:inset 0 2px 4px rgba(255,255,255,.9),inset 0 -3px 9px rgba(0,0,0,.16),0 4px 10px rgba(0,0,0,.2);">
+              <span onClick="{{ closePlyr }}" style="cursor:pointer;position:absolute;top:0;left:50%;transform:translateX(-50%);padding:17px 18px 15px;font-family:'Michroma',sans-serif;font-size:9px;letter-spacing:2px;color:#8a8b97;" style-hover="color:#5a5b67;">MENU</span>
+              <span onClick="{{ pPrev }}" style="cursor:pointer;position:absolute;left:0;top:50%;transform:translateY(-50%);padding:14px 16px 14px 16px;font-size:15px;color:#8a8b97;" style-hover="color:#5a5b67;">&#9198;</span>
+              <span onClick="{{ pNext }}" style="cursor:pointer;position:absolute;right:0;top:50%;transform:translateY(-50%);padding:14px 16px 14px 16px;font-size:15px;color:#8a8b97;" style-hover="color:#5a5b67;">&#9199;</span>
+              <span onClick="{{ toggle }}" style="cursor:pointer;position:absolute;bottom:0;left:50%;transform:translateX(-50%);padding:15px 18px 17px;font-size:11px;letter-spacing:-1px;color:#8a8b97;white-space:nowrap;" style-hover="color:#5a5b67;">&#9654;&#10074;&#10074;</span>
+              <div onClick="{{ openEtch }}" title="etch this burn" style="cursor:pointer;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 50% 36%,#ffffff,#eceef2 60%,#d3d5dd);box-shadow:inset 0 1px 2px rgba(255,255,255,.9),inset 0 -2px 5px rgba(0,0,0,.14),0 1px 3px rgba(0,0,0,.16);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;" style-active="box-shadow:inset 0 2px 5px rgba(0,0,0,.2);"><span style="font-size:13px;color:#FF8A3D;line-height:1;">&#9733;</span><span style="font-family:'Michroma',sans-serif;font-size:7.5px;letter-spacing:2px;color:{{ accHi }};padding-left:2px;">ETCH</span></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+
+      <!-- ================= ETCH · JEWEL CASE (rate + note on a burn) ================= -->
+      <sc-if value="{{ etchOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ cancelEtch }}" style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(8,5,14,.7);backdrop-filter:blur(3px);">
+          <div onClick="{{ stop }}" style="position:relative;margin:0 14px 16px;border-radius:10px;padding:12px 14px 14px 28px;background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.05) 38%,rgba(255,255,255,.03) 60%,rgba(255,255,255,.12));border:1px solid rgba(255,255,255,.32);box-shadow:0 -12px 50px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.4);backdrop-filter:blur(10px);animation:kybrRise .32s ease both;">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:16px;border-radius:10px 0 0 10px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0 1px,rgba(255,255,255,.04) 1px 3px);border-right:1px solid rgba(255,255,255,.3);"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-family:'Michroma',sans-serif;font-size:14px;letter-spacing:3px;background:linear-gradient(180deg,#fff,#e3e4ec 26%,#9a9bae 50%,#74758a 53%,#cfd0db 76%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent;">ETCH</span>
+              <span style="font-size:7px;letter-spacing:2px;color:rgba(233,228,240,.55);">JEWEL CASE &middot; KY&middot;JC01</span>
+              <span onClick="{{ cancelEtch }}" style="width:44px;height:44px;margin:-10px -10px -10px 0;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(233,228,240,.7);font-size:13px;">&#10005;</span>
+            </div>
+
+            <!-- printable disc face: what you write shows up in marker -->
+            <div style="display:flex;justify-content:center;margin-top:6px;">
+              <div style="position:relative;width:196px;height:196px;border-radius:50%;background:radial-gradient(circle,#fbfaff 0,#f1eff6 58%,#dcd8e6 100%);box-shadow:0 10px 26px rgba(0,0,0,.5),inset 0 0 0 1px rgba(0,0,0,.08),inset 0 0 0 9px rgba(255,255,255,.5);">
+                <div style="position:absolute;top:22px;left:28px;right:28px;text-align:center;transform:rotate(-3deg);">
+                  <div style="font-family:'Caveat',cursive;font-weight:600;font-size:19px;line-height:1;color:#1d1b4f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ np.song }}</div>
+                  <div style="font-size:12px;letter-spacing:1px;color:#e2701f;margin-top:3px;min-height:14px;">{{ etchStars }}</div>
+                </div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:radial-gradient(circle,#15121b 0 30%,rgba(200,196,214,.9) 32% 58%,#cfcbdb 60% 100%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);"></div>
+                <div style="position:absolute;top:126px;left:30px;right:30px;text-align:center;transform:rotate(-4deg);font-family:'Caveat',cursive;font-weight:500;font-size:17px;line-height:16px;color:{{ etchNoteFg }};max-height:34px;overflow:hidden;">{{ etchNoteShown }}</div>
+              </div>
+            </div>
+
+            <sc-if value="{{ hasEtchSeed }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:10px;font-size:9.5px;color:rgba(233,228,240,.75);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ etchSeed.who }} etched <span style="color:#FFB45E;">{{ etchSeedStars }}</span> &middot; &ldquo;{{ etchSeed.t }}&rdquo;</div>
+            </sc-if>
+
+            <div style="margin-top:10px;border-radius:8px;padding:2px 10px 10px;background:rgba(10,7,16,.6);box-shadow:inset 0 1px 4px rgba(0,0,0,.6);">
+              <div style="display:flex;align-items:center;margin-left:-10px;">
+                <sc-for list="{{ etchCells }}" as="ec" hint-placeholder-count="5"><span onClick="{{ ec.pick }}" style="flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;" style-active="transform:scale(.92);"><span style="position:relative;display:inline-block;font-size:24px;line-height:1;color:rgba(255,180,94,.2);">&#9733;<span style="position:absolute;left:0;top:0;width:{{ ec.fill }};overflow:hidden;white-space:nowrap;color:#FFB45E;text-shadow:0 0 8px rgba(255,138,61,.55);">&#9733;</span></span></span></sc-for>
+                <span style="margin-left:6px;font-size:10px;color:#FFB45E;white-space:nowrap;">{{ etchWord }}</span>
+              </div>
+              <input value="{{ etchNote }}" onChange="{{ setEtchNote }}" placeholder="etch a short note&hellip;" style="width:100%;min-height:44px;padding:0 12px;border-radius:6px;border:1px solid {{ accA30 }};background:rgba(0,0,0,.35);color:#f3ecff;font-family:'DM Mono',monospace;font-size:11px;outline:none;">
+              <div style="display:flex;justify-content:space-between;font-size:8px;color:rgba(233,228,240,.5);margin-top:6px;"><span>tap a star twice for a half</span><span>{{ etchLeft }}</span></div>
+            </div>
+
+            <div onClick="{{ toggleKeep }}" style="margin-top:8px;display:flex;align-items:center;gap:9px;min-height:44px;padding:0 10px;border-radius:8px;cursor:pointer;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);" style-hover="background:rgba(255,255,255,.08);">
+              <span style="width:9px;height:9px;border-radius:50%;background:{{ etchKeepLed }};box-shadow:{{ etchKeepSh }};"></span>
+              <span style="font-size:8.5px;letter-spacing:1.5px;color:#e9e4f0;">{{ etchKeepLabel }}</span>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <div onClick="{{ cancelEtch }}" style="display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:7px;cursor:pointer;font-size:9px;letter-spacing:2px;flex:none;padding:0 16px;color:#e9e4f0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);">CANCEL</div>
+              <div onClick="{{ saveEtch }}" style="display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:7px;cursor:pointer;font-size:9px;letter-spacing:2px;flex:1;opacity:{{ etchSaveOp }};color:#4a1d05;background:linear-gradient(180deg,#ffcf9a,#FF8A3D);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 0 14px rgba(255,138,61,.35);">&#9733; ETCH IT</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ================= BURN · CD BURNER (paste → chnl → etch → burning → done) ================= -->
+      <sc-if value="{{ burnOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeBurn }}" style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(8,5,14,.64);backdrop-filter:blur(3px);">
+          <div onClick="{{ stop }}" style="margin:0 14px 16px;border-radius:14px;padding:12px 12px 12px;background:linear-gradient(180deg,#d9dbe1 0%,#bcbec7 42%,#a4a6b0 58%,#cfd1d8 100%);box-shadow:inset 0 2px 2px rgba(255,255,255,.85),inset 0 -3px 7px rgba(0,0,0,.32),0 -12px 50px rgba(0,0,0,.5);animation:kybrRise .32s ease both;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:0 3px 8px;">
+              <span style="font-family:'Michroma',sans-serif;font-size:13px;letter-spacing:1px;background:linear-gradient(180deg,#3a3a44,#6f7180 48%,#2b2c34 52%,#54555f);-webkit-background-clip:text;background-clip:text;color:transparent;">KYBR</span>
+              <span style="font-size:7px;letter-spacing:2px;color:#5d5f69;">CD-RW BURNER &middot; KY&middot;BRN01</span>
+              <span style="display:flex;align-items:center;gap:5px;font-size:7px;letter-spacing:1px;color:#5d5f69;"><span style="width:6px;height:6px;border-radius:50%;background:{{ burnStatusDot }};box-shadow:0 0 7px {{ burnStatusDot }};animation:kybrFlick 1.4s ease-in-out infinite;"></span>{{ burnStatus }}</span>
+            </div>
+
+            <!-- step LEDs -->
+            <div style="display:flex;justify-content:space-between;padding:0 6px 8px;">
+              <sc-for list="{{ burnLeds }}" as="bl" hint-placeholder-count="4">
+                <span style="display:flex;align-items:center;gap:5px;font-size:7px;letter-spacing:1.5px;color:{{ bl.fg }};"><span style="width:7px;height:7px;border-radius:50%;background:{{ bl.led }};box-shadow:{{ bl.sh }};"></span>{{ bl.label }}</span>
+              </sc-for>
+            </div>
+
+            <!-- tray -->
+            <div style="position:relative;height:84px;border-radius:8px;overflow:hidden;background:linear-gradient(180deg,#2c2d35,#16171d);box-shadow:inset 0 2px 6px rgba(0,0,0,.6);">
+              <div style="position:absolute;left:14px;right:14px;top:12px;height:90px;border-radius:6px;background:linear-gradient(180deg,#3a3b44,#23242b);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 -3px 10px rgba(0,0,0,.5);"></div>
+              <sc-if value="{{ bDiscShown }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:50%;top:22px;margin-left:-70px;width:140px;height:140px;animation:kybrRise .3s ease both;"><div style="position:absolute;inset:0;border-radius:50%;overflow:hidden;clip-path:circle(50%);background:radial-gradient(circle,#2a1f3a,#46326b 46%,#211633 76%);box-shadow:0 6px 18px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.25);">
+                  <div style="position:absolute;inset:-12%;border-radius:50%;animation:kybrSpin {{ discSpeed }} linear infinite;background:conic-gradient(from 0deg,#c9a6ff,#8fd9ff,#ffb3e6,#ffe6a8,#a8ffd1,#bfa6ff,#8fd9ff,#ffb3e6,#c9a6ff);mix-blend-mode:screen;opacity:.6;"></div>
+                  <div style="position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 2px,rgba(255,255,255,.15) 2px 3px);"></div>
+                  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:26%;height:26%;border-radius:50%;background:radial-gradient(circle,#160f20 0 38%,#8a76b8 40% 62%,#160f20 64%);"></div>
+                </div></div>
+              </sc-if>
+              <div style="position:absolute;left:0;right:0;top:4px;z-index:2;text-align:center;font-size:7px;letter-spacing:1.5px;color:rgba(255,255,255,.6);text-shadow:0 1px 2px #000;">{{ bTrayLabel }}</div>
+            </div>
+
+            <!-- LCD -->
+            <div style="margin-top:10px;border-radius:7px;padding:11px 13px 12px;position:relative;overflow:hidden;background:linear-gradient(180deg,#0a1526,#060c18);box-shadow:inset 0 2px 9px rgba(0,0,0,.85),inset 0 0 0 2px #2c2e38,0 0 0 3px #6b6d77;">
+              <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(95,216,255,.05) 0 1px,transparent 1px 3px);pointer-events:none;"></div>
+
+              <sc-if value="{{ bPaste }}" hint-placeholder-val="{{ true }}">
+                <div style="position:relative;">
+                  <div style="font-family:'Michroma',sans-serif;font-size:9px;letter-spacing:2px;color:#dffaff;">DROP A LINK IN THE TRAY</div>
+                  <div style="font-size:7px;letter-spacing:1.5px;color:rgba(159,239,255,.6);margin:9px 0 5px;">SONG LINK</div>
+                  <input value="{{ burnLink }}" onChange="{{ setBurnLink }}" placeholder="paste a song link&hellip;" style="width:100%;min-height:44px;padding:0 12px;border-radius:6px;border:1px solid rgba(95,216,255,.3);background:rgba(0,0,0,.35);color:#dffaff;font-family:'DM Mono',monospace;font-size:11px;outline:none;">
+                  <sc-if value="{{ bHasSong }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:10px;display:flex;align-items:baseline;gap:8px;">
+                      <span style="color:#7CFFC2;font-size:10px;">&#9656;</span>
+                      <div style="flex:1;min-width:0;"><div style="font-size:12px;color:#fff;">{{ bSong.song }}</div><div style="font-size:8.5px;color:rgba(159,239,255,.7);margin-top:2px;">{{ bSong.artist }} &middot; {{ bAlbumLine }}</div></div>
+                      <span style="font-family:'Michroma',sans-serif;font-size:9px;color:#7CFFC2;">{{ bSongDur }}</span>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ !bHasSong }}" hint-placeholder-val="{{ true }}">
+                    <div style="font-size:7px;letter-spacing:1.5px;color:rgba(159,239,255,.6);margin:11px 0 2px;">OR GRAB ONE YOU PLAYED</div>
+                    <sc-for list="{{ burnPickRows }}" as="bp" hint-placeholder-count="3">
+                      <div onClick="{{ bp.pick }}" style="display:flex;align-items:center;gap:8px;min-height:44px;border-bottom:1px solid rgba(95,216,255,.1);cursor:pointer;font-size:10.5px;color:#dffaff;" style-hover="color:#fff;background:rgba(95,216,255,.06);"><span style="width:6px;height:6px;border-radius:50%;background:#5fd8ff;box-shadow:0 0 6px #5fd8ff;"></span>{{ bp.label }}</div>
+                    </sc-for>
+                  </sc-if>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ bChnl }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;">
+                  <div style="font-family:'Michroma',sans-serif;font-size:9px;letter-spacing:2px;color:#dffaff;">WHO'S THIS FOR?</div>
+                  <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px;">
+                    <sc-for list="{{ burnCrews }}" as="bc" hint-placeholder-count="3">
+                      <div onClick="{{ bc.pick }}" style="display:flex;align-items:center;gap:10px;min-height:44px;padding:0 10px;border-radius:8px;cursor:pointer;background:{{ bc.bg }};border:1px solid {{ bc.bd }};">
+                        <span style="width:20px;height:20px;border-radius:50%;background:{{ bc.disc }};display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;">{{ bc.num }}</span>
+                        <span style="flex:1;font-size:11px;color:{{ bc.fg }};">{{ bc.name }}</span>
+                        <span style="font-size:8px;color:rgba(159,239,255,.55);">{{ bc.freq }}fm</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="font-size:9px;color:rgba(159,239,255,.7);margin-top:10px;">private &middot; stays in the crew, never public</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ bEtch }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-family:'Michroma',sans-serif;font-size:9px;letter-spacing:2px;color:#dffaff;">ETCH IT</span><span style="font-size:8px;color:rgba(159,239,255,.6);">optional</span></div>
+                  <div style="display:flex;align-items:center;margin:6px 0 0 -10px;">
+                    <sc-for list="{{ burnCells }}" as="bh" hint-placeholder-count="5"><span onClick="{{ bh.pick }}" style="flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;" style-active="transform:scale(.92);"><span style="position:relative;display:inline-block;font-size:24px;line-height:1;color:rgba(255,180,94,.2);">&#9733;<span style="position:absolute;left:0;top:0;width:{{ bh.fill }};overflow:hidden;white-space:nowrap;color:#FFB45E;text-shadow:0 0 8px rgba(255,138,61,.6);">&#9733;</span></span></span></sc-for>
+                    <span style="margin-left:6px;font-size:10px;color:#FFB45E;white-space:nowrap;">{{ burnWord }}</span>
+                  </div>
+                  <input value="{{ burnNote }}" onChange="{{ setBurnNote }}" placeholder="a note for {{ burnCrewName }}&hellip;" style="width:100%;min-height:44px;padding:0 12px;border-radius:6px;border:1px solid rgba(95,216,255,.3);background:rgba(0,0,0,.35);color:#dffaff;font-family:'DM Mono',monospace;font-size:11px;outline:none;margin-top:6px;">
+                  <div style="font-size:8.5px;color:rgba(159,239,255,.6);margin-top:7px;">tap a star twice for a half. skip it if the song says enough.</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ bBurning }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;padding:4px 0 2px;">
+                  <div style="font-family:'Michroma',sans-serif;font-size:11px;letter-spacing:2px;color:#FFB45E;text-shadow:0 0 8px rgba(255,138,61,.5);">{{ burnPctLabel }}</div>
+                  <div style="margin-top:12px;height:8px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden;"><div style="height:100%;width:{{ burnPct }};background:linear-gradient(90deg,#d75a2a,#FFB45E);box-shadow:0 0 10px #FF8A3D;"></div></div>
+                  <div style="font-size:9px;color:rgba(159,239,255,.7);margin-top:10px;">writing to {{ burnCrewName }}'s deck&hellip;</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ bDone }}" hint-placeholder-val="{{ false }}">
+                <div style="position:relative;padding:2px 0;">
+                  <div style="font-family:'Michroma',sans-serif;font-size:11px;letter-spacing:2px;color:#7CFFC2;text-shadow:0 0 8px rgba(124,255,194,.5);">&#10003; BURNED &amp; SENT</div>
+                  <div style="font-size:11px;color:#dffaff;margin-top:10px;">delivered to {{ burnCrewName }} &mdash; still warm.</div>
+                  <div style="font-size:9.5px;line-height:15px;color:rgba(159,239,255,.7);margin-top:5px;">your crew will find it sitting at the top of their stack.</div>
+                </div>
+              </sc-if>
+            </div>
+
+            <!-- keys -->
+            <div style="display:flex;gap:8px;margin-top:12px;">
+              <sc-if value="{{ hasSecondary }}" hint-placeholder-val="{{ true }}">
+                <div onClick="{{ burnSecondary }}" style="flex:none;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:7px;cursor:pointer;font-size:9px;letter-spacing:2px;color:#4b4d56;background:linear-gradient(180deg,#eceef2,#c2c4cd);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 2px rgba(0,0,0,.3);" style-active="box-shadow:inset 0 2px 3px rgba(0,0,0,.3);">{{ secondary }}</div>
+              </sc-if>
+              <div onClick="{{ burnPrimary }}" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:7px;cursor:pointer;opacity:{{ primaryOp }};font-size:9px;letter-spacing:2px;color:{{ primaryFg }};background:{{ primaryBg }};box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 2px rgba(0,0,0,.3);" style-active="box-shadow:inset 0 2px 3px rgba(0,0,0,.3);">{{ primary }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- toast -->
+      <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:40px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none;"><div style="white-space:nowrap;padding:8px 14px;border-radius:999px;font-size:9.5px;letter-spacing:.5px;color:#a8ffcf;background:linear-gradient(180deg,#0e2418,#06120c);box-shadow:0 6px 18px rgba(0,0,0,.5),inset 0 0 0 1px rgba(124,255,176,.35);text-shadow:0 0 6px rgba(124,255,176,.5);animation:kybrRise .25s ease both;">&#10003; {{ toast }}</div></div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <div style="font-size:9.5px;letter-spacing:.5px;color:rgba(233,228,240,.42);text-align:center;line-height:1.7;max-width:392px;">WIRE: D-pad &uarr;&darr; picks a burn &middot; A opens it &middot; B closes &middot; START burns &middot; SELECT / &larr;&rarr; cycles tabs.<br>PLYR: center button etches &middot; &ldquo;from [album] &#8599;&rdquo; opens the tape. DECK: tap any album or review.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;skin&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;uv&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;uv&quot;,&quot;sunset&quot;,&quot;ice&quot;,&quot;volt&quot;,&quot;heat&quot;,&quot;mint&quot;],&quot;section&quot;:&quot;Skin&quot;},&quot;showGuts&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;WIRE shell&quot;},&quot;scanlines&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;WIRE shell&quot;},&quot;gloss&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;WIRE shell&quot;}}">
+class Component extends DCLogic {
+  state = { tab:'wire', skin:null, crew:1, np:null, plyr:false, playing:true, elapsed:78, wireSel:0, casePage:0, flipTick:0, ctrlSel:'skin', ctrlDlg:false, pending:null,
+    // BURN
+    burnOpen:false, burnStep:'paste', burnLink:'', burnCrew:1, burnNote:'', burnHeat:0, burnProg:0, sent:[],
+    // ETCH
+    etchOpen:false, etchHeat:0, etchNote:'', etchKeep:true, etches:{}, kept:[], toast:'',
+    // TAPE (album page)
+    album:null, tapeOn:false, tapeTrack:0, revEdit:false, revHeat:0, revNote:'', myReviews:{} };
+
+  get skins(){
+    return {
+      uv:    { name:'UV',     c:'#C084FF', lo:'#e7c8ff', hi:'#7a3fd0', q:'what basement put you on' },
+      sunset:{ name:'Sunset', c:'#FF8A3D', lo:'#ffd6a8', hi:'#d75a2a', q:'golden hour on the roadtrip' },
+      ice:   { name:'Ice',    c:'#6FD3E8', lo:'#cdf6ff', hi:'#2a9fc4', q:'cold open, warm inside' },
+      volt:  { name:'Volt',   c:'#C6F24E', lo:'#eaffb0', hi:'#7fb02a', q:'loud in a good way' },
+      heat:  { name:'Heat',   c:'#FF4D3D', lo:'#ffcabf', hi:'#c42a1a', q:'still warm. too warm.' },
+      mint:  { name:'Mint',   c:'#2bd07a', lo:'#b8ffd9', hi:'#1a8f54', q:'fresh out the case' },
+    };
+  }
+
+  /* ---------- the one heat scale (ETCH + album reviews) ---------- */
+  heatWord(v){ return ({0.5:'frozen',1:'cold',1.5:'cool',2:'room temp',2.5:'lukewarm',3:'warm',3.5:'toasty',4:'hot',4.5:'burning',5:'scorching'})[v] || 'no heat yet'; }
+  heatStr(v){ if(!v) return ''; return '★'.repeat(Math.floor(v)) + (v%1?'½':''); }
+  heatCells(v,set){
+    return [1,2,3,4,5].map(n=>({ fill: v>=n?'100%':(v>=n-0.5?'50%':'0%'),
+      pick:()=>set(v===n ? n-0.5 : n) }));
+  }
+
+  /* ---------- catalog (prototype data; real build pulls from MusicBrainz) ---------- */
+  get albums(){
+    return {
+      mezzanine: { title:'Mezzanine', artist:'Massive Attack', year:1998, tint:'#5a6274', tracks:['Angel','Risingson','Teardrop','Inertia Creeps','Exchange','Dissolved Girl','Man Next Door','Black Milk','Mezzanine','Group Four','(Exchange)'] },
+      post:      { title:'Post', artist:'Björk', year:1995, tint:'#4FC8E8', tracks:['Army of Me','Hyper-Ballad','The Modern Things',"It's Oh So Quiet",'Enjoy',"You've Been Flirting Again",'Isobel','Possibly Maybe','I Miss You','Cover Me','Headphones'] },
+      dummy:     { title:'Dummy', artist:'Portishead', year:1994, tint:'#d63d8b', tracks:['Mysterons','Sour Times','Strangers','It Could Be Sweet','Wandering Star',"It's a Fire",'Numb','Roads','Pedestal','Biscuit','Glory Box'] },
+      vespertine:{ title:'Vespertine', artist:'Björk', year:2001, tint:'#c9d8f7', tracks:['Hidden Place','Cocoon',"It's Not Up to You",'Undo','Pagan Poetry','Frosti','Aurora','An Echo, a Stain','Sun in My Mouth','Heirloom','Harm of Will','Unison'] },
+      voodoo:    { title:'Voodoo', artist:"D'Angelo", year:2000, tint:'#e0b04a', tracks:['Playa Playa',"Devil's Pie",'Left & Right','The Line','Send It On','Chicken Grease',"One Mo'Gin",'The Root','Spanish Joint',"Feel Like Makin' Love","Greatdayndamornin' / Booty",'Untitled (How Does It Feel)','Africa'] },
+      discovery: { title:'Discovery', artist:'Daft Punk', year:2001, tint:'#8a76b8', tracks:['One More Time','Aerodynamic','Digital Love','Harder, Better, Faster, Stronger','Crescendolls','Nightvision','Superheroes','High Life','Something About Us','Voyager','Veridis Quo','Short Circuit','Face to Face','Too Long'] },
+      baduizm:   { title:'Baduizm', artist:'Erykah Badu', year:1997, tint:'#2bd07a', tracks:['Rimshot (Intro)','Otherside of the Game','Sometimes (Mix #9)','Appletree','No Love','4 Leaf Clover','Certainly','Drama','Afro (Freestyle Skit)','On & On','Sometimes...','Next Lifetime','Certainly (Flipped It)','Rimshot (Outro)'] },
+      rayoflight:{ title:'Ray of Light', artist:'Madonna', year:1998, tint:'#6FD3E8', tracks:['Drowned World / Substitute for Love','Swim','Ray of Light','Candy Perfume Girl','Skin','Nothing Really Matters','Sky Fits Heaven','Shanti / Ashtangi','Frozen','The Power of Good-Bye','To Have and Not to Hold','Little Star','Mer Girl'] },
+      play:      { title:'Play', artist:'Moby', year:1999, tint:'#FF8A3D', tracks:['Honey','Find My Baby','Porcelain','Why Does My Heart Feel So Bad?','South Side','Rushing','Bodyrock','Natural Blues','Machete','7','Run On','Down Slow','If Things Were Perfect','Everloving','Inside','Guitar Flute & String','The Sky Is Broken','My Weakness'] },
+      rumours:   { title:'Rumours', artist:'Fleetwood Mac', year:1977, tint:'#FFB45E', tracks:['Second Hand News','Dreams','Never Going Back Again',"Don't Stop",'Go Your Own Way','Songbird','The Chain','You Make Loving Fun',"I Don't Want to Know",'Oh Daddy','Gold Dust Woman'] },
+    };
+  }
+  get songAlbum(){ return { 'Teardrop':'mezzanine','Angel':'mezzanine','Hyperballad':'post','Glory Box':'dummy','Sour Times':'dummy','How Does It Feel':'voodoo','Pagan Poetry':'vespertine','Digital Love':'discovery','Dreams':'rumours' }; }
+  get titleKey(){ const o={}; Object.entries(this.albums).forEach(([k,a])=>{ o[a.title]=k; }); return o; }
+
+  /* ---------- reviews: yours, your crews', and the public ---------- */
+  get seedMine(){
+    return {
+      vespertine:{ h:4.5, t:'a record for headphones & snow. she whispers so you lean in.', when:'logged in march' },
+      dummy:     { h:5,   t:'glory box is the last song and somehow the first thing you remember.', when:'logged in january' },
+      mezzanine: { h:4,   t:"angel opens like a door you shouldn't walk through. i walked through.", when:'logged last fall' },
+      voodoo:    { h:4.5, t:'everything lands a little late on purpose. lean back.', when:'logged in may' },
+      discovery: { h:3.5, t:'side b loses me. digital love never will.', when:'logged in june' },
+    };
+  }
+  get crewRev(){
+    return {
+      mezzanine: [{who:'Mara',crew:'basement',h:5,t:'teardrop at 2am, every time.'},{who:'Dev',crew:'basement',h:4,t:'heavier than i remembered. good heavy.'}],
+      vespertine:[{who:'Sof',crew:'basement',h:4,t:'pagan poetry wrecked me on the bus.'},{who:'Dev',crew:'basement',h:4.5,t:'the music box parts. come on.'}],
+      dummy:     [{who:'Sof',crew:'basement',h:5,t:'the reason i own a turntable.'},{who:'Mara',crew:'basement',h:4.5,t:'sour times on loop all winter.'}],
+      voodoo:    [{who:'Dev',crew:'basement',h:5,t:'the drums are drunk and perfect.'},{who:'Mara',crew:'basement',h:4,t:'long, but untitled earns it.'}],
+      post:      [{who:'Dev',crew:'basement',h:4.5,t:'hyper-ballad is a whole movie.'},{who:'Liv',crew:'family',h:4,t:'army of me is my alarm now.'}],
+      discovery: [{who:'Al',crew:'roadtrip',h:4.5,t:'one more time, 300 miles in.'},{who:'Cy',crew:'roadtrip',h:4,t:'voyager at sunset. trust me.'}],
+      baduizm:   [{who:'Mara',crew:'basement',h:4.5,t:'on & on and on and on.'}],
+      rayoflight:[{who:'Mom',crew:'family',h:4.5,t:'frozen still gives me chills.'}],
+      play:      [{who:'Dad',crew:'family',h:4,t:"porcelain. that's the review."}],
+      rumours:   [{who:'Mom',crew:'family',h:5,t:'dreams in the kitchen, every sunday.'},{who:'Liv',crew:'family',h:4.5,t:"stole this from mom's car."}],
+    };
+  }
+  get worldRev(){
+    return {
+      mezzanine: [{who:'@tapehiss',h:4.5,t:'a basement record. you can hear the concrete.',when:'this week'},{who:'@nightbus',h:4,t:'group four is eight minutes and i wanted twenty.',when:'in august'}],
+      vespertine:[{who:'@snowglobe',h:5,t:'made entirely of tiny sounds. hold it carefully.',when:'this week'},{who:'@lowendlena',h:4,t:'quiet enough to hear the room you are in.',when:'in july'}],
+      dummy:     [{who:'@rainonvinyl',h:5,t:'sounds like an old film about a sad spy.',when:'yesterday'}],
+      voodoo:    [{who:'@slowjam_sam',h:4.5,t:'needs a whole sunday. give it one.',when:'this week'}],
+      post:      [{who:'@glacier.fm',h:4.5,t:'every song is a different room in the same house.',when:'in june'}],
+      discovery: [{who:'@carstereo',h:4,t:'built for a car with the windows down.',when:'tuesday'}],
+      baduizm:   [{who:'@incense_hour',h:4.5,t:'cool water in a hot summer.',when:'in may'}],
+      rayoflight:[{who:'@ravelight',h:4,t:'the comeback that sounds like a beginning.',when:'in april'}],
+      play:      [{who:'@sampledsoul',h:4,t:'old voices, new rooms.',when:'last week'}],
+      rumours:   [{who:'@goldust',h:5,t:'everyone is fighting and it still sounds like sunshine.',when:'sunday'}],
+    };
+  }
+  get etchSeeds(){
+    return { 'Teardrop':{who:'Dev',h:4,t:'basement anthem, no notes'}, 'Hyperballad':{who:'Mara',h:4.5,t:'the cliff part!!'}, 'Glory Box':{who:'Mara',h:5,t:'this is the one'}, 'Crystalised':{who:'Sof',h:3.5,t:'quiet in a loud way'}, 'Dreams':{who:'Dad',h:4.5,t:'your mother loves this one'} };
+  }
+  mineFor(k){ return this.state.myReviews[k] || this.seedMine[k] || null; }
+
+  /* ---------- crews / feed / library (sent burns + kept discs merge in) ---------- */
+  get crews(){
+    const base=[
+      { name:'family', freq:'92.1', members:[{i:'Mo',live:true},{i:'Da',live:true},{i:'Li',live:false},{i:'Sa',live:false}],
+        burns:[{song:'Dreams',artist:'Fleetwood Mac',who:'Mom',dur:254},{song:'Africa',artist:'Toto',who:'Dad',dur:295},{song:'Linger',artist:'The Cranberries',who:'Liv',dur:274}] },
+      { name:'basement', freq:'98.6', members:[{i:'M',live:true},{i:'D',live:true},{i:'S',live:false},{i:'J',live:false},{i:'R',live:true},{i:'K',live:false},{i:'T',live:false}],
+        burns:[{song:'Teardrop',artist:'Massive Attack',who:'Mara',dur:279},{song:'Hyperballad',artist:'Björk',who:'Dev',dur:321},{song:'Glory Box',artist:'Portishead',who:'Sof',dur:306},{song:'Crystalised',artist:'The xx',who:'Mara',dur:203}] },
+      { name:'roadtrip', freq:'104.3', members:[{i:'Al',live:true},{i:'Bo',live:false},{i:'Cy',live:true},{i:'Di',live:false},{i:'Ed',live:false},{i:'Fi',live:false}],
+        burns:[{song:'Mr. Brightside',artist:'The Killers',who:'Al',dur:222},{song:'Float On',artist:'Modest Mouse',who:'Cy',dur:208},{song:'1979',artist:'Smashing Pumpkins',who:'Bo',dur:266}] },
+    ];
+    this.state.sent.slice().reverse().forEach(b=>{ base[b.crewIdx].burns.unshift({ song:b.song, artist:b.artist, who:'you', dur:b.dur }); });
+    return base;
+  }
+  get wire(){
+    const mine=this.state.sent.map(b=>({ song:b.song, artist:b.artist, who:'you', dur:b.dur, crew:this.crewNames[b.crewIdx] }));
+    return mine.concat([
+      { song:'Teardrop', artist:'Massive Attack', who:'Mara', dur:279 },
+      { song:'This Week', artist:'basement · weekly mix', who:'basement', dur:2232, featured:true },
+      { song:'Hyperballad', artist:'Björk', who:'Dev', dur:321 },
+      { song:'Glory Box', artist:'Portishead', who:'Sof', dur:306 },
+      { song:'How Does It Feel', artist:"D'Angelo", who:'June', dur:329 },
+    ]).slice(0,5);
+  }
+  get crewNames(){ return ['family','basement','roadtrip']; }
+  get library(){
+    return this.state.kept.concat([
+      { song:'Teardrop', artist:'Massive Attack', who:'Mara', date:'saved tue', dur:279, art:'linear-gradient(135deg,#7a3fd0,#2a1f3a)', whoBg:'radial-gradient(circle at 35% 30%,#e7c8ff,#7a3fd0)' },
+      { song:'Glory Box', artist:'Portishead', who:'Sof', date:'saved sun', dur:306, art:'linear-gradient(135deg,#d63d8b,#3a1430)', whoBg:'radial-gradient(circle at 35% 30%,#ffb3e6,#d63d8b)' },
+      { song:'Hyperballad', artist:'Björk', who:'Dev', date:'saved fri', dur:321, art:'linear-gradient(135deg,#4FC8E8,#06283a)', whoBg:'radial-gradient(circle at 35% 30%,#bfeeff,#4FC8E8)' },
+      { song:'How Does It Feel', artist:"D'Angelo", who:'June', date:'saved thu', dur:329, art:'linear-gradient(135deg,#e0b04a,#3a2406)', whoBg:'radial-gradient(circle at 35% 30%,#ffe6a8,#e0b04a)' },
+      { song:'Let Go', artist:'Frou Frou', who:'Liv', date:'saved wed', dur:263, art:'linear-gradient(135deg,#2bd07a,#08231a)', whoBg:'radial-gradient(circle at 35% 30%,#b8ffd9,#2bd07a)' },
+      { song:'Crystalised', artist:'The xx', who:'Mara', date:'saved mon', dur:203, art:'linear-gradient(135deg,#8a76b8,#160f20)', whoBg:'radial-gradient(circle at 35% 30%,#d8c8ff,#8a76b8)' },
+    ]);
+  }
+  get top8(){
+    const keys=this.titleKey;
+    return [['Vespertine','Björk'],['Dummy','Portishead'],['Voodoo',"D'Angelo"],['Mezzanine','Massive Attack'],['Discovery','Daft Punk'],['Baduizm','Erykah Badu'],['Ray of Light','Madonna'],['Play','Moby']]
+      .map((a,i)=>({ n:String(i+1).padStart(2,'0'), album:a[0], artist:a[1], open:()=>this.openAlbum(keys[a[0]]) }));
+  }
+
+  /* ---------- BURN: songs you can drop in the tray ---------- */
+  get burnPicks(){
+    return [
+      { song:'Angel', artist:'Massive Attack', dur:379, link:'open.link/track/angel' },
+      { song:'Pagan Poetry', artist:'Björk', dur:314, link:'open.link/track/pagan-poetry' },
+      { song:'Sour Times', artist:'Portishead', dur:251, link:'open.link/track/sour-times' },
+      { song:'Digital Love', artist:'Daft Punk', dur:301, link:'open.link/track/digital-love' },
+    ];
+  }
+  resolve(link){
+    const l=(link||'').trim(); if(!l) return null;
+    const hit=this.burnPicks.find(p=>p.link===l); if(hit) return hit;
+    let h=0; for(const ch of l) h=(h*31+ch.charCodeAt(0))>>>0;
+    return this.burnPicks[h%this.burnPicks.length];
+  }
+
+  fmt(s){ s=Math.max(0,Math.floor(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  rgb(hex){ const n=parseInt(hex.slice(1),16); return [(n>>16)&255,(n>>8)&255,n&255].join(','); }
+
+  fromCrew(ci,k){ const c=this.crews[ci], b=c.burns[k]; return { song:b.song, artist:b.artist, who:b.who, dur:b.dur, crew:c.name, src:'chnl', ci, k, n:c.burns.length, live:true }; }
+  fromWire(k){ const w=this.wire[k]; return { song:w.song, artist:w.artist, who:w.who, dur:w.dur, crew:w.crew||'basement', src:'wire', k, n:this.wire.length, live:!w.featured }; }
+  fromCase(k){ const d=this.library[k]; return { song:d.song, artist:d.artist, who:d.who, dur:d.dur, crew:'your case', src:'case', k, n:this.library.length, live:false }; }
+  fromDeck(){ return { song:'Let Go', artist:'Frou Frou', who:'June', dur:263, crew:"june's deck", src:'deck', k:0, n:1, live:false }; }
+  step(np,d){ const k=(np.k+d+np.n)%np.n; return np.src==='chnl'?this.fromCrew(np.ci,k):np.src==='wire'?this.fromWire(k):np.src==='case'?this.fromCase(k):np; }
+  play(np){ this.setState({ np, elapsed:0, playing:true, plyr:true, etchOpen:false }); }
+  closeAll(){ this.setState({ plyr:false, burnOpen:false, etchOpen:false }); }
+  toast(msg){ this.setState({ toast:msg }); clearTimeout(this.toastT); this.toastT=setTimeout(()=>this.setState({ toast:'' }),2600); }
+
+  openAlbum(key,song){ if(!key) return; const norm=(x)=>(x||'').toLowerCase().replace(/[^a-z0-9]/g,''); const at=song?this.albums[key].tracks.findIndex(t=>norm(t).includes(norm(song))):-1;
+    this.setState({ album:key, plyr:false, etchOpen:false, burnOpen:false, revEdit:false, tapeOn:at>=0, tapeTrack:Math.max(0,at) }); }
+  openBurn(){ clearInterval(this.burnT); this.setState({ burnOpen:true, plyr:false, etchOpen:false, burnStep:'paste', burnLink:'', burnNote:'', burnHeat:0, burnProg:0, burnCrew:this.state.crew }); }
+  startBurn(){
+    clearInterval(this.burnT);
+    this.setState({ burnStep:'burning', burnProg:0 });
+    this.burnT=setInterval(()=>{
+      const st=this.state, p=st.burnProg+4;
+      if(p<100){ this.setState({ burnProg:p }); return; }
+      clearInterval(this.burnT);
+      const song=this.resolve(st.burnLink);
+      const sent=[{ song:song.song, artist:song.artist, dur:song.dur, crewIdx:st.burnCrew, note:st.burnNote.trim(), heat:st.burnHeat }].concat(st.sent);
+      this.setState({ burnProg:100, burnStep:'done', sent, wireSel:0 });
+    },60);
+  }
+  openEtch(){
+    const s=this.state, np=s.np||this.fromCrew(s.crew,0), prev=s.etches[np.song];
+    this.setState({ etchOpen:true, plyr:false, etchHeat:prev?prev.h:0, etchNote:prev?prev.t:'', etchKeep:true });
+  }
+  saveEtch(){
+    const s=this.state, np=s.np||this.fromCrew(s.crew,0);
+    const etches=Object.assign({}, s.etches, { [np.song]:{ h:s.etchHeat, t:s.etchNote.trim() } });
+    let kept=s.kept, keptNow=false;
+    if(s.etchKeep && !this.library.some(d=>d.song===np.song)){
+      const a=this.skins[s.skin||(this.props||{}).skin||'uv']||this.skins.uv;
+      kept=[{ song:np.song, artist:np.artist, who:np.who, date:'saved today', dur:np.dur, art:'linear-gradient(135deg,'+a.c+',#160f20)', whoBg:'radial-gradient(circle at 35% 30%,'+a.lo+','+a.c+')' }].concat(kept);
+      keptNow=true;
+    }
+    this.setState({ etches, kept, etchOpen:false, plyr:true, casePage:keptNow?0:s.casePage });
+    this.toast(keptNow?'etched · kept in your case':'etched');
+  }
+  saveReview(){
+    const s=this.state; if(!s.revHeat) return;
+    const myReviews=Object.assign({}, s.myReviews, { [s.album]:{ h:s.revHeat, t:s.revNote.trim(), when:'logged today' } });
+    this.setState({ myReviews, revEdit:false });
+    this.toast('etched on the j-card · public on your deck');
+  }
+
+  componentDidMount(){
+    this.timer=setInterval(()=>{
+      if(!this.state.playing) return;
+      this.setState(s=>{ const np=s.np||this.fromCrew(s.crew,0); return { elapsed:(s.elapsed+1)%np.dur }; });
+    },1000);
+    this.onKey=(e)=>{
+      const s=this.state;
+      if(e.key==='Escape'){ this.closeAll(); return; }
+      const tag=(e.target&&e.target.tagName)||'';
+      if(tag==='INPUT'||tag==='TEXTAREA') return;
+      if(s.tab!=='wire' || s.album || s.burnOpen || s.etchOpen || e.metaKey || e.ctrlKey) return;
+      const n=this.wire.length;
+      if(e.key==='ArrowUp'){ e.preventDefault(); this.setState({ wireSel:(s.wireSel-1+n)%n }); }
+      else if(e.key==='ArrowDown'){ e.preventDefault(); this.setState({ wireSel:(s.wireSel+1)%n }); }
+      else if(e.key==='Enter'){ this.play(this.fromWire(s.wireSel)); }
+      else if(e.key==='Backspace'){ this.closeAll(); }
+    };
+    window.addEventListener('keydown',this.onKey);
+  }
+  componentWillUnmount(){ clearInterval(this.timer); clearInterval(this.burnT); clearTimeout(this.toastT); window.removeEventListener('keydown',this.onKey); }
+
+  renderVals(){
+    const s=this.state, p=this.props||{};
+    const skinKey=s.skin||p.skin||'uv', sk=this.skins[skinKey]||this.skins.uv;
+    const R=this.rgb(sk.c), A=(a)=>'rgba('+R+','+a+')';
+    const c=this.crews[s.crew];
+    const np=s.np||this.fromCrew(s.crew,0);
+    const order=['wire','chnl','deck','case','ctrl'];
+    const go=(t)=>()=>this.setState({ tab:t, plyr:false, burnOpen:false, etchOpen:false, album:null });
+    const isAlbum=!!s.album;
+
+    const tabs=order.map(id=>{
+      const on=id===s.tab;
+      return { label:id.toUpperCase(), go:go(id),
+        bg: on?'linear-gradient(180deg,#f5f6f9,#d3d5dd 46%,#a8aab5 54%,#ced0d9)':'linear-gradient(180deg,#dcdee4,#b6b8c1 46%,#8e909c 54%,#b2b4be)',
+        bd: on?'rgba(255,255,255,.55)':'rgba(255,255,255,.4)',
+        sh: on?'inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -2px 3px rgba(0,0,0,.28),0 3px 5px rgba(0,0,0,.45)':'inset 0 1.5px 0 rgba(255,255,255,.75),inset 0 -2px 3px rgba(0,0,0,.25),0 2px 4px rgba(0,0,0,.4)',
+        led: on?'radial-gradient(circle at 40% 35%,'+sk.lo+','+sk.c+' 70%)':'radial-gradient(circle at 40% 35%,#9a9ca6,#5f616c)',
+        ledSh: on?'0 0 9px '+sk.c+',inset 0 0 2px rgba(255,255,255,.8)':'inset 0 1px 1px rgba(0,0,0,.45),inset 0 -1px 1px rgba(255,255,255,.3)',
+        fg: on?'#2a2433':'rgba(38,33,48,.64)', ts: on?'0 1px 0 rgba(255,255,255,.6)':'0 1px 0 rgba(255,255,255,.45)' };
+    });
+
+    const isWire=s.tab==='wire' && !isAlbum;
+    const shells={
+      wire:['linear-gradient(158deg,#d6cfe8,#bfb5da 44%,#a99dcb 80%,#bbb1d8)','0 44px 80px -20px rgba(0,0,0,.72),inset 0 2px 0 rgba(255,255,255,.75),inset 0 0 0 1px rgba(255,255,255,.45),inset 0 -6px 14px rgba(120,104,170,.45)'],
+      dark:['linear-gradient(155deg,#48424f 0%,#2a2530 32%,#16131b 100%)','0 44px 80px -20px rgba(0,0,0,.72),inset 0 2px 1px rgba(255,255,255,.16),inset 0 -3px 6px rgba(0,0,0,.5)'] };
+    const shell=isWire?shells.wire:shells.dark;
+    const screens={ wire:'linear-gradient(158deg,#e6e1f2,#d2cce8 44%,#bcb4dc 80%,#cbc4e6)', chnl:'linear-gradient(180deg,#1c1822 0%,#15111c 100%)', deck:'#150f1f', case:'radial-gradient(120% 56% at 50% -4%,#241c30 0%,#120f19 62%)', ctrl:'#5b9bd5' };
+    const statusFgs={ wire:'#3a2f52', chnl:'rgba(233,228,240,.6)', deck:'rgba(233,228,240,.55)', case:'rgba(233,228,240,.6)', ctrl:'#15315c' };
+
+    const wireRows=this.wire.map((b,i)=>{
+      const on=i===s.wireSel, mine=b.who==='you';
+      return { title:b.song, who:mine?('you burned this · '+b.crew):('from '+b.who), time:this.fmt(b.dur),
+        bg: on?(b.featured?'rgba(255,180,94,.16)':A(.18)):'rgba(255,255,255,.03)',
+        bd: on?(b.featured?'#FFB45E':sk.c):'transparent',
+        titleFg: b.featured?'#ffd36a':(on?'#fff':'#d7cbe8'),
+        select:()=>{ if(s.wireSel===i) this.play(this.fromWire(i)); else this.setState({ wireSel:i }); } };
+    });
+    const strip=order.map(id=>({ label:id.toUpperCase(), bg:id===s.tab?'linear-gradient(180deg,'+sk.lo+','+sk.c+')':'transparent', fg:id===s.tab?'#2a1f3a':'rgba(231,224,240,.5)' }));
+
+    const presets=this.crews.map((cc,i)=>{
+      const on=i===s.crew;
+      return { name:cc.name, freq:cc.freq, num:i+1, select:()=>this.setState({ crew:i, np:this.fromCrew(i,0), elapsed:0, playing:true }),
+        bg: on?'rgba(255,111,174,.16)':'rgba(255,255,255,.03)', bd: on?'rgba(255,111,174,.6)':'rgba(255,255,255,.07)',
+        disc: on?'radial-gradient(circle at 38% 30%,#ffb3d6,#d63d8b)':'radial-gradient(circle at 38% 30%,#5a5b64,#2c2d35)',
+        discGlow: on?'0 0 10px rgba(255,111,174,.7),inset 0 1px 1px rgba(255,255,255,.5)':'inset 0 1px 1px rgba(255,255,255,.15)',
+        fg: on?'#ffd0e6':'rgba(233,228,240,.55)' };
+    });
+    const avatarBg='radial-gradient(circle at 35% 30%,'+sk.lo+','+sk.c+' 55%,'+sk.hi+')';
+    const members=c.members.slice(0,6).map((m,k)=>({ i:m.i, ml:k?'-5px':'0', bd:m.live?'#7CFFC2':'#0c0d12', sh:m.live?'0 0 6px rgba(124,255,194,.5)':'none', op:m.live?1:.45, bg:avatarBg }));
+    const specH=[34,58,80,100,72,90,54,84,46,96,64,38], specD=[0,.12,.24,.06,.3,.18,.36,.09,.27,.15,.33,.21];
+    const spec=specH.map((h,k)=>({ h:h+'%', d:specD[k]+'s', grad:k%2?'linear-gradient(180deg,#caffe8,#2fd6a6)':'linear-gradient(180deg,#b6f7ff,#19b6e6)' }));
+    const vu=Array.from({length:14}).map((_,k)=>({ col:k>11?'#ff4d4d':(k>8?'#ffd23d':'#46e06a'), h:(40+(k%3)*22)+'%', d:(k*0.05).toFixed(2)+'s' }));
+    const nowIdx=(np.src==='chnl'&&np.ci===s.crew)?np.k:-1;
+    const burns=c.burns.slice(0,5).map((b,k,arr)=>({ num:String(k+1).padStart(2,'0'), song:b.song, sub:b.artist+' · '+b.who, isNow:k===nowIdx,
+      numFg:k===nowIdx?'#7CFFC2':'rgba(159,239,255,.45)', numSh:k===nowIdx?'0 0 6px rgba(124,255,194,.6)':'none',
+      bb:k<arr.length-1?'1px solid rgba(95,216,255,.1)':'none', open:()=>this.play(this.fromCrew(s.crew,k)) }));
+
+    const caseKeys=['uv','sunset','mint','ice'];
+    const caseSwatches=caseKeys.map(k=>{ const t=this.skins[k], on=k===skinKey; return { name:t.name, c:t.c, lo:t.lo, hi:t.hi, pick:()=>this.setState({ skin:k }),
+      ring: on?('0 0 0 2px #15121b,0 0 0 3.5px '+t.c+',0 0 9px '+t.c):'inset 0 1px 2px rgba(0,0,0,.4)' }; });
+    const lib=this.library;
+    const total=Math.ceil(lib.length/2), top=s.casePage*2, bot=top+1;
+    const disc=(i)=>{ const d=lib[i%lib.length]; return Object.assign({}, d, { who0:d.who[0].toUpperCase(), pre:d.who==='you'?'burned by':'saved from', play:()=>this.play(this.fromCase(i%lib.length)) }); };
+    const flip=(d)=>()=>this.setState(st=>({ casePage:(st.casePage+d+total)%total, flipTick:st.flipTick+1 }));
+
+    const apKeys=['skin','profile','chnls','notif','about','signout'], ap={};
+    apKeys.forEach(k=>{ const on=s.ctrlSel===k; ap[k]={ sel:()=>this.setState({ ctrlSel:k }), ol:on?'1px dotted #555':'none', bg:on?'rgba(10,31,140,.1)':'transparent', fg:on?'#0a1f8c':'#000' }; });
+    const pend=s.pending||skinKey;
+    const dlgSkins=['uv','sunset','ice','volt','heat'].map(k=>{ const t=this.skins[k], on=k===pend; return { name:t.name, c:t.c, lo:t.lo, hi:t.hi, pick:()=>this.setState({ pending:k }),
+      sh: on?'0 0 0 2px #0a1f8c,inset 0 1px 2px rgba(255,255,255,.6)':'inset 0 1px 2px rgba(255,255,255,.5)', radio: on?'radial-gradient(circle,#0a1f8c 0 45%,#fff 50%)':'#fff' }; });
+    const dirty=pend!==skinKey;
+
+    const ctx={ chnl:'live in '+np.crew, wire:'from WIRE', case:'saved in CASE', deck:'profile song' }[np.src];
+
+    /* ---- PLYR extras: album doorway + your etch ---- */
+    const npAlbumKey=this.songAlbum[np.song], npAlbum=npAlbumKey?this.albums[npAlbumKey]:null;
+    const myEtch=s.etches[np.song];
+
+    /* ---- DECK reviews ---- */
+    const featKey='vespertine', feat=this.mineFor(featKey);
+    const shelf=Object.keys(this.albums).filter(k=>k!==featKey && this.mineFor(k))
+      .sort((a,b)=>(s.myReviews[b]?1:0)-(s.myReviews[a]?1:0)).slice(0,4)
+      .map(k=>({ title:this.albums[k].title, stars:this.heatStr(this.mineFor(k).h), open:()=>this.openAlbum(k) }));
+
+    /* ---- BURN ---- */
+    const bSong=this.resolve(s.burnLink), bAlbumKey=bSong?this.songAlbum[bSong.song]:null;
+    const bSteps=['paste','chnl','etch','burn'], bIdx={paste:0,chnl:1,etch:2,burning:3,done:3}[s.burnStep];
+    const burnLeds=bSteps.map((l,i)=>({ label:l.toUpperCase(),
+      led: i<bIdx||s.burnStep==='done'?'radial-gradient(circle at 40% 35%,#c8ffe0,#7CFFB0)':(i===bIdx?'radial-gradient(circle at 40% 35%,#ffe0b8,#FFB45E)':'radial-gradient(circle at 40% 35%,#9a9ca6,#5f616c)'),
+      sh: i<bIdx||s.burnStep==='done'?'0 0 7px #7CFFB0':(i===bIdx?'0 0 8px #FF8A3D':'inset 0 1px 1px rgba(0,0,0,.45)'),
+      fg: i<=bIdx?'#3a3c46':'#8a8c96' }));
+    const burnCrews=this.crewNames.map((n,i)=>{ const on=i===s.burnCrew, cc=this.crews[i]; return { name:n, freq:cc.freq, num:i+1, people:cc.members.length+' people', pick:()=>this.setState({ burnCrew:i }),
+      bg: on?'rgba(255,111,174,.16)':'rgba(255,255,255,.03)', bd: on?'rgba(255,111,174,.6)':'rgba(95,216,255,.14)',
+      disc: on?'radial-gradient(circle at 38% 30%,#ffb3d6,#d63d8b)':'radial-gradient(circle at 38% 30%,#5a5b64,#2c2d35)', fg: on?'#ffd0e6':'rgba(223,250,255,.7)' }; });
+    const burnPickRows=this.burnPicks.slice(0,3).map(pk=>({ label:pk.song+' · '+pk.artist, pick:()=>this.setState({ burnLink:pk.link }) }));
+    const canNext = s.burnStep==='paste' ? !!bSong : true;
+    const primary = { paste:'NEXT ▸ CHNL', chnl:'NEXT ▸ ETCH', etch:'● BURN IT', burning:'BURNING…', done:'SEE IT ON WIRE' }[s.burnStep];
+    const secondary = { paste:'⏏ EJECT', chnl:'◂ BACK', etch:'◂ BACK', burning:'', done:'⏏ EJECT' }[s.burnStep];
+    const burnPrimary=()=>{
+      const st=this.state;
+      if(st.burnStep==='paste'){ if(this.resolve(st.burnLink)) this.setState({ burnStep:'chnl' }); }
+      else if(st.burnStep==='chnl') this.setState({ burnStep:'etch' });
+      else if(st.burnStep==='etch') this.startBurn();
+      else if(st.burnStep==='done') this.setState({ burnOpen:false, tab:'wire', album:null, wireSel:0 });
+    };
+    const burnSecondary=()=>{
+      const st=this.state;
+      if(st.burnStep==='chnl') this.setState({ burnStep:'paste' });
+      else if(st.burnStep==='etch') this.setState({ burnStep:'chnl' });
+      else if(st.burnStep!=='burning') this.setState({ burnOpen:false });
+    };
+
+    /* ---- TAPE (album page) ---- */
+    const al=isAlbum?this.albums[s.album]:null;
+    let tape={ title:'', artist:'', year:'', tint:'#888', sideA:[], sideB:[], spine:'' };
+    let mine=null, crewList=[], worldList=[], crewAvg=0;
+    if(al){
+      const half=Math.ceil(al.tracks.length/2);
+      const row=(t,i)=>({ n:String(i+1).padStart(2,'0'), t, on:s.tapeOn&&s.tapeTrack===i,
+        fg:(s.tapeOn&&s.tapeTrack===i)?'#b4321f':'#2a2433', pick:()=>this.setState({ tapeTrack:i, tapeOn:true }) });
+      tape={ title:al.title, artist:al.artist, year:al.year, tint:al.tint,
+        sideA:al.tracks.slice(0,half).map((t,i)=>row(t,i)), sideB:al.tracks.slice(half).map((t,i)=>row(t,i+half)),
+        spine:(al.artist+' — '+al.title+' — '+al.year).toUpperCase(), sideLabel:(s.tapeTrack<half?'SIDE A':'SIDE B'),
+        nowTrack:al.tracks[s.tapeTrack]||al.tracks[0] };
+      mine=this.mineFor(s.album);
+      crewList=(this.crewRev[s.album]||[]).map(r=>({ who:r.who, who0:r.who[0], crew:r.crew, stars:this.heatStr(r.h), t:r.t }));
+      worldList=(this.worldRev[s.album]||[]).map(r=>({ who:r.who, stars:this.heatStr(r.h), t:r.t, when:r.when }));
+      const hs=(this.crewRev[s.album]||[]).map(r=>r.h);
+      crewAvg=hs.length?Math.round(hs.reduce((a,b)=>a+b,0)/hs.length*2)/2:0;
+    }
+    const reelState=s.tapeOn?'running':'paused';
+    const tapeN=al?al.tracks.length:1;
+
+    return {
+      tabUp:isAlbum?'TAPE':s.tab.toUpperCase(), tabs,
+      isWire, isChnl:s.tab==='chnl'&&!isAlbum, isDeck:s.tab==='deck'&&!isAlbum, isCase:s.tab==='case'&&!isAlbum, isCtrl:s.tab==='ctrl'&&!isAlbum, isAlbum,
+      shellBg:shell[0], shellSh:shell[1], screenBg:isAlbum?'radial-gradient(120% 60% at 50% -6%,#2a2236 0%,#14101b 60%)':screens[s.tab], statusFg:isAlbum?'rgba(233,228,240,.6)':statusFgs[s.tab], navGround:(s.tab==='ctrl'&&!isAlbum)?'#c0c0c0':'transparent',
+      skinName:sk.name.toUpperCase(), acc:sk.c, accLo:sk.lo, accHi:sk.hi,
+      accA05:A(.05), accA10:A(.1), accA18:A(.18), accA22:A(.22), accA30:A(.3), accA34:A(.34), accA40:A(.4), accA45:A(.45), accA50:A(.5), accA55:A(.55), accA80:A(.8), accA85:A(.85),
+      toast:s.toast,
+      // WIRE
+      guts:p.showGuts??true, scanlines:p.scanlines??true, gloss:p.gloss??true, wireRows, strip,
+      wireUp:()=>this.setState(st=>({ wireSel:(st.wireSel-1+this.wire.length)%this.wire.length })),
+      wireDown:()=>this.setState(st=>({ wireSel:(st.wireSel+1)%this.wire.length })),
+      wireA:()=>this.play(this.fromWire(s.wireSel)),
+      wireB:()=>this.closeAll(),
+      wireStart:()=>this.openBurn(),
+      wireSelectTab:()=>this.setState({ tab:order[(order.indexOf(s.tab)+1)%order.length], plyr:false, burnOpen:false }),
+      // CHNL
+      crewName:c.name, crewNameUp:c.name.toUpperCase(), crewFreq:c.freq, discNum:s.crew+1, trackCount:c.burns.length, thisWeekLabel:c.name+"'s THIS WEEK ►",
+      onAirLabel:np.live?'ON AIR':'NOW PLAYING', np, npWho0:np.who[0], npCtx:ctx, syncLabel:np.live?'in sync':this.fmt(np.dur),
+      spec, vu, vuOp:s.playing?1:.22, members, hasMore:c.members.length>6, moreN:c.members.length-6, burns, presets,
+      playState:s.playing?'running':'paused',
+      nextCrew:()=>{ const i=(s.crew+1)%3; this.setState({ crew:i, np:this.fromCrew(i,0), elapsed:0, playing:true }); },
+      playOn:()=>this.setState({ playing:true }), pauseOn:()=>this.setState({ playing:false }),
+      playThisWeek:()=>this.play(this.fromWire(this.wire.findIndex(w=>w.featured)<0?0:this.wire.findIndex(w=>w.featured))),
+      // PLYR
+      plyr:s.plyr, plyrMode:np.live?'LIVE':'KEPT', elapsedStr:this.fmt(s.elapsed), progressPct:Math.min(100,(s.elapsed/np.dur)*100).toFixed(2)+'%',
+      playGlyph:s.playing?'❚❚':'▶',
+      npHasAlbum:!!npAlbum, npAlbumLabel:npAlbum?('from '+npAlbum.title+' ↗'):'', openNpAlbum:()=>this.openAlbum(npAlbumKey,np.song),
+      npEtched:!!myEtch, npEtchLine:myEtch?('you etched '+this.heatStr(myEtch.h)+(myEtch.t?(' · “'+myEtch.t+'”'):'')):'',
+      openEtch:()=>this.openEtch(),
+      closePlyr:()=>this.setState({ plyr:false }),
+      toggle:()=>this.setState(st=>({ playing:!st.playing })),
+      pNext:()=>this.setState(st=>({ np:this.step(st.np||this.fromCrew(st.crew,0),1), elapsed:0, playing:true })),
+      pPrev:()=>this.setState(st=>({ np:this.step(st.np||this.fromCrew(st.crew,0),-1), elapsed:0, playing:true })),
+      stop:(e)=>e.stopPropagation(),
+      // ETCH (jewel case)
+      etchOpen:s.etchOpen, etchCells:this.heatCells(s.etchHeat,(v)=>this.setState({ etchHeat:v })), etchWord:this.heatWord(s.etchHeat), etchStars:this.heatStr(s.etchHeat),
+      etchNote:s.etchNote, etchNoteShown:s.etchNote.trim()||'write something…', etchNoteFg:s.etchNote.trim()?'#1d1b4f':'rgba(29,27,79,.3)',
+      setEtchNote:(e)=>this.setState({ etchNote:e.target.value.slice(0,80) }), etchLeft:(80-s.etchNote.length)+' left',
+      etchKeepLed:s.etchKeep?'radial-gradient(circle at 40% 35%,#c8ffe0,#7CFFB0)':'radial-gradient(circle at 40% 35%,#9a9ca6,#5f616c)', etchKeepSh:s.etchKeep?'0 0 8px #7CFFB0':'inset 0 1px 1px rgba(0,0,0,.45)',
+      etchKeepLabel:s.etchKeep?'KEEP IT IN YOUR CASE · ON':'KEEP IT IN YOUR CASE · OFF',
+      toggleKeep:()=>this.setState(st=>({ etchKeep:!st.etchKeep })),
+      etchSeed:this.etchSeeds[np.song]||null, hasEtchSeed:!!this.etchSeeds[np.song], etchSeedStars:this.etchSeeds[np.song]?this.heatStr(this.etchSeeds[np.song].h):'',
+      saveEtch:()=>this.saveEtch(), cancelEtch:()=>this.setState({ etchOpen:false, plyr:true }), etchCanSave:s.etchHeat>0, etchSaveOp:s.etchHeat>0?1:.45,
+      // DECK
+      deckEq:['.9s','1.3s','.7s','1.5s','1s','1.2s'].map(d=>({ dur:d })), deckPlayState:(np.src==='deck'&&s.playing)?'running':'paused', top8:this.top8,
+      playDeck:()=>this.play(this.fromDeck()),
+      feat:{ title:'Vespertine', sub:'Björk · 2001', stars:this.heatStr(feat.h), t:feat.t, open:()=>this.openAlbum(featKey) }, shelf,
+      // CASE
+      caseSwatches, pageLabel:String(top+1).padStart(2,'0'), rings:Array.from({length:8}).map((_,i)=>({i})),
+      flipAnim:(s.flipTick%2?'kybrFlipB':'kybrFlipA')+' .56s ease', topDisc:disc(top), botDisc:disc(bot), flipNext:flip(1), flipPrev:flip(-1),
+      // CTRL
+      ap, ctrlDlg:s.ctrlDlg, dlgSkins, dlgCurrentName:this.skins[pend].name, dlgQuote:this.skins[pend].q, applyFg:dirty?'#000':'#7a7a7a',
+      taskLabel:s.ctrlDlg?'Display Properties':'kybr control panel',
+      openDlg:()=>this.setState({ ctrlDlg:true, ctrlSel:'skin', pending:skinKey }),
+      dlgCancel:()=>this.setState({ ctrlDlg:false, pending:null }),
+      dlgOk:()=>this.setState({ skin:pend, ctrlDlg:false, pending:null }),
+      dlgApply:()=>{ if(dirty) this.setState({ skin:pend }); },
+      goCase:go('case'), goDeck:go('deck'), goChnl:go('chnl'),
+      // BURN (cd burner)
+      burnOpen:s.burnOpen, closeBurn:()=>{ if(this.state.burnStep!=='burning') this.setState({ burnOpen:false }); },
+      bPaste:s.burnStep==='paste', bChnl:s.burnStep==='chnl', bEtch:s.burnStep==='etch', bBurning:s.burnStep==='burning', bDone:s.burnStep==='done',
+      burnLeds, burnLink:s.burnLink, setBurnLink:(e)=>this.setState({ burnLink:e.target.value }), burnPickRows,
+      bHasSong:!!bSong, bSong:bSong||{ song:'', artist:'' }, bSongDur:bSong?this.fmt(bSong.dur):'', bAlbumLine:bAlbumKey?('from '+this.albums[bAlbumKey].title+' · '+this.albums[bAlbumKey].year):'single',
+      bDiscShown:!!bSong, bTrayLabel:bSong?(bSong.song+' · '+bSong.artist):'NO DISC IN TRAY',
+      burnCrews, burnCrewName:this.crewNames[s.burnCrew],
+      burnCells:this.heatCells(s.burnHeat,(v)=>this.setState({ burnHeat:v })), burnWord:this.heatWord(s.burnHeat),
+      burnNote:s.burnNote, setBurnNote:(e)=>this.setState({ burnNote:e.target.value.slice(0,80) }),
+      burnPct:s.burnProg+'%', burnPctLabel:'BURNING… '+s.burnProg+'%', discSpeed:s.burnStep==='burning'?'.9s':'9s',
+      burnStatus:s.burnStep==='burning'?'BUSY':(s.burnStep==='done'?'DONE':'READY'),
+      burnStatusDot:s.burnStep==='done'?'#7CFFB0':'#FFB45E',
+      primary, secondary, hasSecondary:!!secondary, primaryOp:canNext?1:.45, burnPrimary, burnSecondary,
+      primaryBg:s.burnStep==='etch'?'linear-gradient(180deg,#ffcf9a,#FF8A3D)':'linear-gradient(180deg,#eceef2,#c2c4cd)', primaryFg:s.burnStep==='etch'?'#4a1d05':'#2a2433',
+      // TAPE (cassette player + j-card)
+      tape, reelState, closeAlbum:()=>this.setState({ album:null, tapeOn:false }),
+      tapePlay:()=>this.setState(st=>({ tapeOn:!st.tapeOn })), tapePlayLabel:s.tapeOn?'❚❚':'▶',
+      tapeFf:()=>this.setState(st=>({ tapeTrack:(st.tapeTrack+1)%tapeN, tapeOn:true })),
+      tapeRw:()=>this.setState(st=>({ tapeTrack:(st.tapeTrack-1+tapeN)%tapeN, tapeOn:true })),
+      tapeStop:()=>this.setState({ tapeOn:false, tapeTrack:0 }),
+      tapeCounter:String(s.tapeTrack+1).padStart(3,'0'),
+      tapeLed:s.tapeOn?'radial-gradient(circle at 40% 35%,#c8ffe0,#7CFFB0)':'radial-gradient(circle at 40% 35%,#ffb3a8,#c42a1a)', tapeLedSh:s.tapeOn?'0 0 7px #7CFFB0':'0 0 4px rgba(196,42,26,.6)',
+      tapeNowLine:al?((s.tapeOn?'\u25b6 ':'\u25a0 ')+tape.sideLabel.toLowerCase()+' \u00b7 '+String(s.tapeTrack+1).padStart(2,'0')+' '+tape.nowTrack):'',
+      hasMine:!!mine && !s.revEdit, noMine:!mine && !s.revEdit, revEdit:s.revEdit,
+      mine:mine?{ stars:this.heatStr(mine.h), word:this.heatWord(mine.h), t:mine.t||'(no words, just heat)', when:mine.when }:{},
+      crewList, worldList, hasCrew:crewList.length>0, hasWorld:worldList.length>0,
+      crewAvgStars:this.heatStr(crewAvg), crewAvgWord:crewAvg?('your crews run it '+this.heatWord(crewAvg)):'no crew heat yet',
+      myHeatStars:mine?this.heatStr(mine.h):'', myHeatWord:mine?('you run it '+this.heatWord(mine.h)):'you haven’t logged it',
+      startReview:()=>{ const m=this.mineFor(this.state.album); this.setState({ revEdit:true, revHeat:m?m.h:0, revNote:m?m.t:'' }); },
+      cancelReview:()=>this.setState({ revEdit:false }),
+      revCells:this.heatCells(s.revHeat,(v)=>this.setState({ revHeat:v })), revWord:this.heatWord(s.revHeat),
+      revNote:s.revNote, setRevNote:(e)=>this.setState({ revNote:e.target.value.slice(0,280) }), revLeft:(280-s.revNote.length)+' left',
+      saveReview:()=>this.saveReview(), revSaveOp:s.revHeat>0?1:.45,
+    };
+  }
+}
+</script>
+</body>
+</html>

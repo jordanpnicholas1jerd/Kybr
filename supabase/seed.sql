@@ -1,0 +1,1 @@
+-- No seed data: the app has a demo mode with the prototype's fake data instead.
