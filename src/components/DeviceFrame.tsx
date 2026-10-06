@@ -12,6 +12,8 @@ interface Props {
   statusFg?: string;
   /** what the status bar names: the skin, or a screen label like TAPE */
   statusLabel?: string;
+  /** the drawn phone's body; WIRE's is the translucent Game Boy shell */
+  shell?: { bg: string; shadow: string };
   children: ReactNode;
 }
 
@@ -20,7 +22,7 @@ interface Props {
  * from the prototype; on a phone it disappears and the screen fills the
  * viewport (see styles.css). Children get `--safe-top` / `--safe-bottom`.
  */
-export function DeviceFrame({ skin, screenBg, statusFg = 'rgba(233,228,240,.6)', statusLabel, children }: Props) {
+export function DeviceFrame({ skin, screenBg, statusFg = 'rgba(233,228,240,.6)', statusLabel, shell, children }: Props) {
   const phone = useRef<HTMLDivElement>(null);
 
   // Shrink the drawn phone to fit short desktop windows.
@@ -39,7 +41,7 @@ export function DeviceFrame({ skin, screenBg, statusFg = 'rgba(233,228,240,.6)',
 
   return (
     <div className="kybr-stage">
-      <div ref={phone} className="kybr-phone">
+      <div ref={phone} className="kybr-phone" style={shell ? { background: shell.bg, boxShadow: shell.shadow } : undefined}>
         <div className="kybr-screen" style={{ background: screenBg }}>
           <div className="kybr-status" style={status(statusFg)} aria-hidden="true">
             <span>9:41</span>

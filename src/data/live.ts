@@ -1,8 +1,9 @@
 import { createClient, type PostgrestError, type SupabaseClient } from '@supabase/supabase-js';
-import { DEFAULT_SKIN, isSkinKey, type SkinKey } from '../theme/skins';
+import { DEFAULT_SKIN, isSkinKey } from '../theme/skins';
 import {
   DubError, HandleTakenError, normalizeDub,
-  type Crew, type Dub, type DubFailure, type KybrApi, type Session,
+  type Burn, type Crew, type Dub, type DubFailure, type Etch, type KybrApi, type Person,
+  type Service, type Session, type Settings, type Track,
 } from './types';
 
 // Live mode: Supabase. Privacy is enforced by row level security in
@@ -17,6 +18,22 @@ function fail(error: PostgrestError | Error): never {
   if (hint && DUB_HINTS[hint]) throw new DubError(DUB_HINTS[hint]);
   throw error;
 }
+
+const TRACK = 'id, title, artist, duration_ms, art_url, links';
+const BURN = `id, crew_id, note, heat, created_at, crew:crews(name), from:profiles!burns_from_user_fkey(id, display_name), track:tracks(${TRACK})`;
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type Row = any;
+
+export const toTrack = (r: Row): Track => ({
+  id: r.id, title: r.title, artist: r.artist, durationMs: r.duration_ms ?? null, artUrl: r.art_url ?? null, links: r.links ?? {},
+});
+const toPerson = (r: Row): Person => ({ id: r.id, displayName: r.display_name });
+const toBurn = (r: Row): Burn => ({
+  id: r.id, crewId: r.crew_id, crewName: r.crew?.name ?? '', track: toTrack(r.track), from: toPerson(r.from),
+  note: r.note, heat: r.heat === null ? null : Number(r.heat), createdAt: r.created_at,
+});
+const SERVICES: Service[] = ['apple', 'youtube', 'spotify', 'link'];
 
 const toCrew = (r: { id: string; name: string; freq: string }): Crew => ({ id: r.id, name: r.name, freq: r.freq });
 const toDub = (r: { code: string; crew_id: string; expires_at: string }): Dub =>
@@ -74,9 +91,20 @@ export function createLiveApi(url: string, anonKey: string): KybrApi {
       await sb.from('settings').insert({ user_id: id });
       return { id: data.id, handle: data.handle, displayName: data.display_name };
     },
-    async skin(): Promise<SkinKey> {
-      const { data } = await sb.from('settings').select('skin').maybeSingle();
-      return isSkinKey(data?.skin) ? data.skin : DEFAULT_SKIN;
+    async settings(): Promise<Settings> {
+      const { data } = await sb.from('settings').select('skin, preferred_service').maybeSingle();
+      return {
+        skin: isSkinKey(data?.skin) ? data.skin : DEFAULT_SKIN,
+        preferredService: SERVICES.includes(data?.preferred_service) ? data!.preferred_service : 'link',
+      };
+    },
+    async saveSettings(patch) {
+      const id = await uid();
+      const row: Row = { user_id: id };
+      if (patch.skin) row.skin = patch.skin;
+      if (patch.preferredService) row.preferred_service = patch.preferredService;
+      const { error } = await sb.from('settings').upsert(row, { onConflict: 'user_id' });
+      if (error) fail(error);
     },
 
     async myCrews() {
@@ -99,6 +127,87 @@ export function createLiveApi(url: string, anonKey: string): KybrApi {
       const { data, error } = await sb.rpc('create_dub', { p_crew_id: crewId }).single<never>();
       if (error) fail(error);
       return toDub(data);
+    },
+    async leaveCrew(crewId) {
+      const id = await uid();
+      const { error } = await sb.from('crew_members').delete().eq('crew_id', crewId).eq('user_id', id);
+      if (error) fail(error);
+    },
+
+    async wire(limit) {
+      // RLS limits burns to your crews.
+      const { data, error } = await sb.from('burns').select(BURN).order('created_at', { ascending: false }).limit(limit);
+      if (error) fail(error);
+      return data.map(toBurn);
+    },
+    async deck(crewId) {
+      const [crew, members, burns] = await Promise.all([
+        sb.from('crews').select('id, name, freq').eq('id', crewId).single(),
+        sb.from('crew_members').select('joined_at, profile:profiles!crew_members_user_id_fkey(id, display_name)').eq('crew_id', crewId).order('joined_at'),
+        sb.from('burns').select(BURN).eq('crew_id', crewId).order('created_at', { ascending: false }).limit(60),
+      ]);
+      if (crew.error) fail(crew.error);
+      if (members.error) fail(members.error);
+      if (burns.error) fail(burns.error);
+      return {
+        ...toCrew(crew.data),
+        members: members.data.map((m: Row) => toPerson(m.profile)),
+        burns: burns.data.map(toBurn),
+      };
+    },
+    async thisWeek(crewId) {
+      const { data, error } = await sb.from('this_week').select(BURN).eq('crew_id', crewId).order('created_at');
+      if (error) fail(error);
+      return data.map(toBurn);
+    },
+
+    async resolveLink(url) {
+      const { data, error } = await sb.functions.invoke('resolve-link', { body: { url } });
+      if (error || !data) return { ok: false, reason: 'unavailable' };
+      return data.resolved ? { ok: true, track: toTrack(data.track) } : { ok: false, reason: data.reason ?? 'unavailable' };
+    },
+    async rawTrack(url, title, artist) {
+      const { data, error } = await sb.rpc('create_raw_track', { p_url: url, p_title: title, p_artist: artist }).single();
+      if (error) fail(error);
+      return toTrack(data);
+    },
+    async burn({ crewId, trackId, note, heat }) {
+      const id = await uid();
+      const { data, error } = await sb.from('burns')
+        .insert({ crew_id: crewId, track_id: trackId, from_user: id, note, heat })
+        .select(BURN).single();
+      if (error) fail(error);
+      return toBurn(data);
+    },
+
+    async etches(burnId) {
+      const { data, error } = await sb.from('etches')
+        .select('burn_id, heat, note, created_at, by:profiles!etches_user_id_fkey(id, display_name)')
+        .eq('burn_id', burnId).order('created_at');
+      if (error) fail(error);
+      return data.map((r: Row): Etch => ({ burnId: r.burn_id, by: toPerson(r.by), heat: Number(r.heat), note: r.note, createdAt: r.created_at }));
+    },
+    async etch(burnId, heat, note) {
+      const id = await uid();
+      const { error } = await sb.from('etches')
+        .upsert({ burn_id: burnId, user_id: id, heat, note, created_at: new Date().toISOString() }, { onConflict: 'burn_id,user_id' });
+      if (error) fail(error);
+    },
+
+    async kept() {
+      const { data, error } = await sb.from('kept').select(`kept_at, burn:burns(${BURN})`).order('kept_at', { ascending: false });
+      if (error) fail(error);
+      // A burn from a crew you've left is no longer visible to you.
+      return data.filter((r: Row) => r.burn).map((r: Row) => ({ keptAt: r.kept_at, burn: toBurn(r.burn) }));
+    },
+    async keep(burnId) {
+      const id = await uid();
+      const { error } = await sb.from('kept').upsert({ user_id: id, burn_id: burnId }, { onConflict: 'user_id,burn_id', ignoreDuplicates: true });
+      if (error) fail(error);
+    },
+    async unkeep(burnId) {
+      const { error } = await sb.from('kept').delete().eq('burn_id', burnId);
+      if (error) fail(error);
     },
   };
 }

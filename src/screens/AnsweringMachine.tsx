@@ -33,6 +33,9 @@ interface Props {
   onCrew: (c: Crew) => void;
   /** GO TO WIRE */
   onDone: () => void;
+  /** opened from CTRL by someone already in a crew: where the machine starts, and the way back */
+  entry?: 'naming' | 'dubbing';
+  onCancel?: () => void;
   demoHint?: ReactNode;
 }
 
@@ -43,10 +46,10 @@ const DUB_COPY: Record<DubFailure, string> = {
   full: "that crew's full. 8 is the limit.",
 };
 
-const first = (s: MachineStage): Step => ({ k: s === 'signin' ? 'signin' : s === 'greeting' ? 'greeting' : 'idle' });
+const first = (s: MachineStage, entry?: 'naming' | 'dubbing'): Step => ({ k: s === 'signin' ? 'signin' : s === 'greeting' ? 'greeting' : entry ?? 'idle' });
 
-export function AnsweringMachine({ api, skin, stage, onProfile, onCrew, onDone, demoHint }: Props) {
-  const [step, setStep] = useState<Step>(() => first(stage));
+export function AnsweringMachine({ api, skin, stage, onProfile, onCrew, onDone, entry, onCancel, demoHint }: Props) {
+  const [step, setStep] = useState<Step>(() => first(stage, entry));
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
   const [toast, setToast] = useState('');
@@ -58,7 +61,7 @@ export function AnsweringMachine({ api, skin, stage, onProfile, onCrew, onDone, 
   const field = useRef<HTMLInputElement>(null);
 
   // The app moves us along when sign-in or the greeting lands elsewhere.
-  useEffect(() => { setStep(first(stage)); setErr(''); }, [stage]);
+  useEffect(() => { setStep(first(stage, entry)); setErr(''); }, [stage, entry]);
   useEffect(() => { field.current?.focus({ preventScroll: true }); }, [step.k]);
   useEffect(() => {
     if (!toast) return;
@@ -173,6 +176,7 @@ export function AnsweringMachine({ api, skin, stage, onProfile, onCrew, onDone, 
         { label: 'START A CREW', primary: true, onClick: () => go({ k: 'naming' }) },
         { label: 'ENTER A DUB', onClick: () => go({ k: 'dubbing' }) },
       ];
+      if (onCancel) extra = { label: '◂ BACK TO CTRL', onClick: onCancel };
       break;
 
     case 'naming':
@@ -190,7 +194,7 @@ export function AnsweringMachine({ api, skin, stage, onProfile, onCrew, onDone, 
         go({ k: 'started', crew, dub });
       });
       keys = [
-        { label: '◂ BACK', onClick: () => go({ k: 'idle' }) },
+        { label: '◂ BACK', onClick: () => (onCancel && entry === 'naming' ? onCancel() : go({ k: 'idle' })) },
         { label: '● START IT', primary: true, disabled: !crewOk, submit: true },
       ];
       break;
@@ -236,7 +240,7 @@ export function AnsweringMachine({ api, skin, stage, onProfile, onCrew, onDone, 
         go({ k: 'joined', crew });
       });
       keys = [
-        { label: '◂ BACK', onClick: () => go({ k: 'idle' }) },
+        { label: '◂ BACK', onClick: () => (onCancel && entry === 'dubbing' ? onCancel() : go({ k: 'idle' })) },
         { label: '▶ PLAY IT', primary: true, disabled: !dubOk, submit: true },
       ];
       break;
