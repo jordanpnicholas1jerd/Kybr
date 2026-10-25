@@ -27,6 +27,15 @@ python3 -m venv tv/.venv && . tv/.venv/bin/activate
 pip install -r tv/requirements.txt          # websocket-client, from PyPI
 ```
 
+On **Windows (PowerShell)**, use `py` in place of `python3`, and skip the venv:
+
+```powershell
+py -m pip install -r tv\requirements.txt
+py tv\samsung_tv.py discover
+```
+
+If Windows Firewall asks about Python, allow it on **Private networks** so the TV's replies get through.
+
 On macOS, if you later see **"No route to host"**, go to System Settings → Privacy & Security →
 **Local Network**, turn your terminal app on, and retry.
 

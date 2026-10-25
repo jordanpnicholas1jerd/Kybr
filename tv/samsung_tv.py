@@ -404,29 +404,53 @@ def backup(ip):
         "tv/README.md's checklist before you change it (that is your restore record).")
 
 
+# Windows getwch() sends arrows as a prefix ("\xe0" or "\x00") plus one of these letters.
+WINDOWS_ARROWS = {"H": "\x1b[A", "P": "\x1b[B", "M": "\x1b[C", "K": "\x1b[D"}
+
+
+def read_keys():
+    """Yield key presses one at a time, in the same form as INTERACTIVE_KEYS."""
+    if os.name == "nt":
+        import msvcrt
+        while True:
+            ch = msvcrt.getwch()
+            if ch in ("\xe0", "\x00"):
+                yield WINDOWS_ARROWS.get(msvcrt.getwch(), "")
+            else:
+                yield "\x7f" if ch == "\x08" else ch
+    else:
+        import termios
+        import tty
+        fd = sys.stdin.fileno()
+        old = termios.tcgetattr(fd)
+        try:
+            tty.setcbreak(fd)
+            while True:
+                yield os.read(fd, 3).decode(errors="ignore")
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+
 def interactive(ip):
-    import termios
-    import tty
     remote = Remote(ip)
     print("\nArrows move · Enter OK · Backspace/b Back · h Home · m Menu · s Source · "
           "p Play · k Pause · +/- Volume · 0 Mute · e Exit · q quit\n", flush=True)
-    fd = sys.stdin.fileno()
-    old = termios.tcgetattr(fd)
+    keys = read_keys()
     try:
-        tty.setcbreak(fd)
-        while True:
-            ch = os.read(fd, 3).decode(errors="ignore")
+        for ch in keys:
             if ch not in INTERACTIVE_KEYS:
                 continue
             if INTERACTIVE_KEYS[ch] is None:
                 break
             remote.key(INTERACTIVE_KEYS[ch], pause=0.05)
     finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old)
+        keys.close()
         remote.close()
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(errors="replace")
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--ip", help="TV IP address (remembered after first use)")
     sub = ap.add_subparsers(dest="cmd", required=True)
