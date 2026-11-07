@@ -27,7 +27,7 @@ You **spin** albums and write **takes** on them, with heat stars and a few hones
 | Principle | What it means in the UI |
 |---|---|
 | **Warm and personal** | Copy is lowercase, personal, a little sentimental: "burned for you", "still warm", "what stuck with you?" |
-| **Known for taste, not fame** | Reviews get likes and comments, with real counts, so good writing gets noticed. People never get a fame number: **no follower counts**, no leaderboards, no "top reviewers", no trending pages. Reputation shows as what you're *known for* (§6.5), not how many people follow you. Changed November 2026; this replaces v2's "zero vanity metrics" lock. |
+| **Known for taste, not fame** | Reviews get likes and comments, with real counts, so good writing gets noticed. Labels show their **listener count** (people subscribed), so writers can grow an audience. There are still no leaderboards, no "top reviewers", no trending pages. Reputation shows as what you're *known for* (§6.5), not how many people follow you. Changed November 2026; this replaces v2's "zero vanity metrics" lock. |
 | **Reviews are public, sharing is private** | Takes, booklets, comments, Top 8, spins and wraps are public. Burns, crews, song replies and your KEPT binder never leave the crew, and the crew side has no likes or counts. |
 | **Time, not numbers** | "spun nov 3", "kept tue", "ends sun". The only numbers shown are navigational ("round 14", "4 of 6 spun it" inside your own crew). |
 | **Plain words, CD world** | **LOCKED.** Every label is an everyday word or a CD-era word people already know. The CD feeling comes from the visuals. See §3. |
@@ -35,7 +35,7 @@ You **spin** albums and write **takes** on them, with heat stars and a few hones
 | **Never corporate** | No SaaS gradients, no pill-badge dashboards, no "Welcome back, User!" |
 
 **Hard nevers:**
-- No follower counts, play counts or leaderboards. Like and comment counts appear only on individual reviews and comments.
+- No play counts or leaderboards. Listener counts appear on labels; like and comment counts appear only on individual reviews and comments.
 - No public feed, explore tab, "trending" or "recommended".
 - No emoji as UI chrome.
 - Handwriting (Caveat) only for things a person wrote: takes on the cards, notes on burned CD-Rs, Sharpie labels. Never in labels or buttons.
@@ -217,7 +217,7 @@ The v1 CHNL rack, kept because it's the strongest chassis in the project. Top to
 7. **Your spins:** spines grouped by month, newest on top (your own label only).
 8. **Still wrapped:** albums you want to hear (your own label only).
 
-Anyone can see a label. Nothing from the private side (crews, burns, KEPT) ever appears on it. You reach someone's label by tapping their name on a take, booklet or comment, or through DIG → WRITERS. **No subscriber count is ever shown, on either side.**
+Anyone can see a label. Nothing from the private side (crews, burns, KEPT) ever appears on it. You reach someone's label by tapping their name on a take, booklet or comment, or through DIG → WRITERS. The masthead shows **n listeners** (how many people subscribe). Who subscribes stays private.
 
 ### 6.6 KEPT: your binder (private)
 The v1 CD binder: a `KEPT` chrome title, "burns you kept · only you see this", a `DISC nn / 48` pill, two sleeves per page split by eight chrome rings, and ▲ / `flip the rings` / ▼. Each sleeve: an iridescent CD, the song, the artist, an avatar plus "burned by [name] · kept [day]", and `▸ OPEN IN [SERVICE]`. Mixes show as a CD-R with a Sharpie tracklist.
@@ -285,7 +285,7 @@ Replaces the 80-character song take. When someone burns a song, anyone in the cr
 - UPPERCASE with wide tracking for hardware labels and keys (`SPIN IT`, `DISC PRESETS`, `flip the rings` is the one lowercase exception, kept from v1).
 - Time, not counts: "spun nov 3", "kept tue", "ends sun".
 - Attribution is always a person: "Dev's pick", "burned by Mara", "Sof picks next".
-- Never: "Trending", "Popular", "Recommended for you", "Top reviewers", "X plays", "X subscribers", "Discover". Like and comment counts are fine on individual reviews.
+- Never: "Trending", "Popular", "Recommended for you", "Top reviewers", "X plays", "Discover". Like and comment counts are fine on individual reviews.
 - Every word passes the word test (§3.1).
 
 ---
@@ -306,9 +306,9 @@ Replaces the 80-character song take. When someone burns a song, anyone in the cr
 11. **Solo users are welcome** (November 2026). You can sign up just to spin and post takes; a crew is something you add.
 12. **Burn Club rounds run Sunday to Sunday.** Every round closes Sunday at midnight in the crew's time zone and the next one opens. A crew's first round runs to the next Sunday. Unlit discs stay dark; there's no penalty.
 13. **Song takes stay.** Receivers can leave heat and up to 80 characters on a burned song, inside the crew only.
-14. **Subscribing is in** (called following earlier). Subscribe from someone's label; their booklets and takes show on your HOME; subscriber counts are never shown.
+14. **Subscribing is in** (called following earlier). Subscribe from someone's label; their booklets and takes show on your HOME; the label shows its listener count (changed November 2026).
 18. **The look is cobalt and chrome** (§4.1), from the approved mockup.
-15. **Reviews get likes and comments** (November 2026). Counts show on individual takes, booklets and comments. People are known for taste ("known for" tags), never for subscriber numbers. No app-wide best-of or trending page; good reviews rise on each album's page.
+15. **Reviews get likes and comments** (November 2026). Counts show on individual takes, booklets and comments. People are known for taste ("known for" tags), with listener counts on labels as the one per-person number. No app-wide best-of or trending page; good reviews rise on each album's page.
 16. **Booklets** are the long review (§6.13).
 17. **Song replies** replace song takes: 250 characters, stars optional, crew only (§6.14).
 

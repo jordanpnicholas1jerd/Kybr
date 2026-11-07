@@ -229,7 +229,7 @@ room_state    (v1, Phase 6) (crew_id pk, track_id, position_ms, started_at, play
 | profiles (handle, name, tagline, liner notes, profile song) | **Everyone** (shelves are public, spec §8 Settled 10). Never expose crews, burns, notes, rounds or KEPT through them | Owner |
 | tracks, albums, album_tracks | Everyone | Server functions only |
 
-**Known for taste, not fame, is enforced in the API:** like and comment counts per review or comment are public (through `like_counts`). Never create any endpoint, view or column that returns **subscriber counts**, per-person totals of likes, plays or spins, or any ranking of people. `known_for` exposes tags only, never the numbers behind them. Inside crews, two aggregates are allowed, only for members:
+**Known for taste, not fame, is enforced in the API:** like and comment counts per review or comment are public (through `like_counts`). Never create any endpoint, view or column that returns per-person totals of likes, plays or spins, or any ranking of people. **Listener counts** (subscribers per label) are public through a `listener_counts` view; the list of who subscribes stays private. `known_for` exposes tags only, never the numbers behind them. Inside crews, two aggregates are allowed, only for members:
 - **crew heat** (the average of your crews' takes on an album, rounded to the half), and
 - **"n of m spun it"** for an open round in your own crew.
 
