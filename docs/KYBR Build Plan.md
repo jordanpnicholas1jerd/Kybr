@@ -186,6 +186,17 @@ round_queue   new (P4) (crew_id, user_id, album_id, queued_at, pk(crew_id,user_i
               -- "make it a Burn Club round": one queued pick per person per crew
 
 -- following (private lists)
+booklets      new (P2) (id, album_id, user_id, title text, body text, fav_tracks int[] null,
+               heat not null, status text check in ('draft','published'), published_at, updated_at)
+likes         new (P2) (user_id, target_kind text check in ('take','booklet','comment'),
+               target_id uuid, created_at, pk(user_id,target_kind,target_id))
+comments      new (P2) (id, target_kind check in ('take','booklet'), target_id, parent_id null,
+               user_id, body text ≤ 1000, pinned bool default false, created_at, deleted_at null)
+like_counts   view (P2): per target, the number of likes — read only through it
+known_for     materialized view (P3): per user, top 3 artists/genres/decades by likes on
+               their takes and booklets, refreshed nightly; tags need a minimum like total
+song_replies  new (P2, replaces etches) (id, burn_id, user_id, body ≤ 250, heat null, created_at)
+
 follows       new (P4) (follower_id → profiles, followee_id → profiles, created_at,
                pk(follower_id,followee_id), check follower_id <> followee_id)
 
@@ -211,15 +222,17 @@ room_state    (v1, Phase 6) (crew_id pk, track_id, position_ms, started_at, play
 |---|---|---|
 | crews, crew_members, burns, burn_tracks, etches, rounds, round_queue, room_state | Members of that crew only | Members; burns and queue entries only as yourself |
 | kept, settings (preferred service, skin), follows | Owner (follow lists are never shown to anyone else) | Owner |
-| reviews (takes), spins, wants, top8 | **Everyone** (public) | Owner |
+| reviews (takes), booklets (published), spins, wants, top8, comments, like_counts, known_for | **Everyone** (public) | Owner (comments: the commenter; the booklet's author can pin or delete) |
+| likes rows (who liked what) | The liker, and the author of the liked thing | The liker |
+| song_replies | Members of that crew only | Members, as themselves |
 | profiles (handle, name, tagline, liner notes, profile song) | **Everyone** (shelves are public, spec §8 Settled 10). Never expose crews, burns, notes, rounds or KEPT through them | Owner |
 | tracks, albums, album_tracks | Everyone | Server functions only |
 
-**Anti-clout is enforced in the API, not just the UI:** don't create any endpoint, view or column that returns counts of plays, likes, followers, follows, spins, takes or wants. Two aggregates are allowed, and both only inside crews the viewer belongs to:
+**Known for taste, not fame, is enforced in the API:** like and comment counts per review or comment are public (through `like_counts`). Never create any endpoint, view or column that returns **follower counts**, per-person totals of likes, plays or spins, or any ranking of people. `known_for` exposes tags only, never the numbers behind them. Inside crews, two aggregates are allowed, only for members:
 - **crew heat** (the average of your crews' takes on an album, rounded to the half), and
 - **"n of m spun it"** for an open round in your own crew.
 
-Takes from everyone on an album are listed by time, never sorted or filtered by anything popularity-like.
+On an album page, takes and booklets sort by likes (default) or by time. There is no app-wide ranking or trending query.
 
 ---
 
@@ -262,7 +275,7 @@ Sign-in, crews and invites (the 9th join is rejected), song burns through `resol
 ---
 
 ## 9. Things to decide before or during the build
-Settled in November 2026: solo users are in, rounds run Sunday to Sunday, song takes stay, following comes after Burn Club (spec §8 Settled 11–14). Still open:
+Settled in November 2026: solo users are in, rounds run Sunday to Sunday, following comes after Burn Club, reviews get likes and comments, booklets are the long review, song replies replace song takes (spec §8 Settled 11–17). Build booklets, likes, comments and song replies in Phase 2 alongside takes; `known_for` in Phase 3. Still open:
 
 1. **First run** (spec Open 1). Needed by Phase 4; Phase 2 uses a plain interim screen.
 2. **Whether a picker can pass their turn** in Burn Club. Decide before Phase 3.

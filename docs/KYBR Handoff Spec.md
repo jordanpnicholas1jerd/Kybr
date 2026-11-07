@@ -12,7 +12,7 @@ The clickable reference for this spec is `docs/reference/KYBR Records Mockup.htm
 You **spin** albums and write **takes** on them, with heat stars and a few honest words. Your takes go up on your **shelf** for anyone to read. Second, you **burn** songs, mixes and albums to your **crew**, a private group of up to 8 friends. Each crew runs **Burn Club**: one album a week, everyone spins it, and then the next person picks.
 
 **Priorities, in order:**
-1. **Album reviews**, Letterboxd-style: spin, take, shelf. This is the main event.
+1. **Album reviews**, part Letterboxd, part Substack: spin, take, booklet, shelf. People read, like and comment, so you can become **known for your opinion without being famous**. This is the main event.
 2. **Music sharing**: burns to your crew, kept in your binder. It's a close second.
 3. **Burn Club** connects the two. Every round is shared music that turns into public takes.
 
@@ -27,15 +27,15 @@ You **spin** albums and write **takes** on them, with heat stars and a few hones
 | Principle | What it means in the UI |
 |---|---|
 | **Warm and personal** | Copy is lowercase, personal, a little sentimental: "burned for you", "still warm", "what stuck with you?" |
-| **Anti-clout** | **ZERO vanity metrics.** No play counts, like counts, follower counts, review counts, trending or charts. Ever. |
-| **Takes are public, sharing is private** | Takes, Top 8, spins and wraps are public on your shelf and on the album. Burns, crews, notes on burns and your KEPT binder never leave the crew. |
+| **Known for taste, not fame** | Reviews get likes and comments, with real counts, so good writing gets noticed. People never get a fame number: **no follower counts**, no leaderboards, no "top reviewers", no trending pages. Reputation shows as what you're *known for* (§6.5), not how many people follow you. Changed November 2026; this replaces v2's "zero vanity metrics" lock. |
+| **Reviews are public, sharing is private** | Takes, booklets, comments, Top 8, spins and wraps are public. Burns, crews, song replies and your KEPT binder never leave the crew, and the crew side has no likes or counts. |
 | **Time, not numbers** | "spun nov 3", "kept tue", "ends sun". The only numbers shown are navigational ("round 14", "4 of 6 spun it" inside your own crew). |
 | **Plain words, CD world** | **LOCKED.** Every label is an everyday word or a CD-era word people already know. The CD feeling comes from the visuals. See §3. |
 | **Every screen is part of a CD's life** | **LOCKED.** Replaces the old "one device per screen" rule. Screens are built from CD objects (jewel case, tray card, spine, shrink-wrap, sticker, CD-R and Sharpie, binder, the silver rack, the burner), not from unrelated gadgets. Each screen still feels like picking up a different object. |
 | **Never corporate** | No SaaS gradients, no pill-badge dashboards, no "Welcome back, User!" |
 
 **Hard nevers:**
-- No follower, play, like or review counts.
+- No follower counts, play counts or leaderboards. Like and comment counts appear only on individual reviews and comments.
 - No public feed, explore tab, "trending" or "recommended".
 - No emoji as UI chrome.
 - Handwriting (Caveat) only for things a person wrote: takes on the cards, notes on burned CD-Rs, Sharpie labels. Never in labels or buttons.
@@ -243,9 +243,12 @@ The v1 CHNL rack, kept because it's the strongest chassis in the project. Top to
 3. **Liner notes:** a thin skin-colored rule on the left, 11px body.
 4. **Top 8** · `PUBLIC`: a 4×2 wall of covers. Tap one to open it.
 5. **Your spins:** spines grouped by month, newest on top, each showing your stars.
-6. **Still wrapped:** covers under shrink-wrap. Empty state: "nothing wrapped. tap ♡ WANT IT on any album."
+6. **Known for:** up to three tags earned from likes on your reviews, for an artist, genre or decade ("known for trip-hop · Björk · 2000s R&B"). Computed from likes on your reviews in that corner of music, never from followers. Hidden until you've earned one.
+7. **Booklets:** your long reviews, newest first, as booklet covers.
+8. **Your takes:** your latest takes as cards with their likes, newest first, `SEE ALL ▸`.
+9. **Still wrapped:** covers under shrink-wrap. Empty state: "nothing wrapped. tap ♡ WANT IT on any album."
 
-Anyone can see a shelf. Nothing from the private side (crews, burns, KEPT) ever appears on it. You reach someone else's shelf by tapping their name on a take. On someone else's shelf, a `＋ FOLLOW` key under the name tag adds their takes to your HOME. It never shows a follower or following count, on either side.
+Anyone can see a shelf. Nothing from the private side (crews, burns, KEPT) ever appears on it. You reach someone else's shelf by tapping their name on a take. On someone else's shelf, a `＋ FOLLOW` key under the name tag adds their takes and booklets to your HOME. **No follower count is ever shown, on either side.** You can see the list of people you follow; nobody can see who follows them.
 
 ### 6.6 KEPT: your binder (private)
 The v1 CD binder: a `KEPT` chrome title, "burns you kept · only you see this", a `DISC nn / 48` pill, two sleeves per page split by eight chrome rings, and ▲ / `flip the rings` / ▼. Each sleeve: an iridescent CD, the song, the artist, an avatar plus "burned by [name] · kept [day]", and `▸ OPEN IN [SERVICE]`. Mixes show as a CD-R with a Sharpie tracklist.
@@ -257,8 +260,9 @@ Opens from DIG, takes on HOME, the CREW rack, Top 8, your spins and burns. It re
 3. Title in chrome Michroma · `artist · year · n tracks`.
 4. Keys: `✎ SPIN IT` / `✎ UNWRAP & SPIN IT` / `✎ REWRITE YOUR TAKE` (ember) · `BURN IT ▸` (opens the burner with this album).
 5. **Crew heat** row (only if someone in your crews has a take).
-6. **Takes:** a horizontal row of take cards. Order: yours, then your crews' (newest first), then everyone else's (newest first). "your crews first, then everyone." Footer: "no likes, no counts. just takes."
-7. **Tracklist:** the tray card, two columns. Tap a song to open it in your service. Under it, an "open in" row: Apple Music · Spotify · YouTube Music · Tidal.
+6. **Booklets** (long reviews, §6.13): cards with title, author, stars and the first lines, above the takes.
+7. **Takes:** a row of take cards. Yours first, then a toggle: `MOST LIKED` (default) / `NEWEST`. Your crews' takes are marked with the crew name. Each card shows `♥ n` and comment counts drawn as hardware glyphs, not emoji (`♥ 24 · ▤ 3`). Tap a card to open its comments.
+8. **Tracklist:** the tray card, two columns. Tap a song to open it in your service. Under it, an "open in" row: Apple Music · Spotify · YouTube Music · Tidal.
 
 ### 6.8 Take sheet (spinning an album)
 Rises from the bottom over a blurred scrim.
@@ -293,6 +297,18 @@ Opens from `⚙ SETTINGS` on SHELF, styled as an enhanced-CD **autorun menu** (t
 ### 6.12 First run
 Not designed yet (Open 1). The v1 answering machine is not CD-world and gets replaced. Direction: you start with a sealed jewel case and unwrap it to begin. Then: sign in with a magic link → pick a handle → **start a crew**, **enter an invite code**, or **just spin** (no crew; settled in Open 2).
 
+
+### 6.13 Booklets (long reviews)
+The Substack part. A booklet is a long review of one album, written like the booklet that folds out of a CD case.
+- **Writing:** from the album page, `✎ WRITE A BOOKLET`. Title, stars (required), the body (no length cap, paragraphs, pull quotes), and up to three favorite tracks called out. Saves drafts. Publishing a booklet also sets your take's stars for that album.
+- **Reading:** a reading view styled as booklet pages: the album art as the cover, then clean pages of type (DM Mono body, Michroma headings). Author name tag at the top, tap to open their shelf.
+- **Likes:** `♥` with a count, on booklets, takes and comments.
+- **Comments:** anyone signed in can comment (1,000 characters). Comments can be liked. The author can pin one and delete any on their own booklet. Sort `MOST LIKED` / `NEWEST`. One level of replies.
+- **Where booklets show:** on the album page above takes, on the author's shelf, and on followers' HOME.
+
+### 6.14 Song replies (crew only)
+Replaces the 80-character song take. When someone burns a song, anyone in the crew can reply with up to **250 characters**, stars optional. Replies stack under the burn as a short thread, oldest first. No likes, no counts; it stays in the crew.
+
 ---
 
 ## 7. Copy rules
@@ -300,7 +316,7 @@ Not designed yet (Open 1). The v1 answering machine is not CD-world and gets rep
 - UPPERCASE with wide tracking for hardware labels and keys (`SPIN IT`, `DISC PRESETS`, `flip the rings` is the one lowercase exception, kept from v1).
 - Time, not counts: "spun nov 3", "kept tue", "ends sun".
 - Attribution is always a person: "Dev's pick", "burned by Mara", "Sof picks next".
-- Never: "Trending", "Popular", "Recommended for you", "X plays", "X likes", "Discover", "followers".
+- Never: "Trending", "Popular", "Recommended for you", "Top reviewers", "X plays", "X followers", "Discover". Like and comment counts are fine on individual reviews.
 - Every word passes the word test (§3.1).
 
 ---
@@ -321,7 +337,10 @@ Not designed yet (Open 1). The v1 answering machine is not CD-world and gets rep
 11. **Solo users are welcome** (November 2026). You can sign up just to spin and post takes; a crew is something you add.
 12. **Burn Club rounds run Sunday to Sunday.** Every round closes Sunday at midnight in the crew's time zone and the next one opens. A crew's first round runs to the next Sunday. Unlit discs stay dark; there's no penalty.
 13. **Song takes stay.** Receivers can leave heat and up to 80 characters on a burned song, inside the crew only.
-14. **Following is in,** built after Burn Club. A quiet follow from someone's shelf; their takes show on your HOME; no counts anywhere, and follow lists are private.
+14. **Following is in,** built after Burn Club. Follow from someone's shelf; their takes and booklets show on your HOME; follower counts are never shown.
+15. **Reviews get likes and comments** (November 2026). Counts show on individual takes, booklets and comments. People are known for taste ("known for" tags), never for follower numbers. No app-wide best-of or trending page; good reviews rise on each album's page.
+16. **Booklets** are the long review (§6.13).
+17. **Song replies** replace song takes: 250 characters, stars optional, crew only (§6.14).
 
 ### Open
 1. **First run:** design the unwrap-the-case opening.
