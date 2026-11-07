@@ -289,7 +289,7 @@ A brushed-silver chassis: `KYBR` · `CD-RW BURNER · KY·BRN01` · a status ligh
 ### 6.10 Burned-for-you sheet
 Opens from a CD-R on HOME. A large CD-R with the Sharpie label, the title, the artist, the sender's note in handwriting, and when it arrived. Keys: `▸ OPEN IN [SERVICE]` · `OPEN THE ALBUM ↗` (if the album is known) · `★ KEEP IT` (moves it to KEPT: "✓ kept · it's in your binder").
 
-**Song takes (the old ETCH):** the receiver can also leave a quick take on a burned song, with heat plus up to 80 characters. It stays inside the crew, and the sender sees it on the burn. Settled (Open 5); not in the mockup yet.
+**Song replies:** anyone in the crew can reply under the burn (§6.14).
 
 ### 6.11 Settings
 Opens from `⚙ SETTINGS` on SHELF, styled as an enhanced-CD **autorun menu** (the window that popped up when you put a disc in a PC): a blue title bar `KYBR.EXE · autorun`, a spinning disc, and glossy pill buttons for **Skin** (five swatches), **Music service** (Apple Music · Spotify · YouTube Music · Tidal), **Your crews**, **Notifications** and **Sign out**.
