@@ -428,6 +428,12 @@ body{background:var(--ground)}
 .jog{box-shadow:0 5px 0 #5d6372,0 7px 9px rgba(0,0,0,.4),inset 0 2px 2px rgba(255,255,255,.9)}
 .ticker .tkl{justify-content:center;text-align:center;min-width:78px}
 .bk{align-items:center}
+/* DIG panel: brushed chrome to match the review plates */
+.counter{background:var(--plate)!important;border:1px solid #4b505c;border-radius:10px!important;box-shadow:inset 0 1.5px 0 #fff,inset 0 -2px 4px rgba(0,0,0,.22),0 4px 0 #5d6372,0 6px 10px rgba(0,0,0,.4)!important;--ink:var(--etch);--ink2:var(--etch2);--ink3:var(--etch2);color:var(--etch)}
+.counter .lbl,.counter>div[style]{color:var(--etch2)!important;text-shadow:0 1px 0 var(--etchhi)}
+.counter .chrome{filter:none;background:none!important;color:#2a418a!important;-webkit-text-fill-color:#2a418a!important;-webkit-text-stroke:0;text-shadow:0 1px 0 var(--etchhi),0 -1px 0 var(--etchlo);font-size:16px!important}
+.counter .seg button:not(.on){background:linear-gradient(180deg,#fff,#d5d9e0)!important;border:1px solid #4b505c!important;color:var(--etch)!important;text-shadow:0 1px 0 #fff}
+.counter .seg button.on{background:linear-gradient(180deg,#c9d6ff 0%,#8ea6f0 20%,#4a66c0 47%,#2a418a 51%,#5f7bd6 75%,#b4c4f5 100%)!important;border:1px solid #141414!important;color:#fff!important;text-shadow:0 1px 1px rgba(0,0,0,.45)}
 /* ---- reviews: brushed chrome plates, words etched in ---- */
 :root{--etch:#2a2e38;--etch2:#4a505e;--etchhi:rgba(255,255,255,.8);--etchlo:rgba(0,0,0,.32);
   --plate:repeating-linear-gradient(90deg,rgba(255,255,255,.10) 0 1px,transparent 1px 3px),linear-gradient(180deg,#f4f5f8 0%,#dadde3 24%,#b8bdc8 48%,#9aa0ad 51%,#c8ccd5 72%,#eef0f4 100%)}
