@@ -89,6 +89,7 @@ Always in this order, uppercase, one real word each:
 | **burn** | Sending music to a crew: a song, a mix or an album. | "Mara burned you Teardrop" |
 | **mix** | A burned CD-R of several songs, max 80:00. | "a mix · 71:40 of 80:00" |
 | **burned for you** | Burns waiting for you on HOME. | |
+| **preview** | A 30-second clip of a song, played inside KYBR. | "▶ PREVIEW · 0:30" |
 | **note** | What the sender writes on a burn, in Sharpie on the disc. Up to 60 characters. | |
 | **reply** | A crew member's response to a burned song (§6.14). | "reply to Mara" |
 | **kept** | A burn you saved to your binder. | "burned by Mara · kept sun" |
@@ -255,7 +256,7 @@ A brushed-silver chassis: `KYBR` · `CD-RW BURNER · KY·BRN01` · a status ligh
 5. **Burning → done:** the disc spins fast with `BURNING… nn%`, then `✓ BURNED & SENT` · "delivered to [crew]. still warm." Keys `⏏ EJECT` / `SEE IT IN CREW`.
 
 ### 6.10 Burned-for-you sheet
-Opens from a CD-R on HOME. A large CD-R with the Sharpie label, the title, the artist, the sender's note in handwriting, and when it arrived. Keys: `▸ OPEN IN [SERVICE]` · `OPEN THE ALBUM ↗` (when the album is known) · `★ KEEP IT` (moves it to KEPT: "✓ kept · it's in your binder"). Below: the song replies (§6.14).
+Opens from a CD-R on HOME. A large CD-R with the Sharpie label, the title, the artist, the sender's note in handwriting, and when it arrived. Keys: `▶ PREVIEW · 0:30` (§6.15) · `▸ OPEN IN [SERVICE]` · `OPEN THE ALBUM ↗` (when the album is known) · `★ KEEP IT` (moves it to KEPT: "✓ kept · it's in your binder"). Below: the song replies (§6.14).
 
 ### 6.11 Settings
 Opens from `⚙ SETTINGS` on your label, styled as an enhanced-CD **autorun menu** (the window that pops up when you put a disc in a PC): a blue title bar `KYBR.EXE · autorun`, a spinning disc, and glossy pill buttons for **Skin**, **Music service** (Apple Music · Spotify · YouTube Music · Tidal), **Your crews**, **Notifications** and **Sign out**.
@@ -272,6 +273,14 @@ Not designed yet (§8 Open 1). The direction: a sealed jewel case you unwrap to 
 
 ### 6.14 Song replies (crew only)
 When someone burns a song, anyone in the crew can reply with up to **250 characters**, stars optional. Replies stack under the burn, oldest first. No likes and no counts; replies stay in the crew.
+
+
+### 6.15 Song previews
+A 30-second clip of a song, so you can hear a burn before opening your music app. Songs only: albums open in your music service.
+- **Where:** `▶ PREVIEW · 0:30` on the burned-for-you sheet, KEPT sleeves, rows in the crew track list, the song step of the burner, and the on repeat radio on a label.
+- **How it looks:** while it plays, the CD-R or disc spins and a thin blue ring around it fills over 30 seconds; the key reads `❚❚ 0:12`. One preview plays at a time; starting another stops the first.
+- **Credit:** a small line under the key: "preview from Apple Music" (or "from Deezer"), next to `▸ OPEN IN [SERVICE]` for the full song.
+- Plays only when tapped. If no preview exists, the key doesn't show.
 
 ---
 

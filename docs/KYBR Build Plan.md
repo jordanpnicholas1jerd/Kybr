@@ -52,6 +52,7 @@ Build the look from the mockup as shared tokens and components (`<ChromeKey>`, `
 | **Apple Developer Program** | MusicKit (Apple Music catalog + in-app playback) | $99/year | `APPLE_TEAM_ID`, `APPLE_MUSICKIT_KEY_ID`, `APPLE_MUSICKIT_PRIVATE_KEY` (.p8), server-only |
 | Google Cloud project with YouTube Data API v3 | Finding a YouTube video for a song | Free quota | `YOUTUBE_API_KEY`, server-only |
 | Odesli (song.link) API | Turning one pasted link into links for every service | Free without a key at a low rate limit; request a key before real use | `ODESLI_API_KEY`, server-only |
+| Deezer API | Backup source for 30-second song previews (§4.8) | Free; no key for public search | none |
 | MusicBrainz | Album search, album data, tracklists | Free; no key, but a contact User-Agent is required (§4.2) | none |
 | Spotify | **Not needed.** Spotify is link-out only (§4.5) | — | — |
 
@@ -111,6 +112,21 @@ So Spotify users get **"open in Spotify"** links (from Odesli). Follow Spotify's
 ### 4.7 Link-out (always available)
 Every track has an "open in…" row built from Odesli links. Each person picks their service in Settings → Music service. Per provider: Apple → play in app; YouTube → play in app; anything else → open the link in that app.
 
+
+### 4.8 Song previews (Phase 2)
+Thirty-second clips of songs, played inside KYBR, without hosting any audio. Songs only; albums link out.
+- **Sources, in order:**
+  1. **Apple:** the `previews[].url` on an Apple Music catalog song (once the Apple developer token exists), or before that the free iTunes Search API (`https://itunes.apple.com/lookup?isrc=<ISRC>` or a search by artist and title), which returns `previewUrl`.
+  2. **Deezer:** the `preview` field on a Deezer track (`https://api.deezer.com/track/isrc:<ISRC>`). Deezer preview links expire, so fetch them fresh when someone presses play.
+  3. **Spotify** doesn't give preview clips to new apps, so it isn't a source.
+- **How it works:** an Edge Function `song-preview` takes a track ID, finds a preview link (cached for Apple, fresh for Deezer), and returns the link plus its source. The app plays it in a plain `<audio>` element.
+- **Rules to respect** (re-check Apple's and Deezer's current terms before building):
+  - Play the clip **straight from Apple's or Deezer's servers.** Never download, copy, store or re-host the audio.
+  - Play only when someone taps. No autoplay, no looping, no background music.
+  - Show where the clip came from ("preview from Apple Music" / "from Deezer") and a link to the full song in that service.
+  - Previews promote the song; don't use them to build anything that replaces listening in a music service (no stitched playlists of clips).
+- **Data:** add to `tracks`: `preview_source text null` (`'apple'` or `'deezer'`), `apple_preview_url text null`, `deezer_id text null`, `preview_checked_at timestamptz null`. Don't store Deezer's expiring links.
+
 ---
 
 ## 5. Player abstraction
@@ -131,7 +147,7 @@ interface PlayerProvider {
 // choose: user's preferred service → apple → youtube → link
 ```
 
-Until Phase 5 the only provider is `link`: every "open in [service]" button (burned-for-you sheet, KEPT sleeves, the crew track list, the album tracklist, on repeat) opens the track's link in your preferred service. In Phase 5 the same buttons call this interface, and an album's tracklist can play in order.
+Until Phase 5 the only provider is `link`: every "open in [service]" button (burned-for-you sheet, KEPT sleeves, the crew track list, the album tracklist, on repeat) opens the track's link in your preferred service. Song previews (§4.8) are separate: a 30-second clip in a plain audio element. In Phase 5 the same buttons call this interface, and an album's tracklist can play in order.
 
 ---
 
@@ -253,26 +269,27 @@ Sign-in by email link, crews and invites (the 9th join is rejected), song burns 
 8. **LABEL and subscribing:** masthead with label name, listener count and SUBSCRIBE, booklets, takes, on repeat, Top 8 (editable), your spins by month, still wrapped. Others' labels open from their name anywhere or from DIG → WRITERS.
 9. **HOME:** new booklets and takes from your crews and labels you subscribe to, burned for you, the BURN button. With no crew: booklets and takes only, plus the start-a-crew line.
 10. **KEPT, Settings and song replies:** the binder ("burned by [name] · kept [day]"), settings as the autorun menu opened from LABEL, and crew-only replies on burned songs.
-11. **CREW:** the rack with its labels (`CREW n`, `IN THE CREW`, `＋ INVITE`, `BURNED TO [CREW]`).
+11. **Song previews** (§4.8, spec §6.15): `song-preview` function, the preview key and spinning ring, source credit. *Done when:* a burned song plays a 30-second clip from Apple (or Deezer when Apple has none), with the credit line showing, and nothing about the audio is stored.
+12. **CREW:** the rack with its labels (`CREW n`, `IN THE CREW`, `＋ INVITE`, `BURNED TO [CREW]`).
 
 **Phase 3 — Burn Club**
-12. `rounds`, `pick_order`, `crews.timezone`, and the hourly close/open job (rounds turn over Sunday at midnight). First round: the crew's creator picks.
-13. **The changer** in the CREW rack: one disc per member, lit when spun, tap to read a take; your disc opens the take sheet. ⏮ ⏭ step through past rounds; the LCD shows the round and `NEXT PICK ▸ [NAME]`; the VU shows crew heat.
-14. **The ticker** on HOME, opening CREW on the first crew that's waiting on you. *Done when:* in a crew of three, two people spin the round and both see the third disc dark; the third spins it, the round shows complete, and the next round opens for the next person in order.
-15. **Known-for tags** on labels.
+13. `rounds`, `pick_order`, `crews.timezone`, and the hourly close/open job (rounds turn over Sunday at midnight). First round: the crew's creator picks.
+14. **The changer** in the CREW rack: one disc per member, lit when spun, tap to read a take; your disc opens the take sheet. ⏮ ⏭ step through past rounds; the LCD shows the round and `NEXT PICK ▸ [NAME]`; the VU shows crew heat.
+15. **The ticker** on HOME, opening CREW on the first crew that's waiting on you. *Done when:* in a crew of three, two people spin the round and both see the third disc dark; the third spins it, the round shows complete, and the next round opens for the next person in order.
+16. **Known-for tags** on labels.
 
 **Phase 4 — Burner extras + first run**
-16. **Mixes:** `burn_tracks`, the 80:00 capacity bar, a mix shown as one CD-R with a Sharpie tracklist in KEPT.
-17. **Album burns:** "burn it for them" lands wrapped in their burned for you; "make it a Burn Club round" writes `round_queue`.
-18. **First run:** the opening (spec §6.12), with start a crew / enter an invite code / just spin.
+17. **Mixes:** `burn_tracks`, the 80:00 capacity bar, a mix shown as one CD-R with a Sharpie tracklist in KEPT.
+18. **Album burns:** "burn it for them" lands wrapped in their burned for you; "make it a Burn Club round" writes `round_queue`.
+19. **First run:** the opening (spec §6.12), with start a crew / enter an invite code / just spin.
 
 **Phase 5 — In-app playback**
-19. Apple developer token function and MusicKit JS provider; authorize on the first tap.
-20. YouTube provider with a visible ≥ 200 px player inside the Phase 5 player device.
-21. Provider order from §5. *Done when:* the same burn plays in-app for an Apple Music friend, as a YouTube video for a friend without Apple Music, and opens Spotify for a Spotify friend.
+20. Apple developer token function and MusicKit JS provider; authorize on the first tap.
+21. YouTube provider with a visible ≥ 200 px player inside the Phase 5 player device.
+22. Provider order from §5. *Done when:* the same burn plays in-app for an Apple Music friend, as a YouTube video for a friend without Apple Music, and opens Spotify for a Spotify friend.
 
 **Phase 6 — Live rooms (maybe; only after Apple answers, §4.4)**
-22. `room_state`, Realtime broadcast and presence, drift correction every few seconds.
+23. `room_state`, Realtime broadcast and presence, drift correction every few seconds.
 
 **Before friends sign in:** host the app, set up the email sender (README), get an Odesli key, and set the MusicBrainz contact User-Agent.
 
