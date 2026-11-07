@@ -2,6 +2,8 @@
 
 An album diary for you and your crew, built out of CDs. You **spin** albums and post **takes** on them (heat stars plus a few honest words) to your public **shelf**. Second, you **burn** songs, mixes and albums to your **crew** of up to 8 friends, and each crew runs **Burn Club**: one album a week, everyone spins it, then the next person picks. No feed, no algorithm, no counts.
 
+**Building the app? Start with [`docs/START HERE.md`](docs/START%20HERE.md).**
+
 The design lives in [`docs/KYBR Handoff Spec.md`](docs/KYBR%20Handoff%20Spec.md) (v2, November 2026), and how it gets built lives in [`docs/KYBR Build Plan.md`](docs/KYBR%20Build%20Plan.md). The clickable reference is [`docs/reference/KYBR Records Mockup.html`](docs/reference/KYBR%20Records%20Mockup.html); open it in a browser. Its albums, people and tracklists are placeholders.
 
 ## Status
