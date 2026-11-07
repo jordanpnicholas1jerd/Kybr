@@ -20,7 +20,7 @@ Because of that, every song in the database is a **service-neutral track**: one 
 | Phase | What ships | Playback |
 |---|---|---|
 | **1. Crew loop** (built, v1 look) | Sign-in, crews + invites, song burns, the rack's track list, song takes (ETCH), the binder, skins | **Open in your own app** (link-out) |
-| **2. New shape + albums** | v2 nav and words; DIG; album page; take sheet; SHELF; HOME as the shop front; KEPT; settings as the autorun menu. Retire the Game Boy, iPod, Win98 and answering machine | Link-out |
+| **2. New shape + albums** | v2 nav and words; DIG; album page; take sheet; booklets with likes and comments; LABEL; HOME as the shop front; KEPT; settings as the autorun menu. Retire the Game Boy, iPod, Win98 and answering machine | Link-out |
 | **3. Burn Club** | Rounds, pick order, the changer in the CREW rack, the ticker on HOME | Link-out |
 | **4. Burner upgrades** | Mixes (80:00 cap), album burns (burn it for them / make it a round), first run (unwrap the case) | Link-out |
 | **5. In-app playback** | Play inside KYBR for Apple Music users; YouTube fallback for everyone else. Needs a CD-world player (spec Open 7) | Apple MusicKit JS + YouTube player |
@@ -140,7 +140,7 @@ Tables marked **(v1)** already exist in `supabase/migrations`. Tables and column
 ```sql
 -- people
 profiles      (v1) (id uuid pk = auth.users.id, handle text unique, display_name, tagline,
-               liner_notes, profile_track_id → tracks, created_at)       -- public: the SHELF
+               liner_notes, profile_track_id → tracks, created_at)       -- public: the LABEL (add label_name text, known_for via the view below)
 settings      (v1) (user_id pk → profiles, skin text default 'uv',
                preferred_service text check in ('apple','youtube','spotify','link'))  -- owner only
 
@@ -185,7 +185,7 @@ rounds        new (P3) (id, crew_id, number int, album_id, picked_by → profile
 round_queue   new (P4) (crew_id, user_id, album_id, queued_at, pk(crew_id,user_id))
               -- "make it a Burn Club round": one queued pick per person per crew
 
--- following (private lists)
+-- reviews: booklets, likes, comments (public)
 booklets      new (P2) (id, album_id, user_id, title text, body text, fav_tracks int[] null,
                heat not null, status text check in ('draft','published'), published_at, updated_at)
 likes         new (P2) (user_id, target_kind text check in ('take','booklet','comment'),
@@ -197,8 +197,9 @@ known_for     materialized view (P3): per user, top 3 artists/genres/decades by 
                their takes and booklets, refreshed nightly; tags need a minimum like total
 song_replies  new (P2, replaces etches) (id, burn_id, user_id, body ≤ 250, heat null, created_at)
 
-follows       new (P4) (follower_id → profiles, followee_id → profiles, created_at,
-               pk(follower_id,followee_id), check follower_id <> followee_id)
+-- subscribing (private lists)
+subscriptions new (P2) (subscriber_id → profiles, label_id → profiles, created_at,
+               pk(subscriber_id,label_id), check subscriber_id <> label_id)
 
 room_state    (v1, Phase 6) (crew_id pk, track_id, position_ms, started_at, playing bool, driver_id)
 ```
@@ -221,14 +222,14 @@ room_state    (v1, Phase 6) (crew_id pk, track_id, position_ms, started_at, play
 | Table | Who can read | Who can write |
 |---|---|---|
 | crews, crew_members, burns, burn_tracks, etches, rounds, round_queue, room_state | Members of that crew only | Members; burns and queue entries only as yourself |
-| kept, settings (preferred service, skin), follows | Owner (follow lists are never shown to anyone else) | Owner |
+| kept, settings (preferred service, skin), subscriptions | Owner (who you subscribe to is never shown to anyone else) | Owner |
 | reviews (takes), booklets (published), spins, wants, top8, comments, like_counts, known_for | **Everyone** (public) | Owner (comments: the commenter; the booklet's author can pin or delete) |
 | likes rows (who liked what) | The liker, and the author of the liked thing | The liker |
 | song_replies | Members of that crew only | Members, as themselves |
 | profiles (handle, name, tagline, liner notes, profile song) | **Everyone** (shelves are public, spec §8 Settled 10). Never expose crews, burns, notes, rounds or KEPT through them | Owner |
 | tracks, albums, album_tracks | Everyone | Server functions only |
 
-**Known for taste, not fame, is enforced in the API:** like and comment counts per review or comment are public (through `like_counts`). Never create any endpoint, view or column that returns **follower counts**, per-person totals of likes, plays or spins, or any ranking of people. `known_for` exposes tags only, never the numbers behind them. Inside crews, two aggregates are allowed, only for members:
+**Known for taste, not fame, is enforced in the API:** like and comment counts per review or comment are public (through `like_counts`). Never create any endpoint, view or column that returns **subscriber counts**, per-person totals of likes, plays or spins, or any ranking of people. `known_for` exposes tags only, never the numbers behind them. Inside crews, two aggregates are allowed, only for members:
 - **crew heat** (the average of your crews' takes on an album, rounded to the half), and
 - **"n of m spun it"** for an open round in your own crew.
 
@@ -242,15 +243,15 @@ On an album page, takes and booklets sort by likes (default) or by time. There i
 Sign-in, crews and invites (the 9th join is rejected), song burns through `resolve-link`, the Game Boy feed, the rack's track list, PLYR as an "open in [service]" remote, ETCH, the binder, skins and settings. It shipped with the v1 look and words; Phase 2 changes those.
 
 **Phase 2 — New shape + albums (the main event)**
-1. **Words and nav:** tabs become HOME · DIG · CREW · SHELF · KEPT. Sweep every v1 word out of the UI (spec §3.4). *Done when:* a search of the rendered app for WIRE, CHNL, DECK, CASE, CTRL, ETCH, DUB or PLYR finds nothing a person can read.
+1. **Words and nav:** tabs become HOME · DIG · CREW · LABEL · KEPT, in the cobalt-and-chrome look (spec §4). Sweep every v1 word out of the UI (spec §3.4). *Done when:* a search of the rendered app for WIRE, CHNL, DECK, CASE, CTRL, ETCH, DUB or PLYR finds nothing a person can read.
 2. **Retire the v1 devices:** the Game Boy (`Wire.tsx`), iPod (`overlays/Plyr.tsx`), Win98 (`Ctrl.tsx`, `Win98.tsx`) and answering machine. Until Phase 4's first run exists, sign-in and "start a crew / enter an invite code" use a plain interim screen.
 3. **Catalog:** `search-albums` (MusicBrainz, cached, debounced) and album resolution for every new track, with cover art.
 4. **DIG:** search box, results as spines grouped A–Z, recent digs on the device.
 5. **Album page:** jewel case, cover, hype sticker, wrapped state, crew heat, takes (yours, your crews', everyone's, each by time), tracklist with "open in" links.
-6. **Take sheet:** heat, take, sticker line, spun today / this week, relisten. Writes `reviews` + `spins`, removes `wants`. *Done when:* a take posted by one friend shows on their shelf and on another friend's view of the album, with no counts anywhere.
-7. **SHELF:** name tag, on repeat, liner notes, Top 8 (editable), your spins by month, still wrapped. Others' shelves open from their name on a take.
-8. **HOME (shop front, without Burn Club):** burned for you (unkept song burns from your crews), new takes from your crews, the BURN button. With no crew: just new takes (empty until Phase 4 follows) and the start-a-crew line. Sign-up gets a **just spin** option, so solo users never need a crew.
-9. **KEPT and Settings:** rename CASE to KEPT ("burned by [name] · kept [day]"); settings as the autorun menu opened from SHELF.
+6. **Take sheet:** heat, take, sticker line, spun today / this week, relisten. Writes `reviews` + `spins`, removes `wants`. *Done when:* a take posted by one friend shows on their label and on another friend's view of the album, with no counts anywhere.
+7. **LABEL:** masthead with label name and SUBSCRIBE, booklets, takes, on repeat, Top 8 (editable), your spins by month, still wrapped. Others' labels open from their name anywhere, or DIG → WRITERS. Subscriptions are built here too, so HOME has something to show.
+8. **HOME (shop front, without Burn Club):** burned for you (unkept song burns from your crews), new takes from your crews, the BURN button. With no crew: just booklets and takes from labels you subscribe to and the start-a-crew line. Sign-up gets a **just spin** option, so solo users never need a crew.
+9. **KEPT and Settings:** rename CASE to KEPT ("burned by [name] · kept [day]"); settings as the autorun menu opened from LABEL.
 10. **CREW:** the rack keeps its v1 parts with the new labels (`CREW n`, `IN THE CREW`, `＋ INVITE`, `BURNED TO [CREW]`).
 
 **Phase 3 — Burn Club**
@@ -261,7 +262,7 @@ Sign-in, crews and invites (the 9th join is rejected), song burns through `resol
 **Phase 4 — Burner upgrades**
 14. **Mixes:** `burn_tracks`, the 80:00 capacity bar, a mix shown as one CD-R with a Sharpie tracklist in KEPT.
 15. **Album burns:** "burn it for them" lands wrapped in their burned for you; "make it a Burn Club round" writes `round_queue`.
-16. **Follows:** `＋ FOLLOW` on someone else's shelf; their takes join new takes on your HOME. No counts, private lists.
+16. **Known for tags** on labels (needs enough likes to mean something).
 17. **First run:** the new opening (spec Open 1), with start a crew / enter an invite code / just spin.
 
 **Phase 5 — In-app playback**
@@ -275,7 +276,7 @@ Sign-in, crews and invites (the 9th join is rejected), song burns through `resol
 ---
 
 ## 9. Things to decide before or during the build
-Settled in November 2026: solo users are in, rounds run Sunday to Sunday, following comes after Burn Club, reviews get likes and comments, booklets are the long review, song replies replace song takes (spec §8 Settled 11–17). Build booklets, likes, comments and song replies in Phase 2 alongside takes; `known_for` in Phase 3. Still open:
+Settled in November 2026: solo users are in, rounds run Sunday to Sunday, subscribing to labels is in, reviews get likes and comments, booklets are the long review, song replies replace song takes (spec §8 Settled 11–17). Build booklets, likes, comments and song replies in Phase 2 alongside takes; `known_for` in Phase 3. Still open:
 
 1. **First run** (spec Open 1). Needed by Phase 4; Phase 2 uses a plain interim screen.
 2. **Whether a picker can pass their turn** in Burn Club. Decide before Phase 3.

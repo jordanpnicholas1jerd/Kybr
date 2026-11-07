@@ -9,10 +9,10 @@ The clickable reference for this spec is `docs/reference/KYBR Records Mockup.htm
 
 **An album diary for you and your crew, built out of CDs.**
 
-You **spin** albums and write **takes** on them, with heat stars and a few honest words. Your takes go up on your **shelf** for anyone to read. Second, you **burn** songs, mixes and albums to your **crew**, a private group of up to 8 friends. Each crew runs **Burn Club**: one album a week, everyone spins it, and then the next person picks.
+You **spin** albums and write **takes** on them, with heat stars and a few honest words. Your takes and longer **booklets** go up on your **label** (your own little record label) for anyone to read, like and comment on. Second, you **burn** songs, mixes and albums to your **crew**, a private group of up to 8 friends. Each crew runs **Burn Club**: one album a week, everyone spins it, and then the next person picks.
 
 **Priorities, in order:**
-1. **Album reviews**, part Letterboxd, part Substack: spin, take, booklet, shelf. People read, like and comment, so you can become **known for your opinion without being famous**. This is the main event.
+1. **Album reviews**, part Letterboxd, part Substack: spin, take, booklet, label. People read, like and comment, so you can become **known for your opinion without being famous**. This is the main event.
 2. **Music sharing**: burns to your crew, kept in your binder. It's a close second.
 3. **Burn Club** connects the two. Every round is shared music that turns into public takes.
 
@@ -55,14 +55,14 @@ No invented abbreviations. **KYBR** is the only word with its vowels dropped, so
 ### 3.2 Tabs
 Always in this order, uppercase, one real word each (3–5 letters):
 
-**HOME · DIG · CREW · SHELF · KEPT**
+**HOME · DIG · CREW · LABEL · KEPT**
 
 | Tab | What it is |
 |---|---|
 | **HOME** | The front of the shop: the Burn Club ticker, what's been burned for you, new takes from your crews. |
 | **DIG** | Search any album or artist. |
 | **CREW** | Your crews, in the silver hi-fi rack. Burn Club lives here. |
-| **SHELF** | Your public page: on repeat, liner notes, Top 8, your spins, still wrapped. Settings opens from here. |
+| **LABEL** | Your public page, set up like your own record label: its name, SUBSCRIBE, known-for tags, booklets, takes, on repeat, Top 8, your spins, still wrapped. Settings opens from here. |
 | **KEPT** | Your private CD binder of burns you chose to keep. |
 
 ### 3.3 Lexicon (use verbatim)
@@ -78,7 +78,11 @@ Always in this order, uppercase, one real word each (3–5 letters):
 | **crew heat** | Average of your crews' takes on an album. | "crew heat ★★★★ hot" |
 | **wrapped** | An album you want to hear. It stays shrink-wrapped until you spin it. | "♡ WANT IT", "still wrapped", "UNWRAP & SPIN IT" |
 | **your spins** | Your diary, drawn as a tower of spines grouped by month. | |
-| **Top 8** | The 8 albums faced out on your shelf. | |
+| **Top 8** | The 8 albums faced out on your label. | |
+| **label** | Your public page, named like a record label ("Cold Side"). | "a label by Jordan" |
+| **subscribe** | Getting someone's new booklets and takes on your HOME. | "SUBSCRIBE", "✓ SUBSCRIBED" |
+| **booklet** | A long review, written like the booklet in a CD case. | "✎ WRITE A BOOKLET" |
+| **known for** | Tags earned from likes on your reviews. | "known for trip-hop · Björk" |
 | **liner notes** | Your bio. | |
 | **on repeat** | Your profile song. | |
 | **burn** | Sending music to a crew: a song, a mix or an album. | "Mara burned you Teardrop" |
@@ -101,75 +105,40 @@ These no longer appear as labels anywhere: **WIRE, CHNL, DECK, CASE, CTRL, ETCH,
 
 ## 4. Visual system
 
-### 4.1 Palette
-Unchanged from v1. **Grounds:** `#15121b` base, `#1a1622` panel, `#100d15` deepest, radial top-light `radial-gradient(130% 80% at 12% -10%, #2b2236, #1a1622 52%)`, `#150f1f` device screen interior.
-**Ink:** `#e9e4f0` primary, `rgba(233,228,240,.6)` secondary, `rgba(233,228,240,.45)` micro-labels only.
+### 4.1 Look (settled November 2026, from the approved mockup)
+**Cobalt and chrome.** The screen is a cobalt grid, like blueprint paper. Everything you press is a chrome key that sits up off the screen and sinks when pressed. The main action on each screen is a blue chrome key. Reviews sit on brushed chrome plates with the words etched in. The CREW rack, ticker and LCD screens keep their dark hardware.
 
-**Skins** (user-selectable accent, UV is the default):
 ```
-UV      #C084FF   lo #e7c8ff   hi #7a3fd0   ← DEFAULT
-Sunset  #FF8A3D   lo #ffd6a8   hi #d75a2a
-Ice     #6FD3E8   lo #cdf6ff   hi #2a9fc4
-Volt    #C6F24E   lo #eaffb0   hi #7fb02a
-Heat    #FF4D3D   lo #ffcabf   hi #c42a1a
-```
-
-**Fixed signal colors (never re-skinned):**
-```
-#FFB45E / #FF8A3D   ember: heat, stars, "your turn" nudges, primary keys
-#7CFFC2 / #a8ffcf   green LCD: "spun it", confirmations, toasts
-#5fd8ff / #9fefff   cyan LCD: the CREW rack, the ticker, the burner screen
-#ff6fae             hot pink: active crew preset, invite
-#ffe27a             sticker yellow: hype stickers
-#f3ecdd → #ebe2ce   paper: take cards (crew), #e9edf2 → #d9dfe7 for takes from everyone
-#23307a             ballpoint ink (handwritten takes)
-#1d1b4f             Sharpie ink (CD-R labels, notes on burns)
+Screen         #3F5BA9 cobalt, with a faint white grid every 22px
+Page outside   #E8DCC6 cream
+Ink on cobalt  #F1E8D6 cream (labels at ~66% opacity)
+Hardware       #141414 ink black (panels, nav tray, outlines)
+Chrome keys    linear-gradient(180deg,#fff 0%,#eef0f4 18%,#b9bec9 46%,#8d93a1 50%,#d5d9e0 74%,#f4f5f8 100%)
+               border #4b505c, a 5px #5d6372 "edge" below; pressed = moves down 4px
+Blue chrome    linear-gradient(180deg,#c9d6ff 0%,#8ea6f0 20%,#4a66c0 47%,#2a418a 51%,#5f7bd6 75%,#b4c4f5 100%)
+               main keys, the active toggle, the BURN button, the BURN CLUB tag
+Review plates  brushed chrome (fine vertical lines over a light steel gradient), border #4b505c
+Etched type    #2a2e38 letters, 1px white highlight below, 1px dark shadow above
+Stars on chrome #24346a
+LCD screens    #0a1526 → #060c18 with cool blue text (#B9C6EE)
 ```
 
 ### 4.2 Type
 | Face | Use |
 |---|---|
-| **Michroma** | Wordmarks, screen titles, spines, LCD readouts, the ticker. Letter-spaced 1–3px, usually uppercase. Never body copy. |
-| **DM Mono** | Everything else: labels, body, data, song titles, typed takes from everyone. |
-| **Chakra Petch 600** | The name on the SHELF name tag only. |
-| **Caveat** | Handwriting only: crew takes on paper cards (500, ballpoint), Sharpie on CD-Rs and burn notes (600). |
-
-Chrome-metal title text, unchanged:
-```css
-background: linear-gradient(180deg,#fff,#e3e4ec 26%,#9a9bae 50%,#74758a 53%,#cfd0db 76%,#fff);
--webkit-background-clip: text; background-clip: text; color: transparent;
-```
+| **Archivo** (wide, italic, heavy 800–900) | Wordmarks, screen titles, booklet titles, spines, the ticker. Chrome-filled with a thin black outline and a hard 2px drop shadow on cobalt. Keep the middle band of the chrome light so titles stay readable. |
+| **DM Mono** | Everything else: labels, body text, booklet paragraphs, takes, data. |
+| **Chakra Petch 600** | The label name on LABEL. |
+| **Caveat** | Handwriting only: Sharpie on CD-Rs, notes on burns, the take in the CREW rack readout. |
 
 ### 4.3 Material recipes
-Kept from v1: **CD iridescence** (discs, avatars), **brushed silver faceplate** (CREW rack, burner, ticker frame), **chrome bar** (on repeat radio), **sunken LCD** with scanlines (cyan and green variants), **phone shell**. Recipes are in the v1 spec history and in `src/`.
+Kept: **CD iridescence** (discs), **CD-R with Sharpie** (burns), **jewel case**, **shrink-wrap**, **hype sticker**, **spines**, **tray card**, **sunken LCD**, the **CREW rack** faceplate. Recipes live in `reference/KYBR Records Mockup.html`.
 
-New in v2:
-
-**Jewel case** (album page):
-```css
-/* frame */ padding: 8px 8px 8px 18px; border-radius: 4px;
-background: linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.04) 40%,rgba(255,255,255,.1));
-box-shadow: inset 0 0 0 1px rgba(255,255,255,.28), 0 14px 30px rgba(0,0,0,.55);
-/* hinge: 8px strip on the left */ repeating-linear-gradient(180deg,rgba(255,255,255,.28) 0 2px,rgba(255,255,255,.06) 2px 5px);
-/* glare */ linear-gradient(120deg,rgba(255,255,255,.18),transparent 30%);
-```
-
-**Shrink-wrap** (wrapped albums), laid over the cover:
-```css
-background: linear-gradient(115deg,transparent 18%,rgba(255,255,255,.28) 30%,transparent 42%,rgba(255,255,255,.14) 68%,transparent 78%),
-            linear-gradient(0deg,rgba(220,230,255,.08),rgba(220,230,255,.08));
-border: 1px solid rgba(255,255,255,.35);
-```
-
-**Hype sticker** (your take on the cover): a 92px circle, `radial-gradient(circle at 40% 35%,#fff4b8,#ffe27a 60%,#e8c24a)`, rotated 9°, overlapping the top-right corner. Stars in `#b4321f`, the heat word in Michroma, the sticker line in DM Mono.
-
-**CD-R** (burns): silver `conic-gradient(from 30deg,#d9dce3,#f6f7f9,#b9bcc6,#eef0f4,#c9ccd5,#e9ebef,#d9dce3)`, a hub cut-out, and the label written in Sharpie (Caveat 600, `#1d1b4f`), tilted −4° to −6°.
-
-**Spine** (search results, your spins): a 36px-tall horizontal strip in the album's two tint colors, `ARTIST — TITLE` in 8px Michroma, year or your stars on the right. A list of spines reads as a stack of CDs.
-
-**Take card:** paper (`#f3ecdd → #ebe2ce`), a strip of translucent tape at the top, the author and time in small caps, stars in `#c4561f`, and the take in ballpoint. Takes from everyone use the cool paper (`#e9edf2 → #d9dfe7`) with the take typed in DM Mono, not handwritten. Your own card gets a 2px ember ring.
-
-**Tray card** (tracklist): pale grey paper (`#e9e6df → #d6d2c8`), two columns, dotted rules, a barcode at the bottom.
+New in this look:
+- **Chrome review plate:** booklet cards, the booklet reader and take cards. Two small rivets in the top corners of the reader. Your own take gets a cobalt ring.
+- **Booklet reader:** a full chrome plate: album art, the label badge, the title in heavy italic, stars, then the body in etched DM Mono. Likes and SUBSCRIBE sit at the bottom; comments sit below the plate.
+- **DIG panel:** a chrome plate with etched labels, a cobalt DIG title, chrome ALBUMS / WRITERS toggles and the dark LCD search box.
+- **KEPT sleeves:** one large disc per sleeve (up to 240px), centered, with the song and "burned by" under it.
 
 ### 4.4 Animations
 `kybrSpin` (discs), `kybrEq` (spectrum, equalizer), `kybrFlick` (VU, ticker light), `kybrRise` (sheets), `kybrFlip` (binder pages) are unchanged.
@@ -188,7 +157,7 @@ New: `kybrTick` (ticker scroll, `translateX(0 → -50%)` over a duplicated strip
 ## 5. Navigation. LOCKED
 The chrome nav tray from v1 is unchanged: five beveled metal buttons in a dark recessed tray, the active one bright with a lit LED in the skin color (recipes in `src/components/NavTray.tsx`).
 
-Order, always: **HOME · DIG · CREW · SHELF · KEPT**. Labels 8px, letter-spacing 1.2–1.5px.
+Order, always: **HOME · DIG · CREW · LABEL · KEPT**. Labels 8px, letter-spacing 1.2–1.5px.
 
 The album page and the overlays don't get tabs. The album page replaces the tab content, and the tab you came from stays lit. ◂ BACK returns you there. The status bar shows the skin name on tab screens and `ALBUM` on the album page.
 
@@ -197,17 +166,18 @@ The album page and the overlays don't get tabs. The album page replaces the tab 
 ## 6. Screens
 
 ### 6.1 HOME: the front of the shop
-1. **Header:** `KYBR RECORDS` in chrome, with a green `● OPEN` light.
-2. **The ticker** (§6.3). It's the first thing you see.
-3. **Burned for you:** a horizontal row of CD-Rs with Sharpie labels (song title, or the mix's name, or "the whole album"), "from [name]" and the time. Tap one to open the burned-for-you sheet (§6.10).
-4. **New takes, from your crews:** rows with a cover, name · album, stars and the take in quotes, newest first. Tap a row to open the album.
-5. **BURN:** a round ember button floating bottom-right opens the burner (§6.9).
+1. **Header:** `KYBR RECORDS` in chrome, with a `● OPEN` light.
+2. **The ticker** (§6.3).
+3. **New booklets:** chrome booklet cards (cover, label name, title, stars, album, when, ♥ and comment counts) from labels you subscribe to and from your crews, newest first. Tap to read.
+4. **Burned for you:** a row of CD-Rs with Sharpie labels from your crews. Tap one to open it (§6.10).
+5. **New takes:** short takes from your crews and labels you subscribe to, each with ♥ and comments.
+6. **BURN:** a blue chrome button floating bottom-right opens the burner (§6.9).
 
-Everything here comes from your crews and the shelves you follow, ordered by time. Empty state: "nothing burned for you yet."
-
-**With no crew:** the ticker and burned for you are hidden. HOME shows new takes from shelves you follow, and a quiet line: "start a crew or enter an invite code to burn music with friends."
+**With no crew:** the ticker and burned for you are hidden. HOME shows booklets and takes from labels you subscribe to, and a quiet line: "start a crew or enter an invite code to burn music with friends."
 
 ### 6.2 DIG: search
+Two modes, switched by chrome toggles: **ALBUMS** and **WRITERS**. WRITERS searches labels by name, handle or what they're known for, and shows a SUBSCRIBE key on each. With nothing typed, it lists the labels you subscribe to.
+
 1. Header `DIG` · "find any album", on a warm brown counter panel.
 2. Input: "dig for an album or artist…". Searches the whole catalog (MusicBrainz), not just what your crews have touched.
 3. Before you type: **Recent digs** (your own searches) and **Burn Club albums** (rounds from your crews).
@@ -237,18 +207,17 @@ The v1 CHNL rack, kept because it's the strongest chassis in the project. Top to
 7. **Burned to [crew]:** the song burn list (Michroma numbers, song, "artist · who", time). Tap to open it in your music service.
 8. **This week** bar and the red `410W T·BASS` badge (decoration).
 
-### 6.5 SHELF: your public page
-1. **Name tag:** a white badge with a skin-colored band reading `KYBR RECORDS · STAFF`, your name in Chakra Petch 600 / 24px / 4px tracking, then `@handle · "tagline"`. Beside it, a small `⚙ SETTINGS` button.
-2. **On repeat:** the chrome radio from v1 (green LCD, equalizer, purple play knob).
-3. **Liner notes:** a thin skin-colored rule on the left, 11px body.
-4. **Top 8** · `PUBLIC`: a 4×2 wall of covers. Tap one to open it.
-5. **Your spins:** spines grouped by month, newest on top, each showing your stars.
-6. **Known for:** up to three tags earned from likes on your reviews, for an artist, genre or decade ("known for trip-hop · Björk · 2000s R&B"). Computed from likes on your reviews in that corner of music, never from followers. Hidden until you've earned one.
-7. **Booklets:** your long reviews, newest first, as booklet covers.
-8. **Your takes:** your latest takes as cards with their likes, newest first, `SEE ALL ▸`.
-9. **Still wrapped:** covers under shrink-wrap. Empty state: "nothing wrapped. tap ♡ WANT IT on any album."
+### 6.5 LABEL: your public page
+1. **Masthead:** a disc logo, "A LABEL BY [NAME]", the label name in Chakra Petch, your handle, your tagline, and **known for** tags (§6.13). On your own label: a `⚙ SETTINGS` key. On someone else's: `SUBSCRIBE` / `✓ SUBSCRIBED`.
+2. **✎ WRITE A BOOKLET** (your own label only).
+3. **Booklets:** newest first, as chrome booklet cards.
+4. **Takes:** a row of chrome take cards with ♥ and comments.
+5. **On repeat:** the chrome radio with your profile song.
+6. **Top 8** (on others' labels: "On the shelf", albums they've reviewed).
+7. **Your spins:** spines grouped by month, newest on top (your own label only).
+8. **Still wrapped:** albums you want to hear (your own label only).
 
-Anyone can see a shelf. Nothing from the private side (crews, burns, KEPT) ever appears on it. You reach someone else's shelf by tapping their name on a take. On someone else's shelf, a `＋ FOLLOW` key under the name tag adds their takes and booklets to your HOME. **No follower count is ever shown, on either side.** You can see the list of people you follow; nobody can see who follows them.
+Anyone can see a label. Nothing from the private side (crews, burns, KEPT) ever appears on it. You reach someone's label by tapping their name on a take, booklet or comment, or through DIG → WRITERS. **No subscriber count is ever shown, on either side.**
 
 ### 6.6 KEPT: your binder (private)
 The v1 CD binder: a `KEPT` chrome title, "burns you kept · only you see this", a `DISC nn / 48` pill, two sleeves per page split by eight chrome rings, and ▲ / `flip the rings` / ▼. Each sleeve: an iridescent CD, the song, the artist, an avatar plus "burned by [name] · kept [day]", and `▸ OPEN IN [SERVICE]`. Mixes show as a CD-R with a Sharpie tracklist.
@@ -257,7 +226,7 @@ The v1 CD binder: a `KEPT` chrome title, "burns you kept · only you see this", 
 Opens from DIG, takes on HOME, the CREW rack, Top 8, your spins and burns. It replaces the tab content.
 1. `◂ BACK` · on the right, `♡ WANT IT` / `♥ WANTED`, or `spun [when]` once you've spun it.
 2. **The case:** the cover (Cover Art Archive) inside the jewel case frame. If you've spun it, your **hype sticker** sits on the corner. If it's wrapped, shrink-wrap covers it with `STILL WRAPPED`.
-3. Title in chrome Michroma · `artist · year · n tracks`.
+3. Title in chrome Archivo · `artist · year · n tracks`.
 4. Keys: `✎ SPIN IT` / `✎ UNWRAP & SPIN IT` / `✎ REWRITE YOUR TAKE` (ember) · `BURN IT ▸` (opens the burner with this album).
 5. **Crew heat** row (only if someone in your crews has a take).
 6. **Booklets** (long reviews, §6.13): cards with title, author, stars and the first lines, above the takes.
@@ -270,10 +239,10 @@ Rises from the bottom over a blurred scrim.
 - A paper card: heat cells plus the word ("tap a star · twice for ½" until set), "your take", a ruled ballpoint textarea (280 characters, "what stuck with you?"), a character counter.
 - `sticker line · optional` (40 characters).
 - `spun`: `TODAY` / `THIS WEEK`, and `↻ RELISTEN` (adds a new entry to your spins instead of replacing the old one).
-- "public · shows on your shelf and on this album." If this album is an open Burn Club round in one of your crews: "counts for Burn Club round 14."
+- "public · shows on your label and on this album." If this album is an open Burn Club round in one of your crews: "counts for Burn Club round 14."
 - Keys `CANCEL` / `★ POST YOUR TAKE` (disabled until there's heat).
 
-**Result:** the sticker appears on the cover, the album goes to the top of your spins, wrap comes off, and if it's a round, your disc lights up in the changer and the ticker flips to green. Toasts: "✓ posted · on your shelf", "✓ spun · your disc is lit in basement", or "✓ round 14 complete · Sof picks next".
+**Result:** the sticker appears on the cover, the album goes to the top of your spins, wrap comes off, and if it's a round, your disc lights up in the changer and the ticker flips to green. Toasts: "✓ posted · on your label", "✓ spun · your disc is lit in basement", or "✓ round 14 complete · Sof picks next".
 
 ### 6.9 Burner (sending music)
 A brushed-silver chassis: `KYBR` · `CD-RW BURNER · KY·BRN01` · a status light (`READY` amber, `BUSY`, `DONE` green), and step lights `WHAT · CREW · NOTE · BURN`.
@@ -292,7 +261,7 @@ Opens from a CD-R on HOME. A large CD-R with the Sharpie label, the title, the a
 **Song replies:** anyone in the crew can reply under the burn (§6.14).
 
 ### 6.11 Settings
-Opens from `⚙ SETTINGS` on SHELF, styled as an enhanced-CD **autorun menu** (the window that popped up when you put a disc in a PC): a blue title bar `KYBR.EXE · autorun`, a spinning disc, and glossy pill buttons for **Skin** (five swatches), **Music service** (Apple Music · Spotify · YouTube Music · Tidal), **Your crews**, **Notifications** and **Sign out**.
+Opens from `⚙ SETTINGS` on LABEL, styled as an enhanced-CD **autorun menu** (the window that popped up when you put a disc in a PC): a blue title bar `KYBR.EXE · autorun`, a spinning disc, and glossy pill buttons for **Skin** (five swatches), **Music service** (Apple Music · Spotify · YouTube Music · Tidal), **Your crews**, **Notifications** and **Sign out**.
 
 ### 6.12 First run
 Not designed yet (Open 1). The v1 answering machine is not CD-world and gets replaced. Direction: you start with a sealed jewel case and unwrap it to begin. Then: sign in with a magic link → pick a handle → **start a crew**, **enter an invite code**, or **just spin** (no crew; settled in Open 2).
@@ -301,10 +270,10 @@ Not designed yet (Open 1). The v1 answering machine is not CD-world and gets rep
 ### 6.13 Booklets (long reviews)
 The Substack part. A booklet is a long review of one album, written like the booklet that folds out of a CD case.
 - **Writing:** from the album page, `✎ WRITE A BOOKLET`. Title, stars (required), the body (no length cap, paragraphs, pull quotes), and up to three favorite tracks called out. Saves drafts. Publishing a booklet also sets your take's stars for that album.
-- **Reading:** a reading view styled as booklet pages: the album art as the cover, then clean pages of type (DM Mono body, Michroma headings). Author name tag at the top, tap to open their shelf.
+- **Reading:** a full chrome plate (§4.3): album art, the label badge (tap to open their label), the title, stars, then the body in etched type.
 - **Likes:** `♥` with a count, on booklets, takes and comments.
 - **Comments:** anyone signed in can comment (1,000 characters). Comments can be liked. The author can pin one and delete any on their own booklet. Sort `MOST LIKED` / `NEWEST`. One level of replies.
-- **Where booklets show:** on the album page above takes, on the author's shelf, and on followers' HOME.
+- **Where booklets show:** on the album page above takes, on the author's label, and on subscribers' HOME.
 
 ### 6.14 Song replies (crew only)
 Replaces the 80-character song take. When someone burns a song, anyone in the crew can reply with up to **250 characters**, stars optional. Replies stack under the burn as a short thread, oldest first. No likes, no counts; it stays in the crew.
@@ -316,7 +285,7 @@ Replaces the 80-character song take. When someone burns a song, anyone in the cr
 - UPPERCASE with wide tracking for hardware labels and keys (`SPIN IT`, `DISC PRESETS`, `flip the rings` is the one lowercase exception, kept from v1).
 - Time, not counts: "spun nov 3", "kept tue", "ends sun".
 - Attribution is always a person: "Dev's pick", "burned by Mara", "Sof picks next".
-- Never: "Trending", "Popular", "Recommended for you", "Top reviewers", "X plays", "X followers", "Discover". Like and comment counts are fine on individual reviews.
+- Never: "Trending", "Popular", "Recommended for you", "Top reviewers", "X plays", "X subscribers", "Discover". Like and comment counts are fine on individual reviews.
 - Every word passes the word test (§3.1).
 
 ---
@@ -327,25 +296,26 @@ Replaces the 80-character song take. When someone burns a song, anyone in the cr
 1. **Reviews are the main event;** sharing is a close second (November 2026).
 2. **The CD world replaces "one device per screen."** The Game Boy (WIRE), iPod (PLYR), Win98 (CTRL), cassette (TAPE) and answering machine are retired.
 3. **The CREW rack stays,** and Burn Club lives inside it (the changer).
-4. **Plain words, CD world** (§3). Tabs: HOME · DIG · CREW · SHELF · KEPT.
+4. **Plain words, CD world** (§3). Tabs: HOME · DIG · CREW · LABEL · KEPT (SHELF became LABEL in November 2026).
 5. **Burn Club shows on HOME as the ticker,** and in full in CREW.
 6. **DIG searches any album** (the whole catalog), with no ranking or feed.
 7. **Mixes are capped at 80:00,** the length of a real CD-R.
 8. **Crews are capped at 8 people.** The wordmark is **KYBR**.
 9. **One heat scale** for album and song takes.
-10. **Takes and shelves are public; crews, burns, notes and KEPT are private.** There's no profile search; you reach a shelf through a take.
+10. **Takes, booklets and labels are public; crews, burns, notes and KEPT are private.** There's no profile search; you reach a label through a take, booklet, comment, or DIG → WRITERS.
 11. **Solo users are welcome** (November 2026). You can sign up just to spin and post takes; a crew is something you add.
 12. **Burn Club rounds run Sunday to Sunday.** Every round closes Sunday at midnight in the crew's time zone and the next one opens. A crew's first round runs to the next Sunday. Unlit discs stay dark; there's no penalty.
 13. **Song takes stay.** Receivers can leave heat and up to 80 characters on a burned song, inside the crew only.
-14. **Following is in,** built after Burn Club. Follow from someone's shelf; their takes and booklets show on your HOME; follower counts are never shown.
-15. **Reviews get likes and comments** (November 2026). Counts show on individual takes, booklets and comments. People are known for taste ("known for" tags), never for follower numbers. No app-wide best-of or trending page; good reviews rise on each album's page.
+14. **Subscribing is in** (called following earlier). Subscribe from someone's label; their booklets and takes show on your HOME; subscriber counts are never shown.
+18. **The look is cobalt and chrome** (§4.1), from the approved mockup.
+15. **Reviews get likes and comments** (November 2026). Counts show on individual takes, booklets and comments. People are known for taste ("known for" tags), never for subscriber numbers. No app-wide best-of or trending page; good reviews rise on each album's page.
 16. **Booklets** are the long review (§6.13).
 17. **Song replies** replace song takes: 250 characters, stars optional, crew only (§6.14).
 
 ### Open
 1. **First run:** design the unwrap-the-case opening.
 2. ~~**Solo users**~~ **Settled:** yes (Settled 11).
-3. ~~**Following people outside your crews**~~ **Settled:** a quiet follow, after Burn Club (Settled 14).
+3. ~~**Following people outside your crews**~~ **Settled:** subscribing to labels (Settled 14).
 4. ~~**Burn Club rules**~~ **Settled:** Sunday to Sunday, closes on time, no penalty (Settled 12). Still to decide: whether a picker can pass their turn.
 5. ~~**Song takes**~~ **Settled:** keep them (Settled 13).
 6. **Crew heat** stays (the mockup shows it on albums and in the VU meter). Reconfirm it doesn't feel like a score.
@@ -357,7 +327,7 @@ Replaces the 80-character song take. When someone burns a song, anyone in the cr
 - **Screen size:** design at 392×812 inside the phone shell; the shell fills the screen on phones.
 - **Hit targets:** anything tappable is at least 44px, using padding or an invisible overlay rather than bigger art. Decorative hardware (LEDs, model numbers, VU segments, rings) stays display-scale.
 - **Contrast:** ink is full opacity over metal and paper. The 45% tier is for micro-labels only.
-- **Code names vs UI words:** the code and database still use v1 names in places (`burns`, `etches`, `dubs`, `kept`, `reviews`, `Wire.tsx`, `Chnl.tsx`). That's fine internally, but no v1 word reaches the UI. Map: Wire → HOME, Chnl → CREW, Deck → SHELF, Case → KEPT, Ctrl → Settings, reviews → takes, etches → song takes, dubs → invites. The Build Plan says which to rename.
+- **Code names vs UI words:** the code and database still use v1 names in places (`burns`, `etches`, `dubs`, `kept`, `reviews`, `Wire.tsx`, `Chnl.tsx`). That's fine internally, but no v1 word reaches the UI. Map: Wire → HOME, Chnl → CREW, Deck → LABEL, Case → KEPT, Ctrl → Settings, reviews → takes, etches → song takes, dubs → invites. The Build Plan says which to rename.
 
 ---
 
