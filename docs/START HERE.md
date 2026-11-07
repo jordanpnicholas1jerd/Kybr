@@ -41,6 +41,10 @@ Then Phase 3 (Burn Club), then Phase 4 (mixes, album burns, the first-run screen
 - **Tests:** keep `npm test`, `npm run typecheck` and `npm run test:db` passing, and add tests for new privacy rules.
 - **Ask before deciding** anything listed as open (Spec §8 Open, Build Plan §9). The biggest one is the first-run screen.
 
+## Hosting: changes go live from Claude Code
+
+Host the app on **Vercel** (or Netlify) **connected to this GitHub repository**, with Supabase for the database. Set it up so every push to the main branch deploys automatically and every other branch gets its own preview link. Then any change made in Claude Code goes live a minute or two after it's pushed, with no manual upload step. Database changes ship the same way, as migration files in `supabase/migrations` applied with `npx supabase db push`.
+
 ## Working with the owner
 
 - Keep replies short and in plain language, without jargon.
