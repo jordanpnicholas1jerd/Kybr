@@ -203,7 +203,9 @@ The album page and the overlays don't get tabs. The album page replaces the tab 
 4. **New takes, from your crews:** rows with a cover, name · album, stars and the take in quotes, newest first. Tap a row to open the album.
 5. **BURN:** a round ember button floating bottom-right opens the burner (§6.9).
 
-Everything here comes from your crews and is ordered by time. Empty state: "nothing burned for you yet."
+Everything here comes from your crews and the shelves you follow, ordered by time. Empty state: "nothing burned for you yet."
+
+**With no crew:** the ticker and burned for you are hidden. HOME shows new takes from shelves you follow, and a quiet line: "start a crew or enter an invite code to burn music with friends."
 
 ### 6.2 DIG: search
 1. Header `DIG` · "find any album", on a warm brown counter panel.
@@ -243,7 +245,7 @@ The v1 CHNL rack, kept because it's the strongest chassis in the project. Top to
 5. **Your spins:** spines grouped by month, newest on top, each showing your stars.
 6. **Still wrapped:** covers under shrink-wrap. Empty state: "nothing wrapped. tap ♡ WANT IT on any album."
 
-Anyone can see a shelf. Nothing from the private side (crews, burns, KEPT) ever appears on it. You reach someone else's shelf by tapping their name on a take.
+Anyone can see a shelf. Nothing from the private side (crews, burns, KEPT) ever appears on it. You reach someone else's shelf by tapping their name on a take. On someone else's shelf, a `＋ FOLLOW` key under the name tag adds their takes to your HOME. It never shows a follower or following count, on either side.
 
 ### 6.6 KEPT: your binder (private)
 The v1 CD binder: a `KEPT` chrome title, "burns you kept · only you see this", a `DISC nn / 48` pill, two sleeves per page split by eight chrome rings, and ▲ / `flip the rings` / ▼. Each sleeve: an iridescent CD, the song, the artist, an avatar plus "burned by [name] · kept [day]", and `▸ OPEN IN [SERVICE]`. Mixes show as a CD-R with a Sharpie tracklist.
@@ -283,13 +285,13 @@ A brushed-silver chassis: `KYBR` · `CD-RW BURNER · KY·BRN01` · a status ligh
 ### 6.10 Burned-for-you sheet
 Opens from a CD-R on HOME. A large CD-R with the Sharpie label, the title, the artist, the sender's note in handwriting, and when it arrived. Keys: `▸ OPEN IN [SERVICE]` · `OPEN THE ALBUM ↗` (if the album is known) · `★ KEEP IT` (moves it to KEPT: "✓ kept · it's in your binder").
 
-**Song takes (the old ETCH):** the receiver can also leave a quick take on a burned song, with heat plus up to 80 characters. It stays inside the crew, and the sender sees it on the burn. Not in the mockup yet; see Open 5.
+**Song takes (the old ETCH):** the receiver can also leave a quick take on a burned song, with heat plus up to 80 characters. It stays inside the crew, and the sender sees it on the burn. Settled (Open 5); not in the mockup yet.
 
 ### 6.11 Settings
 Opens from `⚙ SETTINGS` on SHELF, styled as an enhanced-CD **autorun menu** (the window that popped up when you put a disc in a PC): a blue title bar `KYBR.EXE · autorun`, a spinning disc, and glossy pill buttons for **Skin** (five swatches), **Music service** (Apple Music · Spotify · YouTube Music · Tidal), **Your crews**, **Notifications** and **Sign out**.
 
 ### 6.12 First run
-Not designed yet (Open 1). The v1 answering machine is not CD-world and gets replaced. Direction: you start with a sealed jewel case and unwrap it to begin. Then: sign in with a magic link → pick a handle → **start a crew** or **enter an invite code**, with a third option, **just spin**, for people with no crew yet (Open 2).
+Not designed yet (Open 1). The v1 answering machine is not CD-world and gets replaced. Direction: you start with a sealed jewel case and unwrap it to begin. Then: sign in with a magic link → pick a handle → **start a crew**, **enter an invite code**, or **just spin** (no crew; settled in Open 2).
 
 ---
 
@@ -316,13 +318,17 @@ Not designed yet (Open 1). The v1 answering machine is not CD-world and gets rep
 8. **Crews are capped at 8 people.** The wordmark is **KYBR**.
 9. **One heat scale** for album and song takes.
 10. **Takes and shelves are public; crews, burns, notes and KEPT are private.** There's no profile search; you reach a shelf through a take.
+11. **Solo users are welcome** (November 2026). You can sign up just to spin and post takes; a crew is something you add.
+12. **Burn Club rounds run Sunday to Sunday.** Every round closes Sunday at midnight in the crew's time zone and the next one opens. A crew's first round runs to the next Sunday. Unlit discs stay dark; there's no penalty.
+13. **Song takes stay.** Receivers can leave heat and up to 80 characters on a burned song, inside the crew only.
+14. **Following is in,** built after Burn Club. A quiet follow from someone's shelf; their takes show on your HOME; no counts anywhere, and follow lists are private.
 
 ### Open
 1. **First run:** design the unwrap-the-case opening.
-2. **Solo users:** can someone use KYBR just to spin and post takes, with no crew? (Recommendation: yes. The crew becomes something you add.)
-3. **Following people outside your crews:** a quiet "save this shelf" with no follower counts, or nothing?
-4. **Burn Club rules:** is a round always a week? Can the picker skip? What happens to people who don't spin before it ends? (Recommendation: a round closes on time; unlit discs just stay dark, no penalty.)
-5. **Song takes:** keep the v1 ETCH (receivers rate and note a burned song, crew-only) under the name "take", or drop it?
+2. ~~**Solo users**~~ **Settled:** yes (Settled 11).
+3. ~~**Following people outside your crews**~~ **Settled:** a quiet follow, after Burn Club (Settled 14).
+4. ~~**Burn Club rules**~~ **Settled:** Sunday to Sunday, closes on time, no penalty (Settled 12). Still to decide: whether a picker can pass their turn.
+5. ~~**Song takes**~~ **Settled:** keep them (Settled 13).
 6. **Crew heat** stays (the mockup shows it on albums and in the VU meter). Reconfirm it doesn't feel like a score.
 7. **In-app playback:** v1's PLYR (iPod) is retired. If in-app playback (Build Plan Phase 5) happens, its player needs a CD-world device, probably a Discman.
 

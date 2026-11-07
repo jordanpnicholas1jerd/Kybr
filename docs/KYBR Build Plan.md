@@ -146,6 +146,7 @@ settings      (v1) (user_id pk → profiles, skin text default 'uv',
 
 -- crews
 crews         (v1) (id, name, freq text, created_by → profiles, created_at)
+              -- new (P3): timezone text not null — IANA name, set from the creator's device
 crew_members  (v1) (crew_id → crews, user_id → profiles, joined_at, pk(crew_id,user_id))
               -- trigger: reject insert when the crew already has 8 members
               -- new (P3): pick_order int — Burn Club rotation, set on join
@@ -184,6 +185,10 @@ rounds        new (P3) (id, crew_id, number int, album_id, picked_by → profile
 round_queue   new (P4) (crew_id, user_id, album_id, queued_at, pk(crew_id,user_id))
               -- "make it a Burn Club round": one queued pick per person per crew
 
+-- following (private lists)
+follows       new (P4) (follower_id → profiles, followee_id → profiles, created_at,
+               pk(follower_id,followee_id), check follower_id <> followee_id)
+
 room_state    (v1, Phase 6) (crew_id pk, track_id, position_ms, started_at, playing bool, driver_id)
 ```
 
@@ -195,7 +200,7 @@ room_state    (v1, Phase 6) (crew_id pk, track_id, position_ms, started_at, play
 
 **Burn Club:**
 - A member has *spun* the current round when they have a `spins` row for the round's album dated on or after `starts_at`. The changer and the ticker read that, plus their take for the stars.
-- A round opens with `ends_at = starts_at + 7 days`. A scheduled function (Supabase cron) closes rounds at `ends_at` and opens the next one for the member next in `pick_order`: their `round_queue` album if they queued one, otherwise the round stays open as "waiting on [name]'s pick" until they choose. Unlit discs stay dark; there's no penalty (spec §8 Open 4).
+- **Rounds run Sunday to Sunday** (spec §8 Settled 12). `ends_at` is always the next Sunday at 24:00 in `crews.timezone`; a crew's first round, started midweek, runs to the coming Sunday. A scheduled function (Supabase cron, hourly) closes every round whose `ends_at` has passed and opens the next one for the member next in `pick_order`: their `round_queue` album if they queued one, otherwise the rack shows "waiting on [name]'s pick" until they choose, and that round still ends on the next Sunday. Unlit discs stay dark; there's no penalty.
 - Rounds belong to the crew. The takes written for them are ordinary public takes.
 
 ---
@@ -205,12 +210,12 @@ room_state    (v1, Phase 6) (crew_id pk, track_id, position_ms, started_at, play
 | Table | Who can read | Who can write |
 |---|---|---|
 | crews, crew_members, burns, burn_tracks, etches, rounds, round_queue, room_state | Members of that crew only | Members; burns and queue entries only as yourself |
-| kept, settings (preferred service, skin) | Owner | Owner |
+| kept, settings (preferred service, skin), follows | Owner (follow lists are never shown to anyone else) | Owner |
 | reviews (takes), spins, wants, top8 | **Everyone** (public) | Owner |
 | profiles (handle, name, tagline, liner notes, profile song) | **Everyone** (shelves are public, spec §8 Settled 10). Never expose crews, burns, notes, rounds or KEPT through them | Owner |
 | tracks, albums, album_tracks | Everyone | Server functions only |
 
-**Anti-clout is enforced in the API, not just the UI:** don't create any endpoint, view or column that returns counts of plays, likes, followers, spins, takes or wants. Two aggregates are allowed, and both only inside crews the viewer belongs to:
+**Anti-clout is enforced in the API, not just the UI:** don't create any endpoint, view or column that returns counts of plays, likes, followers, follows, spins, takes or wants. Two aggregates are allowed, and both only inside crews the viewer belongs to:
 - **crew heat** (the average of your crews' takes on an album, rounded to the half), and
 - **"n of m spun it"** for an open round in your own crew.
 
@@ -231,38 +236,39 @@ Sign-in, crews and invites (the 9th join is rejected), song burns through `resol
 5. **Album page:** jewel case, cover, hype sticker, wrapped state, crew heat, takes (yours, your crews', everyone's, each by time), tracklist with "open in" links.
 6. **Take sheet:** heat, take, sticker line, spun today / this week, relisten. Writes `reviews` + `spins`, removes `wants`. *Done when:* a take posted by one friend shows on their shelf and on another friend's view of the album, with no counts anywhere.
 7. **SHELF:** name tag, on repeat, liner notes, Top 8 (editable), your spins by month, still wrapped. Others' shelves open from their name on a take.
-8. **HOME (shop front, without Burn Club):** burned for you (unkept song burns from your crews), new takes from your crews, the BURN button.
+8. **HOME (shop front, without Burn Club):** burned for you (unkept song burns from your crews), new takes from your crews, the BURN button. With no crew: just new takes (empty until Phase 4 follows) and the start-a-crew line. Sign-up gets a **just spin** option, so solo users never need a crew.
 9. **KEPT and Settings:** rename CASE to KEPT ("burned by [name] · kept [day]"); settings as the autorun menu opened from SHELF.
 10. **CREW:** the rack keeps its v1 parts with the new labels (`CREW n`, `IN THE CREW`, `＋ INVITE`, `BURNED TO [CREW]`).
 
 **Phase 3 — Burn Club**
-11. `rounds`, `pick_order`, and the close/open job. First round: the crew's creator picks.
+11. `rounds`, `pick_order`, `crews.timezone`, and the hourly close/open job (rounds turn over Sunday at midnight). First round: the crew's creator picks.
 12. **The changer** in the CREW rack: one disc per member, lit when spun, tap to read a take; your disc opens the take sheet. ⏮ ⏭ step through past rounds; the LCD shows the round and `NEXT PICK ▸ [NAME]`. VU becomes crew heat.
 13. **The ticker** on HOME, opening CREW on the first crew that's waiting on you. *Done when:* in a crew of three, two people spin the round and both see the third disc dark; the third spins it, the round shows complete, and the next round opens for the next person in order.
 
 **Phase 4 — Burner upgrades**
 14. **Mixes:** `burn_tracks`, the 80:00 capacity bar, a mix shown as one CD-R with a Sharpie tracklist in KEPT.
 15. **Album burns:** "burn it for them" lands wrapped in their burned for you; "make it a Burn Club round" writes `round_queue`.
-16. **First run:** the unwrap-the-case opening (spec Open 1), including "just spin" if solo users are settled in (spec Open 2).
+16. **Follows:** `＋ FOLLOW` on someone else's shelf; their takes join new takes on your HOME. No counts, private lists.
+17. **First run:** the new opening (spec Open 1), with start a crew / enter an invite code / just spin.
 
 **Phase 5 — In-app playback**
-17. Apple developer token function and MusicKit JS provider; authorize on the first tap.
-18. YouTube provider with a visible ≥ 200 px player inside the Phase 5 player device.
-19. Provider fallback order from §5. *Done when:* the same burn plays in-app for an Apple Music friend, as a YouTube video for a friend without Apple Music, and opens Spotify for a Spotify friend.
+18. Apple developer token function and MusicKit JS provider; authorize on the first tap.
+19. YouTube provider with a visible ≥ 200 px player inside the Phase 5 player device.
+20. Provider fallback order from §5. *Done when:* the same burn plays in-app for an Apple Music friend, as a YouTube video for a friend without Apple Music, and opens Spotify for a Spotify friend.
 
 **Phase 6 — Live rooms (maybe; only after Apple answers, §4.4)**
-20. `room_state`, Realtime broadcast and presence, drift correction every few seconds.
+21. `room_state`, Realtime broadcast and presence, drift correction every few seconds.
 
 ---
 
 ## 9. Things to decide before or during the build
-1. **Solo users** (spec Open 2). Affects sign-up and whether HOME needs a no-crew state. Decide before Phase 2 step 8.
-2. **Burn Club rules** (spec Open 4): round length, skipping, what an empty pick looks like. Decide before Phase 3.
-3. **Song takes** (spec Open 5): keep ETCH as crew-only song takes, or drop it. Decide during Phase 2; the table already exists.
-4. **Following people outside your crews** (spec Open 3). Not needed until after Phase 3.
-5. **The Phase 5 player device** (spec Open 7).
-6. Apple's written answer on synchronized playback (§4.4). It gates Phase 6.
-7. App name check: confirm "KYBR" is clear to use as a product name before anything goes public.
+Settled in November 2026: solo users are in, rounds run Sunday to Sunday, song takes stay, following comes after Burn Club (spec §8 Settled 11–14). Still open:
+
+1. **First run** (spec Open 1). Needed by Phase 4; Phase 2 uses a plain interim screen.
+2. **Whether a picker can pass their turn** in Burn Club. Decide before Phase 3.
+3. **The Phase 5 player device** (spec Open 7).
+4. Apple's written answer on synchronized playback (§4.4). It gates Phase 6.
+5. App name check: confirm "KYBR" is clear to use as a product name before anything goes public.
 
 ---
 
