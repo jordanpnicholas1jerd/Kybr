@@ -1,12 +1,12 @@
 # KYBR
 
-A private music-sharing app for small crews: you **burn** a song to your people, they **etch** a note on it, and the good ones get **kept** in a CASE. No feed, no algorithm, no counts.
+An album diary for you and your crew, built out of CDs. You **spin** albums and post **takes** on them (heat stars plus a few honest words) to your public **shelf**. Second, you **burn** songs, mixes and albums to your **crew** of up to 8 friends, and each crew runs **Burn Club**: one album a week, everyone spins it, then the next person picks. No feed, no algorithm, no counts.
 
-The design lives in [`docs/KYBR Handoff Spec.md`](docs/KYBR%20Handoff%20Spec.md), and how it gets built lives in [`docs/KYBR Build Plan.md`](docs/KYBR%20Build%20Plan.md). The clickable prototype is in `docs/reference/` (open `KYBR Prototype.dc.html` with `support.js` beside it). Its data, including the album tracklists, is placeholder only.
+The design lives in [`docs/KYBR Handoff Spec.md`](docs/KYBR%20Handoff%20Spec.md) (v2, November 2026), and how it gets built lives in [`docs/KYBR Build Plan.md`](docs/KYBR%20Build%20Plan.md). The clickable reference is [`docs/reference/KYBR Records Mockup.html`](docs/reference/KYBR%20Records%20Mockup.html); open it in a browser. Its albums, people and tracklists are placeholders.
 
 ## Status
 
-**Phase 1 (the crew loop) is built.** Phase 2 (albums, reviews, DECK) waits for a go-ahead.
+**Phase 1 (the crew loop) is built, with the v1 look and words.** In v2, KYBR changed focus to album reviews and moved to new words (tabs **HOME · DIG · CREW · SHELF · KEPT**). Phase 2 (new shape + albums) waits for a go-ahead. The list below describes Phase 1 as it is in the code today, so it still uses the v1 names. The old prototype (`docs/reference/KYBR Prototype.dc.html` with `support.js`) is kept for history only.
 
 - [x] Answering machine first run: sign in with a magic link → greeting → START A CREW / ENTER A DUB
 - [x] **WIRE** (Game Boy): your crews' five newest burns as a cursor list, plus a This Week row. D-pad/arrow keys move, A/Enter opens, START burns

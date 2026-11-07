@@ -1,7 +1,7 @@
 # KYBR — Build Plan
-_Hand this to whoever builds the real app (a developer or Claude Code). It covers stack, accounts, data, music playback, and the order to build in. Pair it with `KYBR Handoff Spec.md` (the design) and `KYBR Prototype.dc.html` (the clickable reference)._
+_Hand this to whoever builds the real app (a developer or Claude Code). It covers stack, accounts, data, music playback, and the order to build in. Pair it with `KYBR Handoff Spec.md` (the design, v2) and `reference/KYBR Records Mockup.html` (the clickable reference)._
 
-Written October 2026. Music-service rules change often, so re-check every rule in §4 against the linked source before building that part.
+Written October 2026. **Revised November 2026** for v2: album reviews became the main event, sharing a close second, and the UI moved to the CD world with new words (spec §3). Phase 1 is built; the phases after it are reordered (§1, §8). Music-service rules change often, so re-check every rule in §4 against the linked source before building that part.
 
 ---
 
@@ -19,12 +19,14 @@ Because of that, every song in the database is a **service-neutral track**: one 
 
 | Phase | What ships | Playback |
 |---|---|---|
-| **1. Crew loop** | Sign-in, crews + invites (DUB), BURN, WIRE, CHNL track list, PLYR, ETCH, CASE, CTRL skins | **Open in your own app** (link-out) |
-| **2. Albums + reviews** | Album catalog, TAPE + J-card, public reviews, DECK | Link-out |
-| **3. In-app playback** | Play inside KYBR for Apple Music users; YouTube fallback for everyone else | Apple MusicKit JS + YouTube player |
-| **4. Live rooms** | CHNL "on air": the crew hears the same song at the same moment | Synced per-person playback, **blocked on Apple's answer (§4.4)** |
+| **1. Crew loop** (built, v1 look) | Sign-in, crews + invites, song burns, the rack's track list, song takes (ETCH), the binder, skins | **Open in your own app** (link-out) |
+| **2. New shape + albums** | v2 nav and words; DIG; album page; take sheet; SHELF; HOME as the shop front; KEPT; settings as the autorun menu. Retire the Game Boy, iPod, Win98 and answering machine | Link-out |
+| **3. Burn Club** | Rounds, pick order, the changer in the CREW rack, the ticker on HOME | Link-out |
+| **4. Burner upgrades** | Mixes (80:00 cap), album burns (burn it for them / make it a round), first run (unwrap the case) | Link-out |
+| **5. In-app playback** | Play inside KYBR for Apple Music users; YouTube fallback for everyone else. Needs a CD-world player (spec Open 7) | Apple MusicKit JS + YouTube player |
+| **6. Live rooms** (maybe) | The crew hears the same song at the same moment | Synced per-person playback, **blocked on Apple's answer (§4.4)** |
 
-Phases 1–2 can go to friends with no approval from any music service.
+Phases 1–4 can go to friends with no approval from any music service.
 
 ---
 
@@ -33,7 +35,7 @@ Phases 1–2 can go to friends with no approval from any music service.
 | Layer | Choice | Why |
 |---|---|---|
 | App | **Web app / PWA**: React + TypeScript + Vite, installable to the home screen | The prototype is already React and inline-styled HTML; MusicKit JS and the YouTube player are web SDKs; one codebase covers iPhone and Android friends. Revisit native (Expo) only if PWA audio limits bite. |
-| Backend | **Supabase**: Postgres, Auth, Row Level Security, Realtime, Edge Functions | Private crews map cleanly to RLS; Realtime covers the live rooms in Phase 4; Edge Functions hold the secret keys. |
+| Backend | **Supabase**: Postgres, Auth, Row Level Security, Realtime, Edge Functions | Private crews map cleanly to RLS; Realtime covers the live rooms in Phase 6; Edge Functions hold the secret keys. |
 | Hosting | Vercel or Netlify for the web app; Supabase for everything else | |
 | Server jobs | Supabase Edge Functions (Deno) | Link resolving, catalog lookups, minting the Apple developer token. |
 
@@ -65,14 +67,16 @@ Port the visual system from the prototype as-is: palette, type, material recipes
 
 If Odesli is down or rate-limited, still accept the burn and store the raw link. Playback falls back to opening that link.
 
-### 4.2 Albums (TAPE / J-card)
+### 4.2 Albums (the album page, DIG)
+- **DIG searches the whole catalog.** The Edge Function `search-albums` queries MusicBrainz release groups (`/ws/2/release-group?query=<text>&type=album`), caches the results, and returns them in the order MusicBrainz gives, then grouped A–Z by artist in the UI. Never rank by anything KYBR counts (spins, takes). Only search once the person has typed at least 2 characters, and debounce input so typing doesn't break the 1 request per second rule. Keep each person's recent searches on their device only.
+- Picking a result upserts the `albums` row (and its `album_tracks`) on first open.
 - **Source of truth for albums: MusicBrainz**, which is open and community-run (the same role TMDb plays for Letterboxd). Look up the recording by ISRC (`/ws/2/isrc/{isrc}?inc=releases+release-groups`), take its **release group** as the album, then fetch the tracklist from a representative release.
 - **Cover art:** Cover Art Archive, `https://coverartarchive.org/release-group/{mbid}/front`.
 - **MusicBrainz rules:** about **1 request per second per IP**, and every request must send a User-Agent like `KYBR/0.1 ( contact@yourdomain )`. Run all lookups server-side through a queue and cache results in `albums` / `album_tracks`. ([rate limiting doc](https://musicbrainz.org/doc/MusicBrainz_API/Rate_Limiting))
 - If MusicBrainz has no match, build the album from the Apple Music album data and flag it `source='apple'`.
 - **Replace the prototype's hand-typed tracklists** with this data. They were typed from memory and aren't authoritative.
 
-### 4.3 Apple Music: in-app playback (Phase 3)
+### 4.3 Apple Music: in-app playback (Phase 5)
 - **Who it works for:** listeners with an Apple Music subscription. Everyone else gets YouTube or link-out.
 - **Developer token:** a JWT signed **ES256** with the MusicKit private key (`iss` = Team ID, `kid` = Key ID), valid for at most 6 months. Mint it in an Edge Function (`apple-dev-token`) and cache it. Never ship the .p8 key to the client.
 - **Web player:** MusicKit JS v3 (`https://js-cdn.music.apple.com/musickit/v3/musickit.js`; confirm the current URL in Apple's docs). Flow: `MusicKit.configure({ developerToken, app:{ name:'KYBR', build } })` → `music.authorize()` the first time the user plays → `music.setQueue({ song: appleSongId })` → `music.play()`.
@@ -82,7 +86,7 @@ If Odesli is down or rate-limited, still accept the burn and store the raw link.
   - Show Apple Music attribution where Apple's guidelines require it.
   - MusicKit content can't be "synchronized with any other content". See §4.4 for why this matters.
 
-### 4.4 Live rooms (CHNL "on air", Phase 4) — blocked pending Apple's answer
+### 4.4 Live rooms (Phase 6, maybe) — blocked pending Apple's answer
 Plan: each person plays the song on **their own** account, and Supabase Realtime broadcasts `{ trackId, positionMs, startedAt, playing }` from whoever is "driving". Each client seeks to `positionMs + (now − startedAt)`. No audio passes through KYBR.
 
 **Blocker:** it's unclear whether Apple's "can't be synchronized with any other content" clause forbids this. A developer asked Apple exactly this question in public ([forum thread](https://developer.apple.com/forums/thread/838157)) and there's no public answer yet. **Before writing Phase 4, email Apple's MusicKit team and get the answer in writing.** If the answer is no, live rooms run on YouTube only, or rooms become "listen at the same time" without auto-seek, where each person presses play themselves.
@@ -94,16 +98,16 @@ For a new app, Spotify's developer program is effectively closed to in-app playb
 
 So Spotify users get **"open in Spotify"** links (from Odesli). Follow Spotify's branding guidelines wherever its name or logo appears. Revisit only if KYBR somehow reaches that size.
 
-### 4.6 YouTube: fallback in-app playback (Phase 3)
+### 4.6 YouTube: fallback in-app playback (Phase 5)
 - Find the video with Odesli's YouTube link first; if there isn't one, use a YouTube Data API search (`<artist> <title>`), prefer official "Topic" / Art Track uploads, and cache the match.
 - Play it with the **YouTube IFrame Player API**. Rules that affect the KYBR design ([required minimum functionality](https://developers.google.com/youtube/terms/required-minimum-functionality)):
   - The player viewport must be **at least 200 × 200 px** and stay visible. **It can't be hidden for audio-only playback.**
   - No overlays on top of any part of the player, including the chrome frames KYBR loves. Put the hardware *around* it, never *over* it.
   - No autoplay until more than half the player is on screen, and never two auto-playing players at once.
-- **Design consequence:** when PLYR is on the YouTube provider, the iPod screen shows the actual video player (≥ 200 px tall) in place of the spinning disc. Spec this as a PLYR variant.
+- **Design consequence:** when the Phase 5 player is on the YouTube provider, its screen shows the actual video player (≥ 200 px tall) in place of the spinning disc. Spec this as a variant of that player.
 
 ### 4.7 Link-out (always available)
-Every track has a "open in…" row built from Odesli links. Each user's preferred service is set in CTRL → Profile & Account. PLYR's center behavior per provider: Apple → play in app; YouTube → play in app; anything else → open the link in that app.
+Every track has a "open in…" row built from Odesli links. Each user's preferred service is set in Settings → Music service. Play behavior per provider: Apple → play in app; YouTube → play in app; anything else → open the link in that app.
 
 ---
 
@@ -125,45 +129,74 @@ interface PlayerProvider {
 // choose: user's preferred service → apple → youtube → link
 ```
 
-PLYR, CHNL transport, the CASE play hubs and the TAPE keys all call this. The TAPE's play key plays the album's tracks in order through the same provider.
+Until Phase 5 the only provider is `link`: every "open in [service]" button (burned-for-you sheet, KEPT sleeves, the rack's track list, the album tracklist) opens the track's link for your preferred service. In Phase 5 the same buttons call this interface instead, and the album page's tracklist can play in order. v1's PLYR (iPod) is retired; the Phase 5 player needs its own CD-world device.
 
 ---
 
 ## 6. Data model (Postgres)
 
+Tables marked **(v1)** already exist in `supabase/migrations`. Tables and columns marked **new** come with the phase shown. The database keeps v1 names where a table already exists (spec §9 has the map to UI words).
+
 ```sql
-profiles      (id uuid pk = auth.users.id, handle text unique, display_name, tagline,
-               liner_notes, profile_track_id → tracks, created_at)          -- public (DECK)
-settings      (user_id pk → profiles, skin text default 'uv',
+-- people
+profiles      (v1) (id uuid pk = auth.users.id, handle text unique, display_name, tagline,
+               liner_notes, profile_track_id → tracks, created_at)       -- public: the SHELF
+settings      (v1) (user_id pk → profiles, skin text default 'uv',
                preferred_service text check in ('apple','youtube','spotify','link'))  -- owner only
 
-crews         (id, name, freq text, created_by → profiles, created_at)
-crew_members  (crew_id → crews, user_id → profiles, joined_at, pk(crew_id,user_id))
+-- crews
+crews         (v1) (id, name, freq text, created_by → profiles, created_at)
+crew_members  (v1) (crew_id → crews, user_id → profiles, joined_at, pk(crew_id,user_id))
               -- trigger: reject insert when the crew already has 8 members
-dubs          (code text pk, crew_id, created_by, expires_at, used_by null, used_at null)   -- invites
+              -- new (P3): pick_order int — Burn Club rotation, set on join
+dubs          (v1) (code text pk, crew_id, created_by, expires_at, used_by null, used_at null)  -- invites
 
-tracks        (id, isrc text unique null, title, artist, duration_ms, album_id → albums null,
+-- catalog
+tracks        (v1) (id, isrc text unique null, title, artist, duration_ms, album_id → albums null,
                apple_id, spotify_id, youtube_id, links jsonb, resolved_at)
-albums        (id, mbid uuid unique null, apple_album_id, title, artist, year, cover_url,
+albums        (v1) (id, mbid uuid unique null, apple_album_id, title, artist, year, cover_url,
                tint text, source text)
-album_tracks  (album_id, position int, side text check in ('A','B'), title, track_id null)
+album_tracks  (v1) (album_id, position int, side text, title, track_id null)
 
-burns         (id, crew_id → crews, track_id → tracks, from_user → profiles,
-               note text check (length ≤ 80), heat numeric(2,1) null, created_at)
-etches        (burn_id → burns, user_id, heat numeric(2,1) not null, note ≤ 80, created_at,
-               pk(burn_id,user_id))
-kept          (user_id, burn_id, kept_at, pk(user_id,burn_id))          -- CASE
+-- reviews (public)
+reviews       (v1, = takes) (id, album_id, user_id, heat not null, body text ≤ 280,
+               created_at, updated_at, unique(album_id,user_id))
+              -- new (P2): sticker text check (length ≤ 40) null
+spins         new (P2) (id, user_id, album_id, spun_on date, relisten bool default false,
+               created_at)                                    -- your spins (the diary)
+wants         new (P2) (user_id, album_id, added_at, pk(user_id,album_id))  -- still wrapped;
+              -- deleted when you spin the album
+top8          (v1) (user_id, position 1..8, album_id, pk(user_id,position))
 
-reviews       (id, album_id → albums, user_id, heat numeric(2,1) not null, body text ≤ 280,
-               created_at, updated_at, unique(album_id,user_id))        -- public
-top8          (user_id, position 1..8, album_id, pk(user_id,position))
+-- sharing (private to the crew)
+burns         (v1) (id, crew_id, track_id, from_user, note ≤ 80, heat null, created_at)
+              -- new (P4): kind text check in ('song','mix','album') default 'song',
+              --           album_id → albums null, title text null (a mix's name);
+              --           track_id becomes nullable (a mix or album burn has none)
+burn_tracks   new (P4) (burn_id, position int, track_id, pk(burn_id,position))  -- a mix's songs
+              -- check in a function: total duration ≤ 80:00
+etches        (v1, = song takes) (burn_id, user_id, heat not null, note ≤ 80, created_at)
+kept          (v1) (user_id, burn_id, kept_at, pk(user_id,burn_id))          -- KEPT
 
-room_state    (crew_id pk, track_id, position_ms, started_at, playing bool, driver_id)  -- Phase 4
+-- Burn Club (private to the crew)
+rounds        new (P3) (id, crew_id, number int, album_id, picked_by → profiles,
+               starts_at, ends_at, unique(crew_id,number))
+round_queue   new (P4) (crew_id, user_id, album_id, queued_at, pk(crew_id,user_id))
+              -- "make it a Burn Club round": one queued pick per person per crew
+
+room_state    (v1, Phase 6) (crew_id pk, track_id, position_ms, started_at, playing bool, driver_id)
 ```
 
 **Heat** is `numeric(2,1)` with a check that it's between 0.5 and 5 in steps of 0.5 (spec §4.5). The UI renders it as stars and words, never as a number.
 
-**This Week** is a view, not a table: a crew's burns from the last 7 days, oldest first.
+**This week** is a view, not a table: a crew's burns from the last 7 days, oldest first.
+
+**Spinning an album** writes in one transaction: upsert the `reviews` row (the take, with heat, body and sticker), insert a `spins` row (a new row for a relisten, otherwise update today's), and delete the `wants` row. A take without heat can't be saved.
+
+**Burn Club:**
+- A member has *spun* the current round when they have a `spins` row for the round's album dated on or after `starts_at`. The changer and the ticker read that, plus their take for the stars.
+- A round opens with `ends_at = starts_at + 7 days`. A scheduled function (Supabase cron) closes rounds at `ends_at` and opens the next one for the member next in `pick_order`: their `round_queue` album if they queued one, otherwise the round stays open as "waiting on [name]'s pick" until they choose. Unlit discs stay dark; there's no penalty (spec §8 Open 4).
+- Rounds belong to the crew. The takes written for them are ordinary public takes.
 
 ---
 
@@ -171,47 +204,65 @@ room_state    (crew_id pk, track_id, position_ms, started_at, playing bool, driv
 
 | Table | Who can read | Who can write |
 |---|---|---|
-| crews, crew_members, burns, etches, room_state | Members of that crew only | Members; burns only as yourself |
+| crews, crew_members, burns, burn_tracks, etches, rounds, round_queue, room_state | Members of that crew only | Members; burns and queue entries only as yourself |
 | kept, settings (preferred service, skin) | Owner | Owner |
-| reviews | **Everyone** (public) | Owner |
-| profiles (handle, name, tagline, liner notes, profile song), top8 | **Everyone** (DECKs are public, spec §8 Settled 10). Never expose crews, burns, etches or CASE through them | Owner |
+| reviews (takes), spins, wants, top8 | **Everyone** (public) | Owner |
+| profiles (handle, name, tagline, liner notes, profile song) | **Everyone** (shelves are public, spec §8 Settled 10). Never expose crews, burns, notes, rounds or KEPT through them | Owner |
 | tracks, albums, album_tracks | Everyone | Server functions only |
 
-**Anti-clout is enforced in the API, not just the UI:** don't create any endpoint, view or column that returns counts of plays, likes, followers or reviews. The one aggregate allowed is **crew heat** (the average of your crews' reviews of an album, rounded to the half), computed only over crews the viewer belongs to, and only if spec §8 Open 4 keeps it.
+**Anti-clout is enforced in the API, not just the UI:** don't create any endpoint, view or column that returns counts of plays, likes, followers, spins, takes or wants. Two aggregates are allowed, and both only inside crews the viewer belongs to:
+- **crew heat** (the average of your crews' takes on an album, rounded to the half), and
+- **"n of m spun it"** for an open round in your own crew.
+
+Takes from everyone on an album are listed by time, never sorted or filtered by anything popularity-like.
 
 ---
 
 ## 8. Build order and "done" checks
 
-**Phase 1 — Crew loop (link-out)**
-1. Auth (email magic link) → profile with handle.
-2. Create a crew → share a DUB code → a friend joins; 9th join is rejected.
-3. BURN: paste link → `resolve-link` → pick crew → optional heat + note → burn row. *Done when:* a Spotify link pasted by one friend shows up for an Apple Music friend with a working "open in Apple Music" link.
-4. WIRE (Game Boy, 5-row cursor list of your crews' newest burns), CHNL track list per crew, PLYR as an "open in [service]" remote.
-5. ETCH from PLYR's center button; "keep" adds to CASE. *Done when:* the etch shows for the whole crew and CASE says "saved from [name] · saved [day]".
-6. CTRL: skin picker (persists to profile), preferred service, sign out.
+**Phase 1 — Crew loop (link-out). Built.**
+Sign-in, crews and invites (the 9th join is rejected), song burns through `resolve-link`, the Game Boy feed, the rack's track list, PLYR as an "open in [service]" remote, ETCH, the binder, skins and settings. It shipped with the v1 look and words; Phase 2 changes those.
 
-**Phase 2 — Albums + reviews**
-7. Album resolution on every new track (MusicBrainz queue + cover art).
-8. TAPE screen from PLYR's `from [album] ↗`, DECK Top 8 and DECK reviews; J-card with real tracklist.
-9. Write/rewrite review; public section lists others' reviews by time; no counts anywhere. *Done when:* a review written on TAPE appears on your DECK and on a friend's view of that J-card.
+**Phase 2 — New shape + albums (the main event)**
+1. **Words and nav:** tabs become HOME · DIG · CREW · SHELF · KEPT. Sweep every v1 word out of the UI (spec §3.4). *Done when:* a search of the rendered app for WIRE, CHNL, DECK, CASE, CTRL, ETCH, DUB or PLYR finds nothing a person can read.
+2. **Retire the v1 devices:** the Game Boy (`Wire.tsx`), iPod (`overlays/Plyr.tsx`), Win98 (`Ctrl.tsx`, `Win98.tsx`) and answering machine. Until Phase 4's first run exists, sign-in and "start a crew / enter an invite code" use a plain interim screen.
+3. **Catalog:** `search-albums` (MusicBrainz, cached, debounced) and album resolution for every new track, with cover art.
+4. **DIG:** search box, results as spines grouped A–Z, recent digs on the device.
+5. **Album page:** jewel case, cover, hype sticker, wrapped state, crew heat, takes (yours, your crews', everyone's, each by time), tracklist with "open in" links.
+6. **Take sheet:** heat, take, sticker line, spun today / this week, relisten. Writes `reviews` + `spins`, removes `wants`. *Done when:* a take posted by one friend shows on their shelf and on another friend's view of the album, with no counts anywhere.
+7. **SHELF:** name tag, on repeat, liner notes, Top 8 (editable), your spins by month, still wrapped. Others' shelves open from their name on a take.
+8. **HOME (shop front, without Burn Club):** burned for you (unkept song burns from your crews), new takes from your crews, the BURN button.
+9. **KEPT and Settings:** rename CASE to KEPT ("burned by [name] · kept [day]"); settings as the autorun menu opened from SHELF.
+10. **CREW:** the rack keeps its v1 parts with the new labels (`CREW n`, `IN THE CREW`, `＋ INVITE`, `BURNED TO [CREW]`).
 
-**Phase 3 — In-app playback**
-10. Apple developer token function + MusicKit JS provider; authorize on first tap.
-11. YouTube provider with the visible ≥ 200 px player variant of PLYR.
-12. Provider fallback order from §5. *Done when:* the same burn plays in-app for an Apple Music friend, plays as a YouTube video for a friend without Apple Music, and opens Spotify for a Spotify friend.
+**Phase 3 — Burn Club**
+11. `rounds`, `pick_order`, and the close/open job. First round: the crew's creator picks.
+12. **The changer** in the CREW rack: one disc per member, lit when spun, tap to read a take; your disc opens the take sheet. ⏮ ⏭ step through past rounds; the LCD shows the round and `NEXT PICK ▸ [NAME]`. VU becomes crew heat.
+13. **The ticker** on HOME, opening CREW on the first crew that's waiting on you. *Done when:* in a crew of three, two people spin the round and both see the third disc dark; the third spins it, the round shows complete, and the next round opens for the next person in order.
 
-**Phase 4 — Live rooms (only after Apple answers, §4.4)**
-13. `room_state` + Realtime broadcast + presence ("in the room" chips); drift correction every few seconds.
+**Phase 4 — Burner upgrades**
+14. **Mixes:** `burn_tracks`, the 80:00 capacity bar, a mix shown as one CD-R with a Sharpie tracklist in KEPT.
+15. **Album burns:** "burn it for them" lands wrapped in their burned for you; "make it a Burn Club round" writes `round_queue`.
+16. **First run:** the unwrap-the-case opening (spec Open 1), including "just spin" if solo users are settled in (spec Open 2).
+
+**Phase 5 — In-app playback**
+17. Apple developer token function and MusicKit JS provider; authorize on the first tap.
+18. YouTube provider with a visible ≥ 200 px player inside the Phase 5 player device.
+19. Provider fallback order from §5. *Done when:* the same burn plays in-app for an Apple Music friend, as a YouTube video for a friend without Apple Music, and opens Spotify for a Spotify friend.
+
+**Phase 6 — Live rooms (maybe; only after Apple answers, §4.4)**
+20. `room_state`, Realtime broadcast and presence, drift correction every few seconds.
 
 ---
 
 ## 9. Things to decide before or during the build
-1. Apple's written answer on synchronized playback (§4.4). It gates Phase 4.
-2. ~~Who can see a DECK~~ Settled: DECKs are public (spec §8 Settled 10). `profiles` and `top8` are readable by everyone.
-3. How someone finds an album that nobody burned to them, without building a discovery feed (spec §8 Open 3). A plain search box that only returns exact matches is probably the safe minimum.
-4. Whether crew heat stays (spec §8 Open 4).
-5. App name check: confirm "KYBR" is clear to use as a product name before anything goes public.
+1. **Solo users** (spec Open 2). Affects sign-up and whether HOME needs a no-crew state. Decide before Phase 2 step 8.
+2. **Burn Club rules** (spec Open 4): round length, skipping, what an empty pick looks like. Decide before Phase 3.
+3. **Song takes** (spec Open 5): keep ETCH as crew-only song takes, or drop it. Decide during Phase 2; the table already exists.
+4. **Following people outside your crews** (spec Open 3). Not needed until after Phase 3.
+5. **The Phase 5 player device** (spec Open 7).
+6. Apple's written answer on synchronized playback (§4.4). It gates Phase 6.
+7. App name check: confirm "KYBR" is clear to use as a product name before anything goes public.
 
 ---
 
