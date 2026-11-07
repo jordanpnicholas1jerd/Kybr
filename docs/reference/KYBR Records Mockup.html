@@ -426,7 +426,10 @@ body{background:var(--ground)}
 /* ticker + panels keep ink */
 .ticker .tkl{background:linear-gradient(180deg,#c9d6ff 0%,#8ea6f0 20%,#4a66c0 47%,#2a418a 51%,#5f7bd6 75%,#b4c4f5 100%)!important;color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.45)}
 .jog{box-shadow:0 5px 0 #5d6372,0 7px 9px rgba(0,0,0,.4),inset 0 2px 2px rgba(255,255,255,.9)}
-.ticker .tkl{justify-content:center;text-align:center;min-width:78px}
+.ticker .tkl{position:relative;justify-content:center;text-align:center;min-width:78px;padding:0 12px}
+.ticker .tkl i{position:absolute;left:6px;top:6px}
+.ticker .tkt{display:block;text-align:center;line-height:1.15}
+.fab{background:linear-gradient(180deg,#c9d6ff 0%,#8ea6f0 20%,#4a66c0 47%,#2a418a 51%,#5f7bd6 75%,#b4c4f5 100%)!important;color:#fff!important;text-shadow:0 1px 1px rgba(0,0,0,.5);border:1.5px solid #141414!important;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.7),3px 4px 0 #141414!important}
 .bk{align-items:center}
 .storehead .chrome{background:linear-gradient(180deg,#ffffff 0%,#f1f3f7 30%,#c9ced8 48%,#a9b0be 52%,#e4e7ed 74%,#ffffff 100%)!important;-webkit-background-clip:text!important;background-clip:text!important}
 /* DIG panel: brushed chrome to match the review plates */
@@ -653,7 +656,7 @@ function vWire(){
   for(const [al,arr] of Object.entries(PUBLIC))for(const x of arr)if(S.subs.has(x.h))takes.unshift({p:x.h,al,h:x.r,t:x.t,key:`t:${al}:${x.h}`,base:hn(al+x.h,20,320)});
   return `
   <div class="storehead"><div class="chrome" style="font-size:16px;letter-spacing:2px">KYBR RECORDS</div><div class="open"><i></i>OPEN</div></div>
-  <button class="ticker" data-a="tab" data-v="chnl" data-crew="${target}" aria-label="burn club: ${pend.length?'your turn to spin in '+pend.length+' crew'+(pend.length>1?'s':''):'all caught up'}. open CREW"><span class="tkl"><i></i>BURN<br>CLUB</span><span class="tkw"><span class="tk" style="--tkdur:${all.length*9}s" aria-hidden="true">${items}${items}</span></span></button>
+  <button class="ticker" data-a="tab" data-v="chnl" data-crew="${target}" aria-label="burn club: ${pend.length?'your turn to spin in '+pend.length+' crew'+(pend.length>1?'s':''):'all caught up'}. open CREW"><span class="tkl"><i></i><span class="tkt">BURN<br>CLUB</span></span><span class="tkw"><span class="tk" style="--tkdur:${all.length*9}s" aria-hidden="true">${items}${items}</span></span></button>
   <div class="tkhint"><span>${pend.length?`your turn to spin in ${pend.length} crew${pend.length>1?'s':''}`:'all caught up'}</span><span>tap to open CREW ▸</span></div>
   <div class="sec"><div class="sechead"><span class="lbl">New booklets</span><span class="lbl" style="letter-spacing:1px">labels you subscribe to</span></div>
     ${feed.map(bkCard).join('')||'<div class="empty">subscribe to a label to see its booklets here.</div>'}</div>
