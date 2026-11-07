@@ -82,7 +82,7 @@ button:disabled{cursor:default}
 
 /* covers */
 .cover{position:relative;border-radius:2px;overflow:hidden;flex:none;display:flex;flex-direction:column;justify-content:flex-end;padding:7%;box-shadow:0 2px 6px rgba(0,0,0,.45)}
-.cover .ct{font-family:var(--display);font-size:max(6px,.09em);letter-spacing:1px;text-transform:uppercase;line-height:1.3}
+.cover .ct{font-family:var(--display);font-size:max(6px,.09em);letter-spacing:1px;text-transform:uppercase;line-height:1.3;overflow-wrap:anywhere}
 .cover .ca{font-size:max(6px,.075em);opacity:.8;margin-top:2px}
 .wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 18%,rgba(255,255,255,.28) 30%,transparent 42%,rgba(255,255,255,.14) 68%,transparent 78%),linear-gradient(0deg,rgba(220,230,255,.08),rgba(220,230,255,.08));border:1px solid rgba(255,255,255,.35);pointer-events:none}
 
@@ -311,6 +311,58 @@ button:disabled{cursor:default}
 .swatches button.on{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
 
 .toast{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);z-index:40;max-width:86%;padding:9px 14px;border-radius:8px;background:linear-gradient(180deg,#0e2418,#06120c);color:#a8ffcf;font-size:11px;box-shadow:0 0 0 1px rgba(124,255,176,.35),0 8px 20px rgba(0,0,0,.6);animation:kybrRise .25s ease;text-align:center}
+
+/* labels, booklets, likes */
+.bk{display:flex;gap:12px;width:100%;padding:12px;margin-bottom:8px;border:0;border-radius:4px;text-align:left;background:linear-gradient(180deg,var(--paper),var(--paper2));color:#2b2416;box-shadow:0 3px 8px rgba(0,0,0,.4)}
+.bkt{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.bkl{font-family:var(--display);font-size:7.5px;letter-spacing:1.5px;color:#7a5a2a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bkh{font-size:14px;line-height:1.3;font-weight:500;text-wrap:balance}
+.bks{font-size:10px;color:#6a5a3a}.bks .ember{color:#c4561f;text-shadow:none}
+.bkm{font-size:10px;color:#6a5a3a;margin-top:2px}
+.lk{min-height:32px;padding:0 9px;border-radius:16px;border:1px solid rgba(0,0,0,.15);background:rgba(255,255,255,.35);font-size:10.5px;color:#5a3a1a}
+.lk.on{color:#c42a1a;border-color:rgba(196,42,26,.45);background:rgba(255,200,190,.5)}
+.cardfoot{display:flex;gap:6px;margin-top:9px}
+.cardfoot.dark .lk{border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.04);color:var(--ink2)}
+.cardfoot.dark .lk.on{color:#ff8a7a;border-color:rgba(255,120,100,.5);background:rgba(255,80,60,.12)}
+.nmb{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#6a5a3a;min-height:24px;text-decoration:underline;text-decoration-color:rgba(106,90,58,.35);text-underline-offset:2px}
+.nmb2{font-size:12px;color:var(--ink);min-height:24px;text-decoration:underline;text-decoration-color:rgba(233,228,240,.3);text-underline-offset:2px}
+.card.wide{width:100%}
+.mast{margin-top:6px;padding:14px;border-radius:10px;background:radial-gradient(120% 120% at 0% 0%,#3d2560,#1d1230);box-shadow:inset 0 0 0 1px rgba(192,132,255,.2),0 8px 18px rgba(0,0,0,.45)}
+.mastn{font-family:var(--badge);font-weight:600;font-size:22px;letter-spacing:2px;line-height:1.15;background:linear-gradient(180deg,#fff,var(--skin-lo));-webkit-background-clip:text;background-clip:text;color:transparent;text-wrap:balance}
+.tags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.tagc{font-size:10px;padding:4px 9px;border-radius:12px;border:1px solid rgba(255,180,94,.45);color:var(--ember)}
+.subbtn{flex:none;min-height:36px;padding:0 12px;border-radius:18px;border:1px solid var(--ember);background:linear-gradient(180deg,#ffd6a8,#FFB45E 50%,#FF8A3D 52%,#ffb872);color:#3a1a05;font-size:9px;letter-spacing:1.2px}
+.subbtn.on{background:transparent;color:var(--ember)}
+.subbtn.big{min-height:44px}
+.lcard{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{width:40px;height:40px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:9px;letter-spacing:1px;color:#fff;background:radial-gradient(circle at 38% 30%,var(--skin-lo),var(--skin) 55%,var(--skin-hi));box-shadow:inset 0 0 0 3px rgba(0,0,0,.25)}
+.logo.sm{width:34px;height:34px;font-size:8px}
+.reader{margin-top:12px;border-radius:4px;padding:16px 16px 20px;background:linear-gradient(180deg,#f7f2e6,#efe7d4);color:#2b2416;box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.rcover{border-radius:2px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+.rlabel{display:flex;gap:10px;align-items:center;margin-top:14px;min-height:44px;text-align:left;color:#2b2416}
+.rlabel b{font-weight:500;font-size:12px}.rlabel small{font-size:10px;color:#7a6a4a}
+.reader h1{font-family:var(--mono);font-weight:500;font-size:21px;line-height:1.25;margin:12px 0 6px;text-wrap:balance}
+.ralbum{font-size:11px;color:#6a5a3a;min-height:32px;text-align:left}
+.rst{color:#c4561f;letter-spacing:1px}
+.reader p{font-size:13px;line-height:1.75;margin:12px 0 0}
+.rfav{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rfav span{font-size:10px;padding:4px 8px;border-radius:3px;background:rgba(0,0,0,.06)}
+.ractions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.ractions .lk{min-height:40px;font-size:12px}
+.cmhead{display:flex;justify-content:space-between;align-items:center;margin:4px 0 6px}
+.cmhead .seg button{min-height:32px;padding:0 10px}
+.cm{padding:10px 2px;border-bottom:1px solid rgba(255,255,255,.07)}
+.cmt{font-size:12px;line-height:1.5;color:var(--ink2);margin-top:3px}
+.cmnew{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.cmnew textarea{min-height:70px;border-radius:7px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.3);padding:9px 11px;font:inherit;font-size:12px;color:var(--ink);resize:vertical}
+.cmnew .key{align-self:flex-end}
+.sel,.wbt{width:100%;min-height:44px;border-radius:7px;font:inherit;font-size:12px}
+.sel{border:1px solid rgba(255,255,255,.15);background:#1a1622;color:var(--ink);padding:0 10px}
+.wbt{border:0;border-bottom:1px solid rgba(35,48,122,.25);background:transparent;color:#2b2416;font-size:16px;font-weight:500;padding:0}
+.wbt:focus{outline:none}
+.wbb{width:100%;min-height:180px;border:0;resize:vertical;background:transparent;font:inherit;font-size:13px;line-height:1.7;color:#2b2416;margin-top:4px;padding:0}
+.wbb:focus{outline:none}
+.toast{bottom:96px}
 .empty{font-size:11px;color:var(--ink3);padding:10px 4px;line-height:1.5}
 </style>
 </head>
@@ -323,7 +375,7 @@ button:disabled{cursor:default}
     <div id="ov"></div>
     <div id="toast" aria-live="polite"></div>
   </div></div>
-  <p class="note">KYBR mockup: reviews first, Burn Club in the CREW rack. Albums, covers, people and tracklists are placeholders. Nothing saves when you reload.</p>
+  <p class="note">KYBR mockup: reviews first, Burn Club in the CREW rack, booklets on labels. Albums, covers, people and tracklists are placeholders. Nothing saves when you reload.</p>
 </div>
 
 <script>
@@ -375,6 +427,38 @@ const PUBLIC={
  homogenic:[{h:'@volcanic',w:'4d',r:4.5,t:'strings and beats fighting and both winning.'}],
  isthis:[{h:'@citycops',w:'5d',r:4,t:'36 minutes of leather jackets.'}],
 };
+const LABELS={
+ you:{n:'Cold Side',by:'Jordan',h:'@jordan',tag:'basement-dwelling, always cold. trip-hop on rainy days.',known:['trip-hop','Björk','2000s']},
+ mara:{n:'Teardrop Press',by:'Mara',h:'@mara',tag:'slow songs, long sentences',known:['Radiohead','trip-hop']},
+ dev:{n:'2AM Records',by:'Dev',h:'@dev',tag:'only reviews things after midnight',known:['electronic','90s']},
+ sof:{n:'Snow Day',by:'Sof',h:'@sof',tag:'headphones only',known:['Björk','ambient']},
+ jo:{n:'Rainy Tuesday',by:'Jo',h:'@jo',tag:'mood over songs',known:['Portishead']},
+ kai:{n:'Gas Station Tapes',by:'Kai',h:'@kai',tag:'records for the drive',known:[]},
+ mom:{n:'Back Seat',by:'Mom',h:'@mom',tag:'what was on in the car',known:['70s']},
+ tess:{n:'Ex-Factor',by:'Tess',h:'@tess',tag:'',known:['R&B']},
+ ray:{n:'Zion Notes',by:'Ray',h:'@ray',tag:'',known:[]},
+ lu:{n:'Digital Love',by:'Lu',h:'@lu',tag:'',known:['house']},
+ '@lowend_lou':{n:'Low End Lou',by:'Lou',h:'@lowend_lou',tag:'bass first, questions later',known:['trip-hop','90s','dub']},
+ '@solo_reprise':{n:'Reprise',by:'Ana',h:'@solo_reprise',tag:'one album, one long letter',known:['Frank Ocean','R&B']},
+ '@88keys':{n:'88 Keys Review',by:'Theo',h:'@88keys',tag:'art rock and the people who love it too much',known:['Radiohead','art rock']},
+ '@frostbit':{n:'Frostbit',by:'Ines',h:'@frostbit',tag:'cold records, warm takes',known:['Björk']},
+ '@quietstorm':{n:'Quiet Storm Notes',by:'Kofi',h:'@quietstorm',tag:'',known:['soul']},
+};
+function lab(pid){return LABELS[pid]||{n:pid.replace('@','').replace(/_/g,' ')+' review',by:pid.replace('@',''),h:pid,tag:'',known:[]};}
+const BOOKLETS=[
+ {id:'b3',by:'@solo_reprise',album:'blonde',title:'Blonde is about the car ride, not the destination',h:5,when:'2d',likes:487,fav:['Ivy','Self Control','White Ferrari'],
+  body:['Most breakup records are about the moment it ends. Blonde is about the drive home after, when the radio is low and nobody is talking.','The songs barely have choruses. They drift in, say one true thing, and leave before you can hold onto them. Ivy does it in the first minute: "I thought that I was dreaming when you said you loved me." Past tense, already.','White Ferrari is the closest thing to a memory I have ever heard on a record. Not a song about a memory. A memory, with the edges blurred.']},
+ {id:'b1',by:'@lowend_lou',album:'mezz',title:'Mezzanine is a horror movie you can dance to',h:4.5,when:'3d',likes:212,fav:['Angel','Inertia Creeps','Group Four'],
+  body:['Put it on loud and the first thing you notice is how much room there is. The bass on Angel sits so low it feels like weather.','People call this trip-hop, but it is closer to a slasher score. Every song is a corridor, and something is always about to turn the corner.','Teardrop gets the love, and it deserves it. But Group Four is the real ending: eight minutes of guitars slowly losing their temper.']},
+ {id:'b2',by:'mara',album:'kida',title:'How to disappear, completely and on purpose',h:5,when:'4d',likes:38,fav:['How to Disappear Completely','Idioteque'],
+  body:['I first heard Kid A on a bus that broke down outside a town I never learned the name of. That is still the right way to hear it.','It is a record about being somewhere and not being there. The voice keeps getting smaller, buried under strings and static.','Idioteque is the panic attack. Motion Picture Soundtrack is the morning after, when you realize you made it.']},
+ {id:'b4',by:'sof',album:'homogenic',title:'Jóga on a bus at 7am',h:5,when:'5d',likes:19,fav:['Jóga','Bachelorette','All Is Full of Love'],
+  body:['The strings and the beats on Homogenic are fighting, and both of them are winning.','Jóga made me cry on the 7am bus, which is not a thing I recommend, but I would do it again.']},
+ {id:'b6',by:'@88keys',album:'rainbows',title:'In Rainbows and the price of nothing',h:5,when:'1w',likes:143,fav:['Weird Fishes/Arpeggi','Reckoner','Videotape'],
+  body:['They let you pay whatever you wanted for it, and somehow it still feels like the most generous thing they made.','Reckoner is the prettiest four minutes in their catalog. Weird Fishes is the most fun. Videotape is the goodbye.']},
+ {id:'b5',by:'you',album:'vesp',title:'The most intimate record I own',h:5,when:'oct 12',likes:27,fav:['Cocoon','Pagan Poetry','Unison'],
+  body:['Vespertine is music boxes, harps and whispering. It sounds like it was recorded inside a snow globe.','Cocoon is so close to the microphone it feels rude to listen. Pagan Poetry is the moment the snow globe cracks.']},
+];
 const RECENT=[{s:'Teardrop',a:'Massive Attack',d:'5:30'},{s:'White Ferrari',a:'Frank Ocean',d:'4:08'},{s:'Jóga',a:'Björk',d:'5:05'},{s:'Roads',a:'Portishead',d:'5:05'},{s:'Digital Love',a:'Daft Punk',d:'4:58'},{s:'Reckoner',a:'Radiohead',d:'4:50'},{s:'Untitled (How Does It Feel)',a:'D’Angelo',d:'7:10'},{s:'Ex-Factor',a:'Lauryn Hill',d:'5:26'},{s:'Dreams',a:'Fleetwood Mac',d:'4:14'},{s:'Last Nite',a:'The Strokes',d:'3:13'},{s:'Hunter',a:'Björk',d:'4:15'},{s:'Pagan Poetry',a:'Björk',d:'5:14'},{s:'Idioteque',a:'Radiohead',d:'5:09'},{s:'Glory Box',a:'Portishead',d:'5:01'},{s:'Nights',a:'Frank Ocean',d:'5:07'},{s:'Angel',a:'Massive Attack',d:'6:18'}];
 
 const S={
@@ -432,31 +516,73 @@ function toast(msg){const t=$('#toast');t.innerHTML=`<div class="toast">${esc(ms
 function myRoundsPending(){return CREWS.map(c=>({c,r:c.rounds[0]})).filter(x=>!x.r.done&&!x.r.logs.you);}
 
 // ---------- screens ----------
+Object.assign(S,{
+ subs:new Set(['mara','sof','dev','@lowend_lou','@solo_reprise']),
+ liked:new Set(),navTab:'wire',labelOf:'you',bk:null,bkFrom:'wire',digMode:'albums',sort:'liked',cmSort:'liked',
+ cm:{
+  b3:[{by:'@frostbit',t:'"a memory with the edges blurred" is exactly it. white ferrari on the way home tonight.',likes:41,pin:true},{by:'dev',t:'self control at the end of the night. no notes.',likes:12},{by:'@88keys',t:'disagree that it has no choruses, nights has two songs and both have hooks',likes:7}],
+  b1:[{by:'jo',t:'group four as the real ending is so right',likes:9,pin:true},{by:'@quietstorm',t:'the weather line. stealing that.',likes:22}],
+  b2:[{by:'sof',t:'the bus story every time 😭',likes:5}],
+  b6:[{by:'@lowend_lou',t:'videotape as the goodbye, yes',likes:14}],
+  b5:[{by:'mara',t:'snow globe is the perfect word for it',likes:6,pin:true}],
+  't:mezz:mara':[{by:'dev',t:'the rest earns it is such a good line',likes:4}],
+ },
+ replies:{h1:[{by:'dev',t:'this one at 2am hits different',h:4.5},{by:'sof',t:'the harpsichord at the start!!',h:0}],h3:[{by:'jo',t:'jóga first, then all is full of love. trust',h:0}]},
+});
+function hn(s,a,b){let x=7;for(const c of s)x=(x*31+c.charCodeAt(0))>>>0;return a+x%(b-a+1);}
+function likeN(key,base){return base+(S.liked.has(key)?1:0);}
+function heart(key,base){const on=S.liked.has(key);return `<button class="lk ${on?'on':''}" data-a="like" data-v="${esc(key)}" aria-pressed="${on}" aria-label="like">${on?'♥':'♡'} ${likeN(key,base)}</button>`;}
+function who(pid){return pid==='you'?'you':pid.startsWith('@')?pid:nm(pid);}
+function bkCard(b){const L=lab(b.by);return `<button class="bk" data-a="bk" data-v="${b.id}">${cover(b.album,64)}
+  <span class="bkt"><span class="bkl">${esc(L.n.toUpperCase())} · ${esc(who(b.by))}</span><span class="bkh">${esc(b.title)}</span>
+  <span class="bks"><span class="ember">${stars(b.h)}</span> ${esc(A[b.album].t)} · ${esc(b.when)}</span>
+  <span class="bkm">♥ ${likeN('b:'+b.id,b.likes)} · ▤ ${(S.cm[b.id]||[]).length}</span></span></button>`;}
+function allTakes(id){ // every take on an album with key + base likes
+  const out=[];if(S.my[id])out.push({p:'you',key:`t:${id}:you`,h:S.my[id].h,t:S.my[id].t,base:3,crew:null,when:S.my[id].when,mine:true});
+  for(const x of crewPicks(id))out.push({p:x.p,key:`t:${id}:${x.p}`,h:x.h,t:x.t,base:hn(id+x.p,1,40),crew:x.crew,when:x.round?'round '+x.round:''});
+  for(const x of PUBLIC[id]||[])out.push({p:x.h,key:`t:${id}:${x.h}`,h:x.r,t:x.t,base:hn(id+x.h,20,320),crew:null,when:x.w});
+  return out;
+}
+function takeCard(x,id){const pub=!x.crew&&!x.mine;return `<div class="card ${pub?'public':''} ${x.mine?'mine':''}">
+  <div class="who"><button class="tap nmb" data-a="label" data-v="${esc(x.p)}">${esc(who(x.p))}${x.crew?' · '+esc(x.crew):''}</button><span>${esc(x.when||'')}</span></div>
+  <div class="cs">${stars(x.h)}</div><div class="${pub?'typed':'ballpoint'}">${esc(x.t)}</div>
+  <div class="cardfoot">${heart(x.key,x.base)}<button class="lk" data-a="take" data-v="${esc(x.key)}" data-album="${id}">▤ ${(S.cm[x.key]||[]).length}</button></div></div>`;}
+
 function vWire(){
   const pend=myRoundsPending().sort((x,y)=>(y.c.id===S.crew)-(x.c.id===S.crew));const all=CREWS.map(c=>({c,r:c.rounds[0]})).filter(x=>!x.r.done).sort((x,y)=>(!!x.r.logs.you)-(!!y.r.logs.you));
   const target=(pend[0]||all[0]).c.id;
   const items=all.map(({c,r})=>{const n=Object.keys(r.logs).length;return `<span>● ${esc(c.name.toUpperCase())} · RD ${r.n} · ${esc(A[r.album].t.toUpperCase())} · ${n} OF ${c.members.length} SPUN IT · ENDS ${r.ends.toUpperCase()} · ${r.logs.you?`<em>YOU SPUN IT ${stars(r.logs.you.h)}</em>`:`<b>YOUR TURN TO SPIN ✎</b>`}</span>`;}).join('');
-  const ticker=`<button class="ticker" data-a="tab" data-v="chnl" data-crew="${target}" aria-label="burn club: ${pend.length?'your turn to spin in '+pend.length+' crew'+(pend.length>1?'s':''):'all caught up'}. open CREW"><span class="tkl"><i></i>BURN<br>CLUB</span><span class="tkw"><span class="tk" style="--tkdur:${all.length*9}s" aria-hidden="true">${items}${items}</span></span></button>
-  <div class="tkhint"><span>${pend.length?`your turn to spin in ${pend.length} crew${pend.length>1?'s':''}`:'all caught up'}</span><span>tap to open CREW ▸</span></div>`;
-  const picks=[];for(const c2 of CREWS)for(const x of c2.rounds.slice(0,2))for(const [p,l] of Object.entries(x.logs))if(p!=='you')picks.push({p,c:c2.name,al:x.album,...l});
-  const feed=picks.slice(0,7);
+  const crewPeople=new Set(CREWS.flatMap(c=>c.members));
+  const feed=BOOKLETS.filter(b=>b.by!=='you'&&(S.subs.has(b.by)||crewPeople.has(b.by)));
+  const takes=[];for(const c2 of CREWS)for(const x of c2.rounds.slice(0,2))for(const [p,l] of Object.entries(x.logs))if(p!=='you')takes.push({p,al:x.album,h:l.h,t:l.t,key:`t:${x.album}:${p}`,base:hn(x.album+p,1,40)});
+  for(const [al,arr] of Object.entries(PUBLIC))for(const x of arr)if(S.subs.has(x.h))takes.unshift({p:x.h,al,h:x.r,t:x.t,key:`t:${al}:${x.h}`,base:hn(al+x.h,20,320)});
   return `
   <div class="storehead"><div class="chrome" style="font-size:16px;letter-spacing:2px">KYBR RECORDS</div><div class="open"><i></i>OPEN</div></div>
-  ${ticker}
+  <button class="ticker" data-a="tab" data-v="chnl" data-crew="${target}" aria-label="burn club: ${pend.length?'your turn to spin in '+pend.length+' crew'+(pend.length>1?'s':''):'all caught up'}. open CREW"><span class="tkl"><i></i>BURN<br>CLUB</span><span class="tkw"><span class="tk" style="--tkdur:${all.length*9}s" aria-hidden="true">${items}${items}</span></span></button>
+  <div class="tkhint"><span>${pend.length?`your turn to spin in ${pend.length} crew${pend.length>1?'s':''}`:'all caught up'}</span><span>tap to open CREW ▸</span></div>
+  <div class="sec"><div class="sechead"><span class="lbl">New booklets</span><span class="lbl" style="letter-spacing:1px">labels you subscribe to</span></div>
+    ${feed.map(bkCard).join('')||'<div class="empty">subscribe to a label to see its booklets here.</div>'}</div>
   <div class="sec"><div class="sechead"><span class="lbl">Burned for you</span><span class="lbl" style="letter-spacing:1px">from your crews</span></div>
     <div class="holdrow">${S.hold.map(h=>`<button class="hold" data-a="hold" data-v="${h.id}">
-      <div class="cdr" style="width:86px;height:86px"><div class="sh">${esc(h.kind==='mix'?h.s:h.s.toLowerCase())}</div><div class="sh2">${h.kind==='album'?'the whole album':'for you'} — ${esc(nm(h.from).toLowerCase())}</div></div>
-      <small>from ${esc(nm(h.from))}<br>${esc(h.when)}</small></button>`).join('')||'<div class="empty">nothing burned for you yet.</div>'}</div></div>
-  <div class="sec"><div class="sechead"><span class="lbl">New takes</span><span class="lbl" style="letter-spacing:1px">from your crews</span></div>
-    ${feed.map(x=>`<button class="pickrow" data-a="album" data-v="${x.al}">${cover(x.al,40)}
-      <div style="min-width:0;flex:1"><div class="row" style="gap:6px;justify-content:space-between"><span class="ell" style="font-size:12px;min-width:0">${esc(nm(x.p))} <span style="color:var(--ink3);font-size:10px">· ${esc(A[x.al].t)}</span></span><span class="ember" style="font-size:11px;flex:none">${stars(x.h)}</span></div>
-      <div class="take">“${esc(x.t)}”</div></div></button>`).join('')}
+      <div class="cdr" style="width:80px;height:80px"><div class="sh">${esc(h.kind==='mix'?h.s:h.s.toLowerCase())}</div><div class="sh2">${h.kind==='album'?'the whole album':'for you'} — ${esc(nm(h.from).toLowerCase())}</div></div>
+      <small>from ${esc(nm(h.from))}<br>${esc(h.when)}${(S.replies[h.id]||[]).length?` · ▤ ${S.replies[h.id].length}`:''}</small></button>`).join('')||'<div class="empty">nothing burned for you yet.</div>'}</div></div>
+  <div class="sec"><div class="sechead"><span class="lbl">New takes</span><span class="lbl" style="letter-spacing:1px">crews and labels</span></div>
+    ${takes.slice(0,7).map(x=>`<div class="pickrow"><button class="tap" data-a="album" data-v="${x.al}">${cover(x.al,40)}</button>
+      <div style="min-width:0;flex:1"><div class="row" style="gap:6px;justify-content:space-between"><span class="ell" style="font-size:12px;min-width:0"><button class="tap nmb2" data-a="label" data-v="${esc(x.p)}">${esc(who(x.p))}</button> <span style="color:var(--ink3);font-size:10px">· ${esc(A[x.al].t)}</span></span><span class="ember" style="font-size:11px;flex:none">${stars(x.h)}</span></div>
+      <div class="take">“${esc(x.t)}”</div><div class="cardfoot dark">${heart(x.key,x.base)}<button class="lk" data-a="take" data-v="${esc(x.key)}" data-album="${x.al}">▤ ${(S.cm[x.key]||[]).length}</button></div></div></div>`).join('')}
   </div>`;
 }
+function labelCard(pid){const L=lab(pid);const sub=S.subs.has(pid);return `<div class="lcard"><button class="tap row" data-a="label" data-v="${esc(pid)}" style="flex:1;min-width:0;gap:10px">
+  <span class="logo">${esc(L.n.split(' ').map(w=>w[0]).join('').slice(0,3).toUpperCase())}</span>
+  <span style="min-width:0"><span class="ell" style="display:block;font-size:13px">${esc(L.n)}</span><span class="ell" style="display:block;font-size:10px;color:var(--ink3)">${esc(L.h)}${L.known.length?' · known for '+esc(L.known.join(', ')):''}</span></span></button>
+  ${pid==='you'?'':`<button class="subbtn ${sub?'on':''}" data-a="sub" data-v="${esc(pid)}">${sub?'SUBSCRIBED':'SUBSCRIBE'}</button>`}</div>`;}
 function vCounter(){
-  const q=S.search.trim().toLowerCase();
-  let body;
-  if(!q){
+  const q=S.search.trim().toLowerCase();let body;
+  if(S.digMode==='writers'){
+    const ids=Object.keys(LABELS).filter(p=>p!=='you');
+    const hits=q?ids.filter(p=>{const L=lab(p);return (L.n+' '+L.h+' '+L.by+' '+L.known.join(' ')).toLowerCase().includes(q);}):[...S.subs];
+    body=`<div class="sec"><div class="sechead"><span class="lbl">${q?'Labels':'Labels you subscribe to'}</span></div>${hits.map(labelCard).join('')||`<div class="empty">no label matches “${esc(S.search)}”.</div>`}</div>`;
+  }else if(!q){
     const behind=[...new Set(CREWS.flatMap(c=>c.rounds.map(r=>r.album)))];
     body=`<div class="sec"><div class="sechead"><span class="lbl">Recent digs</span></div>${['homogenic','voodoo','rumours'].map(id=>spine(id)).join('')}</div>
     <div class="sec"><div class="sechead"><span class="lbl">Burn Club albums</span><span class="lbl" style="letter-spacing:1px">from your crews</span></div>${behind.map(id=>spine(id)).join('')}</div>`;
@@ -467,11 +593,45 @@ function vCounter(){
   }
   return `
   <div class="counter">
-    <div class="row" style="justify-content:space-between"><span class="chrome" style="font-size:13px;letter-spacing:2px">DIG</span><span class="lbl" style="color:#c9a87a">find any album</span></div>
-    <div class="ask"><label for="ask" class="lbl" style="position:absolute;left:-9999px">dig for an album</label><input id="ask" placeholder="dig for an album or artist…" value="${esc(S.search)}" autocomplete="off"></div>
+    <div class="row" style="justify-content:space-between"><span class="chrome" style="font-size:13px;letter-spacing:2px">DIG</span><span class="lbl" style="color:#c9a87a">find albums and writers</span></div>
+    <div class="seg" style="margin-top:10px"><button class="${S.digMode==='albums'?'on':''}" data-a="dig" data-v="albums">ALBUMS</button><button class="${S.digMode==='writers'?'on':''}" data-a="dig" data-v="writers">WRITERS</button></div>
+    <div class="ask"><label for="ask" class="lbl" style="position:absolute;left:-9999px">dig</label><input id="ask" placeholder="${S.digMode==='albums'?'dig for an album or artist…':'dig for a label or writer…'}" value="${esc(S.search)}" autocomplete="off"></div>
     <div style="font-size:10px;color:#c9a87a;margin-top:8px">no charts here. dig for what you want.</div>
   </div>
   <div id="results">${body}</div>`;
+}
+function vDeck(){
+  const pid=S.labelOf,me=pid==='you',L=lab(pid);const sub=S.subs.has(pid);
+  const bks=BOOKLETS.filter(b=>b.by===pid);
+  const tk=[];for(const id of Object.keys(A))for(const x of allTakes(id))if(x.p===pid)tk.push({...x,al:id});
+  const months={};for(const [id,m] of S.diary)(months[m]=months[m]||[]).push(id);
+  const top=me?S.top8:[...new Set(tk.map(x=>x.al))].slice(0,8);
+  return `
+  ${me?'':`<div class="back" style="margin-bottom:8px"><button class="key ghost" style="min-height:40px;font-size:9px" data-a="tab" data-v="deck">◂ YOUR LABEL</button></div>`}
+  <div class="mast">
+    <div class="row" style="gap:12px;align-items:center">
+      <div class="disc" style="width:58px;height:58px"></div>
+      <div style="min-width:0;flex:1"><div class="lbl" style="color:var(--skin-lo)">A LABEL BY ${esc(L.by.toUpperCase())}</div>
+        <div class="mastn">${esc(L.n)}</div><div style="font-size:10px;color:var(--ink2)">${esc(L.h)}</div></div>
+      ${me?`<button class="gear" data-a="ctrl"><div class="disc cdicon"></div><span style="font-size:7px;letter-spacing:.5px">SETTINGS</span></button>`
+         :`<button class="subbtn big ${sub?'on':''}" data-a="sub" data-v="${esc(pid)}">${sub?'✓ SUBSCRIBED':'SUBSCRIBE'}</button>`}
+    </div>
+    ${L.tag?`<div style="font-size:11px;color:var(--ink2);margin-top:10px;line-height:1.5">${esc(L.tag)}</div>`:''}
+    ${L.known.length?`<div class="tags"><span class="lbl" style="margin-right:4px">known for</span>${L.known.map(k=>`<span class="tagc">${esc(k)}</span>`).join('')}</div>`:''}
+  </div>
+  ${me?`<button class="key hot" style="width:100%;margin-top:12px" data-a="write">✎ WRITE A BOOKLET</button>`:''}
+  <div class="sec"><div class="sechead"><span class="lbl">Booklets</span><span class="lbl" style="letter-spacing:1px">newest first</span></div>${bks.map(bkCard).join('')||'<div class="empty">no booklets yet.</div>'}</div>
+  <div class="sec"><div class="sechead"><span class="lbl">Takes</span></div><div class="cards">${tk.slice(0,10).map(x=>takeCard(x,x.al)).join('')||'<div class="empty">no takes yet.</div>'}</div></div>
+  ${me?`<div class="radio">
+    <div class="g"><div style="font-size:8px;letter-spacing:1.5px;opacity:.7">ON REPEAT</div><div class="ell" style="margin-top:2px">Teardrop · Massive Attack</div>
+      <div class="eq" aria-hidden="true">${[0,.2,.4,.1,.3,.5].map(d=>`<span style="animation-delay:${d}s"></span>`).join('')}</div></div>
+    <button class="knob" data-a="song" data-v="Teardrop" aria-label="play">▶</button></div>`:''}
+  ${top.length?`<div class="sec"><div class="sechead"><span class="lbl">${me?'Top 8':'On the shelf'}</span></div>
+    <div class="wall">${top.map(id=>`<button data-a="album" data-v="${id}" aria-label="${esc(A[id].t)}">${cover(id,66)}</button>`).join('')}</div></div>`:''}
+  ${me?`<div class="sec"><div class="sechead"><span class="lbl">Your spins</span><span class="lbl" style="letter-spacing:1px">newest on top</span></div>
+    ${Object.entries(months).map(([m,ids])=>`<div class="month">${m} 2026</div>${ids.map(id=>spine(id,`<span class="ss" style="color:${A[id].ink}">${stars(S.my[id]?.h)}</span>`)).join('')}`).join('')}</div>
+  <div class="sec"><div class="sechead"><span class="lbl">Still wrapped</span><span class="lbl" style="letter-spacing:1px">want to hear</span></div>
+    <div class="wantrow">${[...S.want].map(id=>`<button data-a="album" data-v="${id}">${cover(id,74,'wrap')}</button>`).join('')||'<div class="empty">nothing wrapped. tap ♡ WANT IT on any album.</div>'}</div></div>`:''}`;
 }
 function vChnl(){
   const c=crew();const ci=CREWS.indexOf(c);const r=c.rounds[S.back]||c.rounds[0];const past=S.back>0;
@@ -548,28 +708,6 @@ function vChnl(){
   <div class="weekbar"><button class="weekbtn" data-a="toast" data-v="this week: a mix of everything ${c.name} burned since sunday"><span style="width:7px;height:7px;border-radius:50%;background:var(--lcd);box-shadow:0 0 8px var(--lcd)"></span>${esc(c.name.toUpperCase())}'S THIS WEEK ►</button>
   <div class="badge410" aria-hidden="true"><span style="font-family:var(--display);font-size:11px;color:#ffe27a;line-height:1">410W</span><span style="font-size:7px;letter-spacing:1px;color:rgba(255,255,255,.85);margin-top:2px">T·BASS</span></div></div>`;
 }
-function vDeck(){
-  const months={};for(const [id,m] of S.diary)(months[m]=months[m]||[]).push(id);
-  return `
-  <div class="badgecard">
-    <div class="nametag"><div class="top">KYBR RECORDS · STAFF</div><div class="nm">JORDAN</div><div class="hd">@jordan · “i burn more than i talk”</div></div>
-    <button class="gear" data-a="ctrl"><div class="disc cdicon"></div><span style="font-size:7px;letter-spacing:.5px">SETTINGS</span></button>
-  </div>
-  <div class="radio">
-    <div class="g"><div style="font-size:8px;letter-spacing:1.5px;opacity:.7">ON REPEAT</div><div class="ell" style="margin-top:2px">Teardrop · Massive Attack</div>
-      <div class="eq" aria-hidden="true">${[0,.2,.4,.1,.3,.5].map(d=>`<span style="animation-delay:${d}s"></span>`).join('')}</div></div>
-    <button class="knob" data-a="song" data-v="Teardrop" aria-label="play profile song">▶</button>
-  </div>
-  <div class="sec" style="padding-left:10px;border-left:2px solid color-mix(in srgb,var(--skin) 55%,transparent)">
-    <div class="lbl">Liner notes</div><div style="font-size:11px;line-height:1.55;margin-top:5px;color:var(--ink2)">basement-dwelling, always cold. trip-hop on rainy days, daft punk on the highway. ask me about vespertine.</div>
-  </div>
-  <div class="sec"><div class="sechead"><span class="lbl">Top 8</span><span class="lbl" style="color:var(--skin)">PUBLIC</span></div>
-    <div class="wall">${S.top8.map(id=>`<button data-a="album" data-v="${id}" aria-label="${esc(A[id].t)}">${cover(id,66)}</button>`).join('')}</div></div>
-  <div class="sec"><div class="sechead"><span class="lbl">Your spins</span><span class="lbl" style="letter-spacing:1px">newest on top</span></div>
-    ${Object.entries(months).map(([m,ids])=>`<div class="month">${m} 2026</div>${ids.map(id=>spine(id,`<span class="ss" style="color:${A[id].ink}">${stars(S.my[id]?.h)}</span>`)).join('')}`).join('')}</div>
-  <div class="sec"><div class="sechead"><span class="lbl">Still wrapped</span><span class="lbl" style="letter-spacing:1px">want to hear</span></div>
-    <div class="wantrow">${[...S.want].map(id=>`<button data-a="album" data-v="${id}">${cover(id,74,'wrap')}</button>`).join('')||'<div class="empty">nothing wrapped. tap ♡ WANT IT on any album.</div>'}</div></div>`;
-}
 function vCase(){
   const pages=Math.max(1,Math.ceil(S.kept.length/2));const p=Math.min(S.casePage,pages-1);const two=S.kept.slice(p*2,p*2+2);
   return `
@@ -587,8 +725,10 @@ function vCase(){
 }
 function vAlbum(){
   const id=S.album,a=A[id],mine=S.my[id];const wrapped=S.want.has(id)&&!mine;
-  const cp=crewPicks(id);const ch=crewHeat(id);const pub=PUBLIC[id]||[];
-  const half1=Math.ceil(a.tracks.length/2);
+  const ch=crewHeat(id);const half1=Math.ceil(a.tracks.length/2);
+  const bks=BOOKLETS.filter(b=>b.album===id).sort((x,y)=>S.sort==='liked'?likeN('b:'+y.id,y.likes)-likeN('b:'+x.id,x.likes):0);
+  let tk=allTakes(id);const me=tk.filter(x=>x.mine);tk=tk.filter(x=>!x.mine);
+  if(S.sort==='liked')tk.sort((x,y)=>likeN(y.key,y.base)-likeN(x.key,x.base));
   const tr=(t,i)=>`<button class="trk" data-a="song" data-v="${esc(t)}"><i>${String(i+1).padStart(2,'0')}</i><span>${esc(t)}</span></button>`;
   return `
   <div class="back"><button class="key ghost" style="min-height:40px;font-size:9px" data-a="back">◂ BACK</button>
@@ -600,20 +740,61 @@ function vAlbum(){
   </div>
   <div class="atitle"><h1 class="chrome">${esc(a.t.toUpperCase())}</h1><p>${esc(a.a)} · ${a.y} · ${a.tracks.length} tracks</p></div>
   <div class="actions"><button class="key hot" data-a="pick" data-v="${id}">${mine?'✎ REWRITE YOUR TAKE':wrapped?'✎ UNWRAP & SPIN IT':'✎ SPIN IT'}</button><button class="key" data-a="burn" data-v="${id}">BURN IT ▸</button></div>
+  <button class="key ghost" style="width:100%;margin-top:8px;color:var(--ink)" data-a="write" data-v="${id}">✎ WRITE A BOOKLET</button>
   ${ch?`<div class="heatline"><span style="color:var(--ink2)">crew heat</span><span><span class="ember">${stars(ch)}</span> <span class="word">${word(ch)}</span></span></div>`:''}
-  <div class="sec"><div class="sechead"><span class="lbl">Takes</span><span class="lbl" style="letter-spacing:1px">your crews first, then everyone</span></div>
-    <div class="cards">
-      ${mine?`<div class="card mine"><div class="who"><span>you</span><span>${esc(mine.when)}</span></div><div class="cs">${stars(mine.h)}</div><div class="ballpoint">${esc(mine.t)}</div></div>`:''}
-      ${cp.map(x=>`<div class="card"><div class="who"><span>${esc(nm(x.p))} · ${esc(x.crew)}</span>${x.round?`<span>round ${x.round}</span>`:''}</div><div class="cs">${stars(x.h)}</div><div class="ballpoint">${esc(x.t)}</div></div>`).join('')}
-      ${pub.map(x=>`<div class="card public"><div class="who"><span>${esc(x.h)}</span><span>${esc(x.w)}</span></div><div class="cs">${stars(x.r)}</div><div class="typed">${esc(x.t)}</div></div>`).join('')}
-      ${!mine&&!cp.length&&!pub.length?'<div class="empty">no takes yet. be the first.</div>':''}
-    </div>
-    <div style="font-size:10px;color:var(--ink3);text-align:center">no likes, no counts. just takes.</div></div>
+  <div class="seg" style="margin-top:16px"><button class="${S.sort==='liked'?'on':''}" data-a="sort" data-v="liked">MOST LIKED</button><button class="${S.sort==='new'?'on':''}" data-a="sort" data-v="new">NEWEST</button></div>
+  <div class="sec"><div class="sechead"><span class="lbl">Booklets</span><span class="lbl" style="letter-spacing:1px">long reviews</span></div>${bks.map(bkCard).join('')||'<div class="empty">no booklets on this one yet. write the first.</div>'}</div>
+  <div class="sec"><div class="sechead"><span class="lbl">Takes</span><span class="lbl" style="letter-spacing:1px">${S.sort==='liked'?'most liked first':'newest first'}</span></div>
+    <div class="cards">${[...me,...tk].map(x=>takeCard(x,id)).join('')||'<div class="empty">no takes yet. be the first.</div>'}</div></div>
   <div class="sec"><div class="sechead"><span class="lbl">Tracklist</span><span class="lbl" style="letter-spacing:1px">tap a song to open it</span></div>
     <div class="traycard"><div style="font-family:var(--display);font-size:8px;letter-spacing:2px;color:#6a665c;margin-bottom:6px">${esc(a.a.toUpperCase())} — ${esc(a.t.toUpperCase())} — ${a.y}</div>
       <div class="tc"><div>${a.tracks.slice(0,half1).map((t,i)=>tr(t,i)).join('')}</div><div>${a.tracks.slice(half1).map((t,i)=>tr(t,i+half1)).join('')}</div></div>
       <div class="barcode" aria-hidden="true"></div></div>
     <div class="openin">${['Apple Music','Spotify','YouTube Music','Tidal'].map(s=>`<button data-a="toast" data-v="opens ${a.t} in ${s}">▸ ${s.toUpperCase()}</button>`).join('')}</div></div>`;
+}
+function comments(key){
+  const list=[...(S.cm[key]||[])].map((c,i)=>({...c,i}));
+  list.sort((x,y)=>(y.pin?1:0)-(x.pin?1:0)||(S.cmSort==='liked'?likeN(`c:${key}:${y.i}`,y.likes)-likeN(`c:${key}:${x.i}`,x.likes):y.i-x.i));
+  return `<div class="cmhead"><span class="lbl">Comments · ${list.length}</span><div class="seg"><button class="${S.cmSort==='liked'?'on':''}" data-a="cmsort" data-v="liked">TOP</button><button class="${S.cmSort==='new'?'on':''}" data-a="cmsort" data-v="new">NEW</button></div></div>
+  ${list.map(c=>`<div class="cm"><div class="row" style="justify-content:space-between"><button class="tap nmb2" data-a="label" data-v="${esc(c.by)}">${esc(who(c.by))}</button>${c.pin?'<span class="lbl" style="color:var(--ember)">PINNED</span>':''}</div>
+    <div class="cmt">${esc(c.t)}</div><div class="cardfoot dark">${heart(`c:${key}:${c.i}`,c.likes)}</div></div>`).join('')||'<div class="empty">no comments yet.</div>'}
+  <div class="cmnew"><label for="cmt" class="lbl">add a comment</label><textarea id="cmt" maxlength="1000" placeholder="say something about it…"></textarea>
+  <button class="key hot" data-a="comment" data-v="${esc(key)}">POST</button></div>`;
+}
+function vBooklet(){
+  const b=BOOKLETS.find(x=>x.id===S.bk),L=lab(b.by),a=A[b.album];
+  return `<div class="back"><button class="key ghost" style="min-height:40px;font-size:9px" data-a="bkback">◂ BACK</button><span class="lbl">${esc(b.when)}</span></div>
+  <article class="reader">
+    <div class="rcover">${cover(b.album,240).replace('width:240px;height:240px','width:100%;aspect-ratio:1;height:auto')}</div>
+    <button class="tap rlabel" data-a="label" data-v="${esc(b.by)}"><span class="logo sm">${esc(L.n.split(' ').map(w=>w[0]).join('').slice(0,3).toUpperCase())}</span><span><b>${esc(L.n)}</b><br><small>by ${esc(L.by)} · ${esc(L.h)}</small></span></button>
+    <h1>${esc(b.title)}</h1>
+    <button class="tap ralbum" data-a="album" data-v="${b.album}"><span class="rst">${stars(b.h)}</span> ${esc(word(b.h))} · ${esc(a.t)} · ${esc(a.a)} ↗</button>
+    ${b.body.map(p=>`<p>${esc(p)}</p>`).join('')}
+    ${b.fav&&b.fav.length?`<div class="rfav"><div class="lbl" style="color:#7a6a4a">favorite tracks</div>${b.fav.map(t=>`<span>${esc(t)}</span>`).join('')}</div>`:''}
+    <div class="ractions">${heart('b:'+b.id,b.likes)}${b.by==='you'?'':`<button class="subbtn ${S.subs.has(b.by)?'on':''}" data-a="sub" data-v="${esc(b.by)}">${S.subs.has(b.by)?'✓ SUBSCRIBED':'SUBSCRIBE TO '+esc(L.n.toUpperCase())}</button>`}</div>
+  </article>
+  <div class="sec">${comments(b.id)}</div>`;
+}
+function oTake(o){
+  const id=o.album;const x=allTakes(id).find(t=>t.key===o.key);
+  return `<div class="sheet paper" role="dialog" aria-label="take">
+    <div class="sheethead"><div class="lbl">${esc(A[id].t)} · take</div><button class="x" data-a="close" aria-label="close">✕</button></div>
+    <div class="cards" style="overflow:visible">${takeCard(x,id).replace('class="card','class="card wide')}</div>
+    ${comments(o.key)}</div>`;
+}
+function oWrite(o){
+  return `<div class="sheet paper" role="dialog" aria-label="write a booklet">
+   <div class="sheethead"><div><div class="chrome" style="font-size:13px;letter-spacing:2px">NEW BOOKLET</div><div class="lbl" style="margin-top:4px">for ${esc(lab('you').n)}</div></div><button class="x" data-a="close" aria-label="close">✕</button></div>
+   <div class="field"><label for="wbAlbum" class="lbl">album</label><select id="wbAlbum" class="sel">${Object.keys(A).map(id=>`<option value="${id}" ${o.album===id?'selected':''}>${esc(A[id].a)} — ${esc(A[id].t)}</option>`).join('')}</select></div>
+   <div class="pickcard" style="margin-top:12px">
+     <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">${heatCells(o.h)}<span style="font-size:12px;color:#8a5a1a">${o.h?word(o.h):'stars required'}</span></div>
+     <label for="wbTitle" class="lbl" style="color:#8a7a5a;display:block;margin-top:8px">title</label>
+     <input id="wbTitle" type="text" maxlength="90" value="${esc(o.title)}" placeholder="give it a headline" class="wbt">
+     <label for="wbBody" class="lbl" style="color:#8a7a5a;display:block;margin-top:8px">booklet</label>
+     <textarea id="wbBody" class="wbb" placeholder="write as long as you want. blank lines start new paragraphs.">${esc(o.body)}</textarea>
+   </div>
+   <div style="font-size:10px;color:var(--ink3);margin-top:10px">public · on your label, the album and your subscribers' HOME. people can like and comment.</div>
+   <div class="keys"><button class="key ghost" data-a="close">SAVE DRAFT</button><button class="key hot" data-a="publish" ${o.h?'':'disabled'}>PUBLISH ▸</button></div></div>`;
 }
 
 // ---------- overlays ----------
@@ -649,6 +830,11 @@ function oHold(o){
    </div>
    <div class="keys"><button class="key" data-a="toast" data-v="opens in ${S.service}">▸ OPEN IN ${esc(S.service.toUpperCase())}</button></div>
    <div class="keys">${h.album?`<button class="key ghost" data-a="album" data-v="${h.album}">${h.kind==='album'?'OPEN THE ALBUM ↗':'FROM '+esc(A[h.album].t.toUpperCase())+' ↗'}</button>`:''}<button class="key hot" data-a="keep" data-v="${h.id}">★ KEEP IT</button></div>
+   <div class="sec"><div class="sechead"><span class="lbl">Replies · ${esc(h.crew)} only</span><span class="lbl" style="letter-spacing:1px">no likes here</span></div>
+    ${(S.replies[h.id]||[]).map(r=>`<div class="cm"><div class="row" style="justify-content:space-between"><span style="font-size:11px">${esc(who(r.by))}</span>${r.h?`<span class="ember" style="font-size:11px">${stars(r.h)}</span>`:''}</div><div class="cmt">${esc(r.t)}</div></div>`).join('')||'<div class="empty">no replies yet.</div>'}
+    <div class="cmnew"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">${heatCells(o.h||0)}<span class="lbl">stars optional</span></div>
+     <label for="rp" class="lbl">reply to ${esc(nm(h.from))}</label><textarea id="rp" maxlength="250" placeholder="what did it do to you?"></textarea>
+     <div class="row" style="justify-content:space-between"><span class="lbl" id="rpc">0/250</span><button class="key hot" data-a="reply" data-v="${h.id}">REPLY</button></div></div></div>
   </div>`;
 }
 function oBurn(o){
@@ -705,24 +891,24 @@ function oCtrl(){
 }
 
 // ---------- render ----------
-const TABS=[['wire','HOME'],['counter','DIG'],['chnl','CREW'],['deck','SHELF'],['case','KEPT']];
+const TABS=[['wire','HOME'],['counter','DIG'],['chnl','CREW'],['deck','LABEL'],['case','KEPT']];
 function render(keepScroll){
   const v=$('#view');const st=v.scrollTop;
-  const fn={wire:vWire,counter:vCounter,chnl:vChnl,deck:vDeck,case:vCase,album:vAlbum}[S.tab];
+  const fn={wire:vWire,counter:vCounter,chnl:vChnl,deck:vDeck,case:vCase,album:vAlbum,booklet:vBooklet}[S.tab];
   v.innerHTML=fn()+(S.tab==='wire'?'':'');
   const fab=document.querySelector('.fab');if(fab)fab.remove();
   if(S.tab==='wire')$('#screen').insertAdjacentHTML('beforeend','<button class="fab" data-a="burn" aria-label="burn something">BURN</button>');
   v.scrollTop=keepScroll?st:0;
-  const active=S.tab==='album'?S.from:S.tab;
+  const active=S.navTab;
   $('#tray').innerHTML=TABS.map(([k,l])=>`<button class="tab ${active===k?'on':''}" data-a="tab" data-v="${k}" aria-current="${active===k}"><i class="led"></i><span>${l}</span></button>`).join('');
-  const sk=SKINS[S.skin];const r=document.documentElement.style;r.setProperty('--skin',sk[1]);r.setProperty('--skin-lo',sk[2]);r.setProperty('--skin-hi',sk[3]);$('#skinname').textContent=S.tab==='album'?'ALBUM':sk[0];
+  const sk=SKINS[S.skin];const r=document.documentElement.style;r.setProperty('--skin',sk[1]);r.setProperty('--skin-lo',sk[2]);r.setProperty('--skin-hi',sk[3]);$('#skinname').textContent=S.tab==='album'?'ALBUM':S.tab==='booklet'?'BOOKLET':sk[0];
   renderOv();S.flip=false;
 }
 function renderOv(){
   const o=S.ov;const box=$('#ov');
   if(!o){box.innerHTML='';return;}
-  const html={pick:oPick,hold:oHold,burn:oBurn,ctrl:oCtrl}[o.type](o);
-  box.innerHTML=`<div class="scrim" data-a="scrim">${html}</div>`;
+  const html={pick:oPick,hold:oHold,burn:oBurn,ctrl:oCtrl,take:oTake,write:oWrite}[o.type](o);
+  const sc=box.querySelector('.sheet')?.scrollTop||0;box.innerHTML=`<div class="scrim" data-a="scrim">${html}</div>`;if(o.keep){const sh=box.querySelector('.sheet');if(sh)sh.scrollTop=sc;o.keep=false;}
 }
 function openAlbum(id){if(S.tab!=='album')S.from=S.tab;S.album=id;S.tab='album';S.ov=null;render();}
 
@@ -731,7 +917,21 @@ document.addEventListener('click',e=>{
   const el=e.target.closest('[data-a]');if(!el)return;const a=el.dataset.a,v=el.dataset.v;
   if(a==='scrim'&&e.target!==el)return;
   switch(a){
-   case 'tab': if(el.dataset.crew){S.crew=el.dataset.crew;S.back=0;S.peek=null;} S.tab=v;S.ov=null;render();break;
+   case 'tab': if(el.dataset.crew){S.crew=el.dataset.crew;S.back=0;S.peek=null;} if(v==='deck')S.labelOf='you'; S.tab=v;S.navTab=v;S.ov=null;render();break;
+   case 'label': S.labelOf=v;S.tab='deck';S.navTab='deck';S.ov=null;render();break;
+   case 'like': S.liked.has(v)?S.liked.delete(v):S.liked.add(v);if(S.ov)S.ov.keep=true;render(true);break;
+   case 'take': S.ov={type:'take',key:v,album:el.dataset.album};renderOv();break;
+   case 'sub': {const on=S.subs.has(v);on?S.subs.delete(v):S.subs.add(v);toast(on?`unsubscribed from ${lab(v).n}`:`✓ subscribed · ${lab(v).n} lands on your HOME`);if(S.ov)S.ov.keep=true;render(true);break;}
+   case 'dig': S.digMode=v;S.search='';render(true);break;
+   case 'sort': S.sort=v;render(true);break;
+   case 'cmsort': S.cmSort=v;if(S.ov)S.ov.keep=true;render(true);break;
+   case 'comment': {const t=$('#cmt').value.trim();if(!t){toast('write something first');break;}(S.cm[v]=S.cm[v]||[]).push({by:'you',t,likes:0});S.cmSort='new';toast('✓ comment posted');if(S.ov)S.ov.keep=true;render(true);break;}
+   case 'reply': {const t=$('#rp').value.trim();if(!t){toast('write something first');break;}(S.replies[v]=S.replies[v]||[]).push({by:'you',t,h:S.ov.h||0});S.ov.h=0;S.ov.keep=true;toast('✓ replied · only your crew sees it');render(true);break;}
+   case 'write': S.ov={type:'write',album:v||S.diary[0][0],h:(v&&S.my[v]?.h)||0,title:'',body:''};renderOv();break;
+   case 'publish': {const o=S.ov;const paras=o.body.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);const b={id:'b'+Date.now(),by:'you',album:o.album,title:o.title.trim()||A[o.album].t,h:o.h,when:'just now',likes:0,fav:[],body:paras.length?paras:['(no words yet)']};BOOKLETS.unshift(b);
+     if(!S.my[o.album]){S.my[o.album]={h:o.h,t:b.title,st:'',when:'today'};S.diary.unshift([o.album,'nov']);}S.ov=null;S.bkFrom=S.tab;S.bk=b.id;S.tab='booklet';toast('✓ published · on your label');render();break;}
+   case 'bk': if(S.tab!=='booklet')S.bkFrom=S.tab;S.bk=v;S.tab='booklet';S.ov=null;render();break;
+   case 'bkback': S.tab=S.bkFrom;render();break;
    case 'album': openAlbum(v);break;
    case 'back': S.tab=S.from;render();break;
    case 'want': S.want.has(S.album)?S.want.delete(S.album):S.want.add(S.album);toast(S.want.has(S.album)?'wrapped · on your shelf to hear later':'off your want list');render(true);break;
@@ -753,7 +953,7 @@ document.addEventListener('click',e=>{
    case 'scrim': if(S.ov&&S.ov.type==='burn'&&S.ov.step==='burning')return;S.ov=null;renderOv();break;
    // pick
    case 'pick': {const m=S.my[v];S.ov={type:'pick',album:v,h:m?.h||0,t:m?.t||'',st:m?.st||'',when:'today',re:false};renderOv();break;}
-   case 'heat': {const o=S.ov,i=Number(v);o.h=o.h===i?i-.5:o.h===i-.5?i:i;renderOv();break;}
+   case 'heat': {const o=S.ov,i=Number(v);o.h=o.h===i?i-.5:o.h===i-.5?i:i;o.keep=true;renderOv();break;}
    case 'when': S.ov.when=v;renderOv();break;
    case 're': S.ov.re=!S.ov.re;renderOv();break;
    case 'savepick': savePick();break;
@@ -774,6 +974,10 @@ document.addEventListener('input',e=>{
   if(e.target.id==='ask'){S.search=e.target.value;const tmp=document.createElement('div');tmp.innerHTML=vCounter();$('#results').replaceWith(tmp.querySelector('#results'));}
   if(e.target.id==='take'&&S.ov){S.ov.t=e.target.value;$('#cnt').textContent=S.ov.t.length+'/280';}
   if(e.target.id==='stk'&&S.ov)S.ov.st=e.target.value;
+  if(e.target.id==='wbTitle'&&S.ov)S.ov.title=e.target.value;
+  if(e.target.id==='wbBody'&&S.ov)S.ov.body=e.target.value;
+  if(e.target.id==='wbAlbum'&&S.ov)S.ov.album=e.target.value;
+  if(e.target.id==='rp')$('#rpc').textContent=e.target.value.length+'/250';
   if(e.target.id==='bn'&&S.ov){S.ov.note=e.target.value;$('#bnote').textContent=S.ov.note||'for '+crewById(S.ov.crew).name;}
 });
 function savePick(){
